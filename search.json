@@ -1,17 +1,10 @@
 [
   {
-    "objectID": "pages/part_one.html",
-    "href": "pages/part_one.html",
-    "title": "Part One",
+    "objectID": "writing.html",
+    "href": "writing.html",
+    "title": "Notes",
     "section": "",
-    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
-  },
-  {
-    "objectID": "pages/part_one.html#what-it-is",
-    "href": "pages/part_one.html#what-it-is",
-    "title": "Part One",
-    "section": "",
-    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
+    "text": "2022\n\n\n\n\n  \n\n\n\n\nBest Guesses and Wordle\n\n\n\n\n\nOptimising the opening gambit in Worldle, using R.\n\n\n\n\n\n\nJan 27, 2022\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "pages/bayes_trial_eval.html",
@@ -28,11 +21,25 @@
     "text": "Input the trial data into the contingency table and select whether or not the results were found significant.\nNext, set the pre-test probability based on your own prior, or leave it at 0.5 if you have equipoise.\nIf necessary, adjust the Bayesian analysis strategy based on the characteristics of the trial."
   },
   {
-    "objectID": "writing.html",
-    "href": "writing.html",
-    "title": "Notes",
+    "objectID": "pages/part_one.html",
+    "href": "pages/part_one.html",
+    "title": "Part One",
     "section": "",
-    "text": "2022\n\n\n\n\n  \n\n\n\n\nBest Guesses and Wordle\n\n\n\n\n\nOptimising the opening gambit in Worldle, using R.\n\n\n\n\n\n\nJan 27, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
+  },
+  {
+    "objectID": "pages/part_one.html#what-it-is",
+    "href": "pages/part_one.html#what-it-is",
+    "title": "Part One",
+    "section": "",
+    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "cjdbarlow.github.io",
+    "section": "",
+    "text": "Anaesthetic and Intensive Care registrar fellow currently living and working in Auckland, New Zealand. I like everything at the pointy end of medicine, as well as physical computing, biotech, education, statistics, and data visualisation.\nI like doing things, so please feel free to contact me about projects, ideas, or hairbrained schemes that are: medical (cardiac ++, trauma +), humanitarian, challenging (but tractable), electronic, adventurous (low predicted mortality preferred), educational, stats (prediction modelling, Bayesian, and data visualisation); or any combination of the above."
   },
   {
     "objectID": "posts/2022/wordle.html",
@@ -46,14 +53,7 @@
     "href": "posts/2022/wordle.html#combinations",
     "title": "Best Guesses and Wordle",
     "section": "4. Combinations",
-    "text": "4. Combinations\nLastly, we take our list of best words, cross them to make a list of all possible combinations, and then cut that list down to a combination that contains only one of each of the high-yield letters, in a high-yield position.\n\nbest_combinations = list(first = best_words$word,\n               second = best_words$word) %&gt;%\n  cross() %&gt;%\n  map_df(as_tibble) %&gt;%\n  mutate(word = paste(first, second, sep = \"\"),\n         a = stri_count_fixed(word, pattern = \"a\"),\n         e = stri_count_fixed(word, pattern = \"e\"),\n         i = stri_count_fixed(word, pattern = \"i\"),\n         l = stri_count_fixed(word, pattern = \"l\"),\n         n = stri_count_fixed(word, pattern = \"n\"),\n         o = stri_count_fixed(word, pattern = \"o\"),\n         r = stri_count_fixed(word, pattern = \"r\"),\n         s = stri_count_fixed(word, pattern = \"s\"),\n         t = stri_count_fixed(word, pattern = \"t\"),\n         u = stri_count_fixed(word, pattern = \"u\")) %&gt;%\n  filter(across(-c(first, second, word), ~ . == 1)) %&gt;%\n  select(first, second)\n\nWarning: `cross()` was deprecated in purrr 1.0.0.\nℹ Please use `tidyr::expand_grid()` instead.\nℹ See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.\n\n\nWarning: Using `across()` in `filter()` was deprecated in dplyr 1.0.8.\nℹ Please use `if_any()` or `if_all()` instead.\n\nknitr::kable(best_combinations,\n             col.names = c(\"First Word\", \"Second Word\"))\n\n\n\nFirst Word\nSecond Word\n\n\n\ntails\nrouen\n\n\nrouen\ntails\n\n\n\n\n\nThere we have it! An unlikely combination."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "cjdbarlow.github.io",
-    "section": "",
-    "text": "Anaesthetic and Intensive Care registrar fellow currently living and working in Auckland, New Zealand. I like everything at the pointy end of medicine, as well as physical computing, biotech, education, statistics, and data visualisation.\nI like doing things, so please feel free to contact me about projects, ideas, or hairbrained schemes that are: medical (cardiac ++, trauma +), humanitarian, challenging (but tractable), electronic, adventurous (low predicted mortality preferred), educational, stats (prediction modelling, Bayesian, and data visualisation); or any combination of the above."
+    "text": "4. Combinations\nLastly, we take our list of best words, cross them to make a list of all possible combinations, and then cut that list down to a combination that contains only one of each of the high-yield letters, in a high-yield position.\n\nbest_combinations = list(first = best_words$word,\n               second = best_words$word) %&gt;%\n  cross() %&gt;%\n  map_df(as_tibble) %&gt;%\n  mutate(word = paste(first, second, sep = \"\"),\n         a = stri_count_fixed(word, pattern = \"a\"),\n         e = stri_count_fixed(word, pattern = \"e\"),\n         i = stri_count_fixed(word, pattern = \"i\"),\n         l = stri_count_fixed(word, pattern = \"l\"),\n         n = stri_count_fixed(word, pattern = \"n\"),\n         o = stri_count_fixed(word, pattern = \"o\"),\n         r = stri_count_fixed(word, pattern = \"r\"),\n         s = stri_count_fixed(word, pattern = \"s\"),\n         t = stri_count_fixed(word, pattern = \"t\"),\n         u = stri_count_fixed(word, pattern = \"u\")) %&gt;%\n  filter(across(-c(first, second, word), ~ . == 1)) %&gt;%\n  select(first, second)\n\nWarning: `cross()` was deprecated in purrr 1.0.0.\nℹ Please use `tidyr::expand_grid()` instead.\nℹ See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.\n\n\nWarning: Using `across()` in `filter()` was deprecated in dplyr 1.0.8.\nℹ Please use `if_any()` or `if_all()` instead.\n\nknitr::kable(best_combinations,\n             col.names = c(\"First Word\", \"Second Word\"))\n\n\n\n\nFirst Word\nSecond Word\n\n\n\n\ntails\nrouen\n\n\nrouen\ntails\n\n\n\n\n\nThere we have it! An unlikely combination."
   },
   {
     "objectID": "pages/bs.html",
