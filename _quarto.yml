@@ -3,6 +3,7 @@ website:
   title: "C. Jake Barlow"
   description: "{{< meta description-meta >}}"
   favicon: "assets/favicon32x32.png"
+  #site-url: "cjdbarlow.au"
   repo-url: "https://github.com/cjdbarlow/cjdbarlow.github.io"
 
   navbar:
@@ -61,6 +62,7 @@ project:
   type: website
   resources:
     - "assets/**"
+    - CNAME
 
 format:
   html:

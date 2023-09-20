@@ -1,16 +1,19 @@
 ---
-title: "Best Guesses and Wordle"
+title: "Breaking Wordle"
 date: 2022-01-27
 description: |
-  Optimising the opening gambit in Worldle, using R.
+  What are the best starting words in Wordle?
+
+  An approach to optimise the opening gambit, using R.
 image: assets/wordle.png
 categories:
   - R
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+execute:
+    warning: false
+    message: false
+    echo: true
+---
 
 Like much of the internet, I have been fascinated with the game [Wordle](https://www.powerlanguage.co.uk/wordle/). For those unaware, the basic premise is to guess a five letter word in less than six attempts. Unlike many such games, there is no initial clue. Your first guess is made blind, and then refined in subsequent rounds based on whether the letter was:
 
@@ -37,8 +40,9 @@ colnames(words) = "word"
 
 ```{r}
 # Libraries
-library(tidyverse)
-library(stringi)
+require(tidyverse)
+require(stringi)
+require(rmarkdown)
 
 # Clean
 words = words %>% # We've loaded this from a text file off-screen
