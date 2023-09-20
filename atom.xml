@@ -6,16 +6,20 @@
       version="2.0">
 <channel>
 <title>Jake&#39;s Notes</title>
-<link>https://cjdbarlow.github.io/atom.html</link>
-<atom:link href="https://cjdbarlow.github.io/atom.xml" rel="self" type="application/rss+xml"/>
+<link>https://github.com/cjdbarlow/cjdbarlow.github.io/atom.html</link>
+<atom:link href="https://github.com/cjdbarlow/cjdbarlow.github.io/atom.xml" rel="self" type="application/rss+xml"/>
 <description>{{&lt; meta description-meta &gt;}}</description>
 <language>en</language>
-<generator>quarto-1.4.193</generator>
-<lastBuildDate>Wed, 26 Jan 2022 13:00:00 GMT</lastBuildDate>
+<generator>quarto-1.3.450</generator>
+<lastBuildDate>Thu, 27 Jan 2022 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Breaking Wordle</title>
-  <link>https://cjdbarlow.github.io/posts/2022/wordle.html</link>
-  <description><![CDATA[ <p>Like much of the internet, I have been fascinated with the game <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a>. For those unaware, the basic premise is to guess a five letter word in less than six attempts. Unlike many such games, there is no initial clue. Your first guess is made blind, and then refined in subsequent rounds based on whether the letter was:</p>
+  <link>https://github.com/cjdbarlow/cjdbarlow.github.io/posts/2022/wordle.html</link>
+  <description><![CDATA[ 
+
+
+
+<p>Like much of the internet, I have been fascinated with the game <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a>. For those unaware, the basic premise is to guess a five letter word in less than six attempts. Unlike many such games, there is no initial clue. Your first guess is made blind, and then refined in subsequent rounds based on whether the letter was:</p>
 <ol type="1">
 <li>In the correct position,</li>
 <li>In the word, but in the incorrect position,</li>
@@ -23,598 +27,361 @@
 </ol>
 <p>It’s a simple mechanic, and quite fun. Part of the appeal comes from the fact that it’s really a logic game. Since the potential solution space becomes very small very quickly; intelligent early guesses can remove vast swathes of dictionary from consideration. So the key question is; what are the best words to guess first?</p>
 <hr>
-<section id="data-and-data-cleaning" class="level1"><h1>0. Data, and Data Cleaning</h1>
+<section id="data-and-data-cleaning" class="level1">
+<h1>0. Data, and Data Cleaning</h1>
 <p>The first step is getting a list of words and cutting it down to size. A cursory inspection of the wordle javascript reveals that it includes two dictionaries. Without looking too closely, the first one appears to be a list of 2,300 or so simple words which I am assuming is an answer list, and the other is a (several times larger) list of real english words that are valid guesses but (I assume) won’t ever be correct answers. To keep things sporting, we’ll use the second list.</p>
 <p>First up, load the word list. We’ll also get a count of all the letters in each word, which we’ll use later.</p>
 <div class="cell">
 
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Libraries</span></span>
-<span><span class="kw" style="color: #003B4F;
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">require</span>(tidyverse)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">require</span>(stringi)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;"><a href="https://stringi.gagolewski.com/">stringi</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;"><a href="https://github.com/rstudio/rmarkdown">rmarkdown</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span></span>
-<span><span class="co" style="color: #5E5E5E;
+font-style: inherit;">require</span>(rmarkdown)</span>
+<span id="cb1-5"></span>
+<span id="cb1-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Clean</span></span>
-<span><span class="va" style="color: #111111;
+<span id="cb1-7">words <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">words</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> words <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">words</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># We've loaded this from a text file off-screen</span></span>
-<span>  <span class="fu" style="color: #4758AB;
+<span id="cb1-8">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">filter</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">str_length</span>(word) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"><a href="https://stringr.tidyverse.org/reference/str_length.html">str_length</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">5</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">word</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="co" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb1-9">  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># There's definitely a more efficient way of doing this, but this works for now.</span></span>
-<span>  <span class="fu" style="color: #4758AB;
+<span id="cb1-10">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span>a <span class="op" style="color: #5E5E5E;
+font-style: inherit;">a =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">"a"</span>),</span>
+<span id="cb1-11">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">b =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">"a"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         b <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"b"</span>),</span>
+<span id="cb1-12">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">c =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"c"</span>),</span>
+<span id="cb1-13">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">d =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">"b"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         c <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">"d"</span>),</span>
+<span id="cb1-14">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">e =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">"e"</span>),</span>
+<span id="cb1-15">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">"c"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">f =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         d <span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"f"</span>),</span>
+<span id="cb1-16">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">g =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"d"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"g"</span>),</span>
+<span id="cb1-17">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         e <span class="op" style="color: #5E5E5E;
+font-style: inherit;">h =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">"h"</span>),</span>
+<span id="cb1-18">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">i =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">"e"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         f <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"i"</span>),</span>
+<span id="cb1-19">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">j =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"j"</span>),</span>
+<span id="cb1-20">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">k =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">"f"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         g <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">"k"</span>),</span>
+<span id="cb1-21">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">l =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">"l"</span>),</span>
+<span id="cb1-22">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">"g"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">m =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         h <span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"m"</span>),</span>
+<span id="cb1-23">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">n =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"h"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"n"</span>),</span>
+<span id="cb1-24">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         i <span class="op" style="color: #5E5E5E;
+font-style: inherit;">o =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">"o"</span>),</span>
+<span id="cb1-25">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">p =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">"i"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         j <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"p"</span>),</span>
+<span id="cb1-26">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">q =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"q"</span>),</span>
+<span id="cb1-27">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">r =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">"j"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         k <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">"r"</span>),</span>
+<span id="cb1-28">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">s =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">"s"</span>),</span>
+<span id="cb1-29">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">"k"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">t =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         l <span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"t"</span>),</span>
+<span id="cb1-30">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">u =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"l"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"u"</span>),</span>
+<span id="cb1-31">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         m <span class="op" style="color: #5E5E5E;
+font-style: inherit;">v =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">"v"</span>),</span>
+<span id="cb1-32">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">w =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">"m"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         n <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"w"</span>),</span>
+<span id="cb1-33">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"x"</span>),</span>
+<span id="cb1-34">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">"n"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         o <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">"y"</span>),</span>
+<span id="cb1-35">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">z =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"o"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         p <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"p"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         q <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"q"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         r <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"r"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"s"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         t <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"t"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         u <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"u"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         v <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"v"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         w <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"w"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         x <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         y <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"y"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         z <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"z"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
+font-style: inherit;">"z"</span>))</span></code></pre></div>
 </div>
-</section><section id="what-letters" class="level1"><h1>1. What Letters?</h1>
+</section>
+<section id="what-letters" class="level1">
+<h1>1. What Letters?</h1>
 <p>Our first two words allow us to rule-in or rule-out 10 letters, which should let us clear the vowels and a few key consonants. Which ones exactly can be worked out pretty easily: what are the 10 most common letters in the Wordle dictionary?</p>
 <div class="cell">
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">letters <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">letters</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> words[<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">words</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">1</span>] <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+font-style: inherit;">colSums</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">sort</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">decreasing =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">TRUE</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-4">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">10</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-5">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span>decreasing <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
+font-style: inherit;">names</span>()</span></code></pre></div>
 </div>
 <p>This bit of code takes our letter columns (we drop the singular column containing the full word for this exercise), takes the total sum of each column (how many times each letter appearing in our word list), and sorts them in descending order. The result is a little surprising, with ‘u’ as the lonely vowel not making the top-ten cut.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letters</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
+font-style: inherit;">sort</span>(letters)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "a" "d" "e" "i" "l" "n" "o" "r" "s" "t"</code></pre>
 </div>
 </div>
 <p>If we did into this a little more, we see why:</p>
 <div class="cell">
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">letters <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">letters</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> words[<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">words</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">1</span>] <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb5-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+font-style: inherit;">colSums</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb5-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">sort</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">decreasing =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>decreasing <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letters</span></span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb5-4"></span>
+<span id="cb5-5">letters</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   s    e    a    o    r    i    l    t    n    d    u    m    p    y    c    h 
 5996 5429 5011 3684 3259 3088 2652 2566 2377 2060 2044 1660 1652 1649 1551 1371 
@@ -624,229 +391,127 @@ font-style: inherit;">letters</span></span></code></pre></div>
 </div>
 <p><code>U</code> is only slightly less common than <code>d</code>; and the standard wisdom of word construction would suggest that it’s better to know the presence or absence of all the vowels. We’ll make an executive decision here to include it, and drop the <code>d</code> to keep up at a round 10.</p>
 <div class="cell">
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">letters <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">letters</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> words[<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">words</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">1</span>] <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">[</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb7-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+font-style: inherit;">colSums</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb7-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">sort</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">decreasing =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">TRUE</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb7-4">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">11</span>)</span>
+<span id="cb7-5"></span>
+<span id="cb7-6">letters <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> letters[<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span>decreasing <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">11</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letters</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letters</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letters</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">names</span>(letters) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"d"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"d"</span>] <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb7-7">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letters</span></span></code></pre></div>
+font-style: inherit;">names</span>()</span>
+<span id="cb7-8"></span>
+<span id="cb7-9">letters</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "s" "e" "a" "o" "r" "i" "l" "t" "n" "u"</code></pre>
 </div>
 </div>
-</section><section id="what-words" class="level1"><h1>2. What Words?</h1>
+</section>
+<section id="what-words" class="level1">
+<h1>2. What Words?</h1>
 <p>The next part is also pretty simple; we want to cut our list of all words down to just those that use the letters in our top 10. We also want to avoid any duplicates so we can cover off all of the most common letters in our first two guesses.</p>
 <div class="cell">
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">good_words <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">good_words</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> words <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb9-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">words</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">rowwise</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb9-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/rowwise.html">rowwise</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">sum =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">sum</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">across</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">all_of</span>(letters)))) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span>sum <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://tidyselect.r-lib.org/reference/all_of.html">all_of</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letters</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># sum of good letters</span></span>
-<span>  <span class="fu" style="color: #4758AB;
+<span id="cb9-4">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">ungroup</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb9-5">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">filter</span>(sum <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">5</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">sum</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># drop those without a 5</span></span>
-<span>  <span class="fu" style="color: #4758AB;
+<span id="cb9-6">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">filter</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">across</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">all_of</span>(letters), <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">~</span> .x <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"><a href="https://tidyselect.r-lib.org/reference/all_of.html">all_of</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%in%</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">letters</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">)</span>, <span class="op" style="color: #5E5E5E;
+font-style: inherit;">0</span>)))  <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">~</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">.x</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>  <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># drop those with more than one of each letter</span></span>
-<span>  <span class="fu" style="color: #4758AB;
+<span id="cb9-7">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">good_words</span></span></code></pre></div>
+font-style: inherit;">select</span>(word)</span>
+<span id="cb9-8"></span>
+<span id="cb9-9">good_words</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 407 × 1
    word 
@@ -865,39 +530,27 @@ font-style: inherit;">good_words</span></span></code></pre></div>
 </div>
 </div>
 <p>This is a pretty reasonable result - we’ve cut down our list to a tenth of the size and with a little more work we could match up pairs of words that don’t contain shared letters. But, there’s still a little more optimisation that we can do first.</p>
-</section><section id="where-letters" class="level1"><h1>3. … Where Letters?</h1>
+</section>
+<section id="where-letters" class="level1">
+<h1>3. … Where Letters?</h1>
 <p>The second (and more interesting!) part of this process is where the letters should go. Letter frequency isn’t uniformly distributed throughout words; lots of words tend to end with ‘s’, for example. Our best guesses should adjust for this too.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">common_pos <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">common_pos</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> words[<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">1</span>] <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">words</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb11-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+font-style: inherit;">separate</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">col =</span> word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">into =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>col <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, into <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"1"</span>, <span class="st" style="color: #20794D;
 background-color: null;
@@ -907,225 +560,133 @@ font-style: inherit;">"3"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"4"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"5"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"5"</span>), <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>, sep <span class="op" style="color: #5E5E5E;
+font-style: inherit;">sep =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">4</span>), <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">remove =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">FALSE</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span>, remove <span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb11-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+font-style: inherit;">select</span>(<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">FALSE</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">-</span>word) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb11-4">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">pivot_longer</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">everything</span>(), <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">names_to =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">-</span><span class="va" style="color: #111111;
+font-style: inherit;">"position"</span>, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">values_to =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"letter"</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb11-5">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">group_by</span>(position, letter) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb11-6">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">filter</span>(letter <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%in%</span> letters) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span>, names_to <span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb11-7">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">summarise</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">"position"</span>, values_to <span class="op" style="color: #5E5E5E;
+font-style: inherit;">count =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"letter"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">position</span>, <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letter</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letter</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letters</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>count <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
+font-style: inherit;">n</span>())</span></code></pre></div>
 </div>
 <p>The above block splits our word list into columns of each letter, and sums the frequency of letters in each column. We’ve used the full word list rather than our list of ideal words because the distribution of letters are different (and the results won’t always be from the ideal words), but then filter the final list to only ideal letters.</p>
-<p>We then plot a histogram of letter frequency by position in the word; <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code> is used rather than <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> because we’ve already calculated the column count and don’t need <code>ggplot2</code> to do it for us.</p>
+<p>We then plot a histogram of letter frequency by position in the word; <code>geom_col()</code> is used rather than <code>geom_histogram()</code> because we’ve already calculated the column count and don’t need <code>ggplot2</code> to do it for us.</p>
 <div class="cell">
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">letter_hist <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">letter_hist</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> common_pos <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb12-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">common_pos</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">ungroup</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb12-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">x =</span> position,</span>
+<span id="cb12-4">             <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span>x <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">position</span>,</span>
-<span>             y <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">count</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">y =</span> count)) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span></span>
-<span>  <span class="fu" style="color: #4758AB;
+<span id="cb12-5">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">facet_wrap</span>(<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">~</span>letter, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">~</span><span class="va" style="color: #111111;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">letter</span>, ncol <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">5</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span></span>
-<span>  <span class="fu" style="color: #4758AB;
+<span id="cb12-6">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">geom_col</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span></span>
-<span>  <span class="fu" style="color: #4758AB;
+<span id="cb12-7">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span></span>
-<span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">letter_hist</span></span></code></pre></div>
+font-style: inherit;">theme_minimal</span>()</span>
+<span id="cb12-8"></span>
+<span id="cb12-9">letter_hist</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://cjdbarlow.github.io/posts/2022/wordle_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://github.com/cjdbarlow/cjdbarlow.github.io/posts/2022/wordle_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can now cull our list of good words further into those with the most optimal (or, at least, not sub-optimal) letter positions. I’ve adjusted this manually because of the importance of vowel position, though you could define some logic to do it programmatically as well; this is left as an exercise to the reader.</p>
 <div class="cell">
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">best_words <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">best_words</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span> good_words <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb13-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">good_words</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">separate</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">col =</span> word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">into =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span>col <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, into <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"1"</span>, <span class="st" style="color: #20794D;
 background-color: null;
@@ -1135,115 +696,92 @@ font-style: inherit;">"3"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"4"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"5"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"5"</span>), <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>, sep <span class="op" style="color: #5E5E5E;
+font-style: inherit;">sep =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">4</span>), <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">remove =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">FALSE</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span>, remove <span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb13-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+font-style: inherit;">filter</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">FALSE</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">grepl</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"l|r|s|t"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">`</span><span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">1</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">`</span>),</span>
+<span id="cb13-4">         <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">grepl</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
+font-style: inherit;">"a|l|o|r|u"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"l|r|s|t"</span>, <span class="va" style="color: #111111;
+font-style: inherit;">`</span><span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">`1`</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">2</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         <span class="fu" style="color: #4758AB;
+font-style: inherit;">`</span>),</span>
+<span id="cb13-5">         <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">grepl</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
+font-style: inherit;">"a|i|l|n|r|u"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"a|l|o|r|u"</span>, <span class="va" style="color: #111111;
+font-style: inherit;">`</span><span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">`2`</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">3</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         <span class="fu" style="color: #4758AB;
+font-style: inherit;">`</span>),</span>
+<span id="cb13-6">         <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">grepl</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
+font-style: inherit;">"a|e|i|l|n|t"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"a|i|l|n|r|u"</span>, <span class="va" style="color: #111111;
+font-style: inherit;">`</span><span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">`3`</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">4</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         <span class="fu" style="color: #4758AB;
+font-style: inherit;">`</span>),</span>
+<span id="cb13-7">         <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">grepl</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
+font-style: inherit;">"s|n"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"a|e|i|l|n|t"</span>, <span class="va" style="color: #111111;
+font-style: inherit;">`</span><span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">`4`</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">5</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"s|n"</span>, <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">`5`</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rmarkdown</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">`</span>))</span>
+<span id="cb13-8"></span>
+<span id="cb13-9">rmarkdown<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html">paged_table</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">paged_table</span>(best_words[<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">best_words</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
+font-style: inherit;">1</span>])</span></code></pre></div>
 <div class="cell-output-display">
+
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["word"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"lanes"},{"1":"lants"},{"1":"lares"},{"1":"laris"},{"1":"larns"},{"1":"loans"},{"1":"loins"},{"1":"loran"},{"1":"lores"},{"1":"loris"},{"1":"louis"},{"1":"louns"},{"1":"louts"},{"1":"lunas"},{"1":"lunes"},{"1":"lunts"},{"1":"lures"},{"1":"rails"},{"1":"rains"},{"1":"raits"},{"1":"rales"},{"1":"ranis"},{"1":"rants"},{"1":"rauns"},{"1":"roans"},{"1":"roils"},{"1":"roins"},{"1":"roles"},{"1":"rones"},{"1":"ronts"},{"1":"rouen"},{"1":"roues"},{"1":"rouls"},{"1":"routs"},{"1":"ruins"},{"1":"rules"},{"1":"runes"},{"1":"runts"},{"1":"sarin"},{"1":"solan"},{"1":"tails"},{"1":"tains"},{"1":"tales"},{"1":"tares"},{"1":"tarns"},{"1":"toils"},{"1":"tolan"},{"1":"tolas"},{"1":"toles"},{"1":"tones"},{"1":"toran"},{"1":"toras"},{"1":"tores"},{"1":"touns"},{"1":"trans"},{"1":"tries"},{"1":"trins"},{"1":"trues"},{"1":"tuans"},{"1":"tules"},{"1":"tunas"},{"1":"tunes"},{"1":"turns"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1251,315 +789,182 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
-<section id="combinations" class="level2"><h2 class="anchored" data-anchor-id="combinations">4. Combinations</h2>
+<section id="combinations" class="level2">
+<h2 class="anchored" data-anchor-id="combinations">4. Combinations</h2>
 <p>Lastly, we take our list of best words, cross them to make a list of all possible combinations, and then cut that list down to a combination that contains only one of each of the high-yield letters, in a high-yield position.</p>
 <div class="cell">
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">best_combinations</span> <span class="op" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">best_combinations <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span>first <span class="op" style="color: #5E5E5E;
+font-style: inherit;">first =</span> best_words<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">$</span>word,</span>
+<span id="cb14-2">               <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">best_words</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">second =</span> best_words<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
+font-style: inherit;">$</span>word) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">word</span>,</span>
-<span>               second <span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb14-3">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="va" style="color: #111111;
+font-style: inherit;">cross</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">best_words</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb14-4">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">$</span><span class="va" style="color: #111111;
+font-style: inherit;">map_df</span>(as_tibble) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">word</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb14-5">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">word =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://purrr.tidyverse.org/reference/cross.html">cross</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">paste</span>(first, second, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">""</span>),</span>
+<span id="cb14-6">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">a =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_df</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">as_tibble</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"a"</span>),</span>
+<span id="cb14-7">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+font-style: inherit;">e =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span>word <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"e"</span>),</span>
+<span id="cb14-8">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">i =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">first</span>, <span class="va" style="color: #111111;
+font-style: inherit;">"i"</span>),</span>
+<span id="cb14-9">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">second</span>, sep <span class="op" style="color: #5E5E5E;
+font-style: inherit;">l =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">""</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         a <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"l"</span>),</span>
+<span id="cb14-10">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">n =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"n"</span>),</span>
+<span id="cb14-11">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">o =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">"a"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         e <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">"o"</span>),</span>
+<span id="cb14-12">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">r =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">"r"</span>),</span>
+<span id="cb14-13">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">"e"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">s =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         i <span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"s"</span>),</span>
+<span id="cb14-14">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">t =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"i"</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">"t"</span>),</span>
+<span id="cb14-15">         <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         l <span class="op" style="color: #5E5E5E;
+font-style: inherit;">u =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">stri_count_fixed</span>(word, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">pattern =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">"u"</span>)) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb14-16">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+font-style: inherit;">filter</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">"l"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         n <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"n"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         o <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"o"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         r <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"r"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         s <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"s"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         t <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"t"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span>,</span>
-<span>         u <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">word</span>, pattern <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"u"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">across</span>(<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">c</span>(first, second, word), <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">~</span> . <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">first</span>, <span class="va" style="color: #111111;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">second</span>, <span class="va" style="color: #111111;
+font-style: inherit;">1</span>)) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">word</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb14-17">  <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">)</span>, <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">.</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">first</span>, <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">second</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span></span>
-<span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">knitr</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">select</span>(first, second)</span>
+<span id="cb14-18"></span>
+<span id="cb14-19">knitr<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op" style="color: #5E5E5E;
+font-style: inherit;">kable</span>(best_combinations,</span>
+<span id="cb14-20">             <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">(</span><span class="va" style="color: #111111;
+font-style: inherit;">col.names =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">best_combinations</span>,</span>
-<span>             col.names <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">(</span><span class="st" style="color: #20794D;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"First Word"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"Second Word"</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
+font-style: inherit;">"Second Word"</span>))</span></code></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th style="text-align: left;">First Word</th>
 <th style="text-align: left;">Second Word</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">tails</td>
@@ -1576,11 +981,14 @@ font-style: inherit;">)</span></span></code></pre></div>
 <p>There we have it! An unlikely combination.</p>
 
 
-</section></section> ]]></description>
+</section>
+</section>
+
+ ]]></description>
   <category>R</category>
-  <guid>https://cjdbarlow.github.io/posts/2022/wordle.html</guid>
-  <pubDate>Wed, 26 Jan 2022 13:00:00 GMT</pubDate>
-  <media:content url="https://cjdbarlow.github.io/posts/2022/assets/wordle.png" medium="image" type="image/png" height="144" width="144"/>
+  <guid>https://github.com/cjdbarlow/cjdbarlow.github.io/posts/2022/wordle.html</guid>
+  <pubDate>Thu, 27 Jan 2022 00:00:00 GMT</pubDate>
+  <media:content url="https://github.com/cjdbarlow/cjdbarlow.github.io/posts/2022/assets/wordle.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 </channel>
 </rss>
