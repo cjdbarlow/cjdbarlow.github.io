@@ -1,3 +1,7 @@
 github-url: "https://github.com/cjdbarlow/cjdbarlow.github.io"
 
 years: "2020–2023"
+
+pgp:
+  key: public.pgp.txt
+  fingerprint: EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A
