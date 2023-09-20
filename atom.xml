@@ -6,15 +6,15 @@
       version="2.0">
 <channel>
 <title>Jake&#39;s Notes</title>
-<link>cjdbarlow.au/atom.html</link>
-<atom:link href="cjdbarlow.au/atom.xml" rel="self" type="application/rss+xml"/>
+<link>https://cjdbarlow.github.io/atom.html</link>
+<atom:link href="https://cjdbarlow.github.io/atom.xml" rel="self" type="application/rss+xml"/>
 <description>{{&lt; meta description-meta &gt;}}</description>
 <language>en</language>
 <generator>quarto-1.4.193</generator>
 <lastBuildDate>Wed, 26 Jan 2022 13:00:00 GMT</lastBuildDate>
 <item>
   <title>Breaking Wordle</title>
-  <link>cjdbarlow.au/posts/2022/wordle.html</link>
+  <link>https://cjdbarlow.github.io/posts/2022/wordle.html</link>
   <description><![CDATA[ <p>Like much of the internet, I have been fascinated with the game <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a>. For those unaware, the basic premise is to guess a five letter word in less than six attempts. Unlike many such games, there is no initial clue. Your first guess is made blind, and then refined in subsequent rounds based on whether the letter was:</p>
 <ol type="1">
 <li>In the correct position,</li>
@@ -1097,7 +1097,7 @@ font-style: inherit;">)</span></span>
 background-color: null;
 font-style: inherit;">letter_hist</span></span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="cjdbarlow.au/posts/2022/wordle_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://cjdbarlow.github.io/posts/2022/wordle_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can now cull our list of good words further into those with the most optimal (or, at least, not sub-optimal) letter positions. I’ve adjusted this manually because of the importance of vowel position, though you could define some logic to do it programmatically as well; this is left as an exercise to the reader.</p>
@@ -1578,9 +1578,9 @@ font-style: inherit;">)</span></span></code></pre></div>
 
 </section></section> ]]></description>
   <category>R</category>
-  <guid>cjdbarlow.au/posts/2022/wordle.html</guid>
+  <guid>https://cjdbarlow.github.io/posts/2022/wordle.html</guid>
   <pubDate>Wed, 26 Jan 2022 13:00:00 GMT</pubDate>
-  <media:content url="cjdbarlow.au/posts/2022/assets/wordle.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://cjdbarlow.github.io/posts/2022/assets/wordle.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 </channel>
 </rss>

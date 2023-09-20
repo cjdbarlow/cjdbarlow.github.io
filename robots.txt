@@ -1,1 +1,1 @@
-Sitemap: cjdbarlow.au/sitemap.xml
+Sitemap: https://cjdbarlow.github.io/sitemap.xml
