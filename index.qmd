@@ -1,0 +1,11 @@
+---
+title: "cjdbarlow.github.io"
+about:
+  image: "assets/avatar.jpg"
+  template: trestles
+---
+
+ 
+Anaesthetic and Intensive Care ~~registrar~~ fellow currently living and working in Auckland, New Zealand. I like everything at the pointy end of medicine, as well as physical computing, biotech, education, statistics, and data visualisation.
+
+I **like doing things**, so please feel free to **[contact me](mailto:hello@cjdbarlow.au)** about projects, ideas, or hairbrained schemes that are: medical (cardiac ++, trauma +), humanitarian, challenging (but tractable), electronic, adventurous (low predicted mortality preferred), educational, stats (prediction modelling, Bayesian, and data visualisation); or any combination of the above.

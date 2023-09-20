@@ -1,0 +1,80 @@
+# Site Nav
+website:
+  title: "C. Jake Barlow"
+  description: "{{< meta description-meta >}}"
+  favicon: "assets/favicon32x32.png"
+  repo-url: "https://github.com/cjdbarlow/cjdbarlow.github.io"
+
+  navbar:
+    background: light
+    foreground: dark
+    pinned: true
+    logo: "assets/larynx-small.png"
+    left:
+      - text: "About"
+        href: index.qmd
+      - writing.qmd
+      - text: "Resources"
+        menu:
+          - pages/part_one.qmd
+          - pages/bs.qmd
+      - text: "Tools"
+        menu:
+        - text: "Bayesian Trial Evaluation"
+          href: pages/bayes_trial_eval.qmd
+          
+    right:
+      - text: "{{< fa regular envelope >}}"
+        aria-label: email
+        href: "mailto:hello@cjdbarlow.au"
+      - text: "{{< fa brands orcid >}}"
+        aria-label: orcid
+        href: https://orcid.org/0000-0003-3713-8292
+        rel: me
+      - text: "{{< fa brands github >}}"
+        aria-label: github
+        href: https://github.com/chrisjake
+        rel: me
+      - text: "{{< fa brands twitter >}}"
+        aria-label: twitter
+        href: https://twitter.com/cjdbarlow
+      - text: "{{< fa solid rss >}}"
+        aria-label: rss
+        href: atom.xml
+
+  page-footer:
+    border: true
+    background: light
+    left: |
+      <span class="faux-block">{{< fa brands creative-commons >}} {{< var years >}} C. Jake Barlow</span><br>
+      <span class="faux-block">Licensed under<br>[{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} Creative Commons CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)</span>      
+    right: |
+      <span class="faux-block">Built with {{< fa brands r-project >}} and [Quarto](https://quarto.org/)</span>
+
+
+# Metadata
+pagetitle: "{{< meta title >}} | C. Jake Barlow"
+author-meta: "Jake Barlow"
+
+# Setup
+project:
+  type: website
+  resources:
+    - "assets/**"
+
+format:
+  html:
+    theme: materia
+    css: styles.css
+    toc: false
+    code-link: true
+    anchor-sections: true
+    fig-cap-location: margin
+    reference-location: margin
+    footnotes-hover: true
+    highlight-style: monokai
+
+freeze: true
+
+execute:
+  freeze: auto

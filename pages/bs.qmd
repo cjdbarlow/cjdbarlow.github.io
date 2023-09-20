@@ -1,0 +1,14 @@
+---
+title: "Bedside Scientist"
+description: |
+  A collection of notes for anaesthesia and intensive care.
+date: 09-08-2023
+---
+
+These are my notes built up over my anaesthetic and intensive care training, and serves as an easily-searchable personal reference when I am on the floor. As the goal is to provide guidance in uncertainty, it tends to be highly opinionated - irrespective of the level of evidence supporting those opinions. Reasonable people may disagree.
+
+Unlike [Part One](https://partone.litfl.com/), which is (or at least, was) "complete", this is still very much under construction. Many core topics are absent, others will be covered only partially and sometimes incorrectly, particularly if it is a topic I stumbled upon years ago and have not dusted off since.
+
+In particular (and somewhat counter-intuitively), things I know quite well are often covered poorly (if at all), and may reflect the incomplete or incorrect understanding I held when I first came across them. Conversely, topics I can claim only a passing association or interest with may be covered in unrestrained detail as I need to refresh heavily each time they arise.
+
+It can be viewed [here](https://cjdbarlow.github.io).

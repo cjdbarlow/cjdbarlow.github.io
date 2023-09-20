@@ -1,0 +1,12 @@
+---
+title: "Jake Barlow"
+search: false
+listing:
+  sort: "date desc"
+  feed: 
+    title: "Jake's Notes"
+    items: 40
+    type: full
+    language: en
+  contents: posts
+---

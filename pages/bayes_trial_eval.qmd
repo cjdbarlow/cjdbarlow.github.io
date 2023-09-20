@@ -1,0 +1,30 @@
+---
+title: "Bayesian Trial Evaluation"
+description: |
+  A simple tool to quickly perform basic Bayesian analysis of published trial data.
+author:
+  - name: Jake Barlow 
+    url: https://chrisjake.github.io/
+    affiliation: Fellow, CVICU, Auckland City Hospital
+    affiliation_url: https://www.cvicu.co.nz/
+  - name: David Sidebotham
+    affiliation: Consultant, CVICU, Auckland City Hospital
+    affiliation_url: https://www.cvicu.co.nz/
+date: 12-08-2021
+---
+
+## How to Use
+
+1. Input the trial data into the contingency table and select whether or not the results were found significant.
+2. Next, set the pre-test probability based on your own prior, or leave it at 0.5 if you have equipoise.
+3. If necessary, adjust the Bayesian analysis strategy based on the characteristics of the trial.
+
+<script type="text/javascript">
+  function resizeIframe(iframe) {
+    iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
+  }
+</script>
+  
+  <iframe frameborder="no" scrolling="no" class="l-page" height="1300px" width="100%"
+src="https://chrisjake.shinyapps.io/shiny-bayes/">
+  </iframe>
