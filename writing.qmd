@@ -1,12 +1,7 @@
 ---
 title: "Notes"
 listing:
-  - id: posts_2022
-    contents: posts/2022/
+    contents: posts
     sort: "date desc"
+    categories: true
 ---
-
-# 2022
-
-:::{#posts_2022}
-:::
