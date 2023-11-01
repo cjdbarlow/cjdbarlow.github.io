@@ -11,6 +11,8 @@ author:
     affiliation: Consultant, CVICU, Auckland City Hospital
     affiliation_url: https://www.cvicu.co.nz/
 date: 12-08-2021
+aliases: 
+  - /bayes_trial_eval.html
 ---
 
 ## How to Use
