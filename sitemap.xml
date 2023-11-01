@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://cjdbarlow.au/writing.html</loc>
-    <lastmod>2023-09-20T09:05:29.152Z</lastmod>
+    <loc>https://cjdbarlow.au/pages/part_one.html</loc>
+    <lastmod>2023-11-01T00:29:43.183Z</lastmod>
   </url>
   <url>
     <loc>https://cjdbarlow.au/pages/bayes_trial_eval.html</loc>
-    <lastmod>2023-09-20T09:05:28.484Z</lastmod>
+    <lastmod>2023-11-01T00:29:41.975Z</lastmod>
   </url>
   <url>
-    <loc>https://cjdbarlow.au/pages/part_one.html</loc>
-    <lastmod>2023-09-20T09:05:27.792Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cjdbarlow.au/atom.html</loc>
-    <lastmod>2023-09-20T09:05:24.820Z</lastmod>
+    <loc>https://cjdbarlow.au/writing.html</loc>
+    <lastmod>2023-11-01T00:29:39.058Z</lastmod>
   </url>
   <url>
     <loc>https://cjdbarlow.au/index.html</loc>
-    <lastmod>2023-09-20T09:05:24.044Z</lastmod>
+    <lastmod>2023-11-01T00:29:37.038Z</lastmod>
   </url>
   <url>
-    <loc>https://cjdbarlow.au/posts/2022/wordle.html</loc>
-    <lastmod>2023-09-20T09:05:27.244Z</lastmod>
+    <loc>https://cjdbarlow.au/atom.html</loc>
+    <lastmod>2023-11-01T00:29:38.518Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/posts/wordle.html</loc>
+    <lastmod>2023-11-01T00:29:41.483Z</lastmod>
   </url>
   <url>
     <loc>https://cjdbarlow.au/pages/bs.html</loc>
-    <lastmod>2023-09-20T09:05:28.124Z</lastmod>
+    <lastmod>2023-11-01T00:29:42.427Z</lastmod>
   </url>
 </urlset>
