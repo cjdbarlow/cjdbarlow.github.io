@@ -1,12 +1,12 @@
 [
   {
-    "listing": "/writing.html",
+    "listing": "/atom.html",
     "items": [
       "/posts/wordle.html"
     ]
   },
   {
-    "listing": "/atom.html",
+    "listing": "/writing.html",
     "items": [
       "/posts/wordle.html"
     ]

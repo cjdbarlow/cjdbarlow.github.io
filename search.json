@@ -1,17 +1,10 @@
 [
   {
-    "objectID": "pages/part_one.html",
-    "href": "pages/part_one.html",
-    "title": "Part One",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "cjdbarlow.github.io",
     "section": "",
-    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
-  },
-  {
-    "objectID": "pages/part_one.html#what-it-is",
-    "href": "pages/part_one.html#what-it-is",
-    "title": "Part One",
-    "section": "",
-    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
+    "text": "Anaesthetic and Intensive Care registrar fellow currently living and working in Auckland, New Zealand. I like everything at the pointy end of medicine, as well as physical computing, biotech, education, statistics, and data visualisation.\nI like doing things, so please feel free to contact me about projects, ideas, or hairbrained schemes that are: medical (cardiac ++, trauma +), humanitarian, challenging (but tractable), electronic, adventurous (low predicted mortality preferred), educational, stats (prediction modelling, Bayesian, and data visualisation); or any combination of the above."
   },
   {
     "objectID": "pages/bayes_trial_eval.html",
@@ -28,18 +21,32 @@
     "text": "Input the trial data into the contingency table and select whether or not the results were found significant.\nNext, set the pre-test probability based on your own prior, or leave it at 0.5 if you have equipoise.\nIf necessary, adjust the Bayesian analysis strategy based on the characteristics of the trial."
   },
   {
+    "objectID": "pages/bs.html",
+    "href": "pages/bs.html",
+    "title": "Bedside Scientist",
+    "section": "",
+    "text": "These are my notes built up over my anaesthetic and intensive care training, and serves as an easily-searchable personal reference when I am on the floor. As the goal is to provide guidance in uncertainty, it tends to be highly opinionated - irrespective of the level of evidence supporting those opinions. Reasonable people may disagree.\nUnlike Part One, which is (or at least, was) “complete”, this is still very much under construction. Many core topics are absent, others will be covered only partially and sometimes incorrectly, particularly if it is a topic I stumbled upon years ago and have not dusted off since.\nIn particular (and somewhat counter-intuitively), things I know quite well are often covered poorly (if at all), and may reflect the incomplete or incorrect understanding I held when I first came across them. Conversely, topics I can claim only a passing association or interest with may be covered in unrestrained detail as I need to refresh heavily each time they arise.\nIt can be viewed here."
+  },
+  {
+    "objectID": "pages/part_one.html",
+    "href": "pages/part_one.html",
+    "title": "Part One",
+    "section": "",
+    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
+  },
+  {
+    "objectID": "pages/part_one.html#what-it-is",
+    "href": "pages/part_one.html#what-it-is",
+    "title": "Part One",
+    "section": "",
+    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
+  },
+  {
     "objectID": "writing.html",
     "href": "writing.html",
     "title": "Notes",
     "section": "",
     "text": "Breaking Wordle\n\n\n\n\n\n\n\nR\n\n\n\n\nWhat are the best starting words in Wordle? An approach to optimise the opening gambit, using R.\n\n\n\n\n\n\nJan 27, 2022\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "cjdbarlow.github.io",
-    "section": "",
-    "text": "Anaesthetic and Intensive Care registrar fellow currently living and working in Auckland, New Zealand. I like everything at the pointy end of medicine, as well as physical computing, biotech, education, statistics, and data visualisation.\nI like doing things, so please feel free to contact me about projects, ideas, or hairbrained schemes that are: medical (cardiac ++, trauma +), humanitarian, challenging (but tractable), electronic, adventurous (low predicted mortality preferred), educational, stats (prediction modelling, Bayesian, and data visualisation); or any combination of the above."
   },
   {
     "objectID": "posts/wordle.html",
@@ -54,12 +61,5 @@
     "title": "Breaking Wordle",
     "section": "4. Combinations",
     "text": "4. Combinations\nLastly, we take our list of best words, cross them to make a list of all possible combinations, and then cut that list down to a combination that contains only one of each of the high-yield letters, in a high-yield position.\n\nbest_combinations = list(first = best_words$word,\n               second = best_words$word) %&gt;%\n  cross() %&gt;%\n  map_df(as_tibble) %&gt;%\n  mutate(word = paste(first, second, sep = \"\"),\n         a = stri_count_fixed(word, pattern = \"a\"),\n         e = stri_count_fixed(word, pattern = \"e\"),\n         i = stri_count_fixed(word, pattern = \"i\"),\n         l = stri_count_fixed(word, pattern = \"l\"),\n         n = stri_count_fixed(word, pattern = \"n\"),\n         o = stri_count_fixed(word, pattern = \"o\"),\n         r = stri_count_fixed(word, pattern = \"r\"),\n         s = stri_count_fixed(word, pattern = \"s\"),\n         t = stri_count_fixed(word, pattern = \"t\"),\n         u = stri_count_fixed(word, pattern = \"u\")) %&gt;%\n  filter(across(-c(first, second, word), ~ . == 1)) %&gt;%\n  select(first, second)\n\nknitr::kable(best_combinations,\n             col.names = c(\"First Word\", \"Second Word\"))\n\n\n\n\nFirst Word\nSecond Word\n\n\n\n\ntails\nrouen\n\n\nrouen\ntails\n\n\n\n\n\nThere we have it! An unlikely combination."
-  },
-  {
-    "objectID": "pages/bs.html",
-    "href": "pages/bs.html",
-    "title": "Bedside Scientist",
-    "section": "",
-    "text": "These are my notes built up over my anaesthetic and intensive care training, and serves as an easily-searchable personal reference when I am on the floor. As the goal is to provide guidance in uncertainty, it tends to be highly opinionated - irrespective of the level of evidence supporting those opinions. Reasonable people may disagree.\nUnlike Part One, which is (or at least, was) “complete”, this is still very much under construction. Many core topics are absent, others will be covered only partially and sometimes incorrectly, particularly if it is a topic I stumbled upon years ago and have not dusted off since.\nIn particular (and somewhat counter-intuitively), things I know quite well are often covered poorly (if at all), and may reflect the incomplete or incorrect understanding I held when I first came across them. Conversely, topics I can claim only a passing association or interest with may be covered in unrestrained detail as I need to refresh heavily each time they arise.\nIt can be viewed here."
   }
 ]
