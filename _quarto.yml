@@ -15,11 +15,12 @@ website:
       - text: "About"
         href: index.qmd
       - writing.qmd
-      - text: "Resources"
+      - publications.qmd
+      - text: "Education"
         menu:
           - pages/part_one.qmd
           - pages/bs.qmd
-      - text: "Tools"
+      - text: "Statistics"
         menu:
         - text: "Bayesian Trial Evaluation"
           href: pages/bayes_trial_eval.qmd

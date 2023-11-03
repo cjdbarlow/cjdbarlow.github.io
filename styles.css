@@ -36,3 +36,8 @@
     padding-top: 0rem;
     padding-bottom: 0rem;
 }
+
+/* Bibtex padding */
+.csl-entry{
+    padding-bottom: 0.5em;
+}

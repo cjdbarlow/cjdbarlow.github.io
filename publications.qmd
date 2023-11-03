@@ -1,0 +1,15 @@
+---
+title: "Publications"
+bibliography: assets/works.bib
+citeproc: true
+csl: assets/vancouver_custom.csl
+csl-refs: true
+---
+
+---
+nocite: |
+  @*
+---
+
+::: {#refs}
+:::
