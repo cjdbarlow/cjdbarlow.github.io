@@ -26,13 +26,13 @@
   display: none;
 }
 
-/* Make some space on the title bar after we removed the title name */
-.navbar-logo {
-    margin-right: 3em;
-}
-
 /* Navbar padding */
 .navbar {
     padding-top: 0rem;
     padding-bottom: 0rem;
+}
+
+/* Bibtex padding */
+.csl-entry{
+    padding-bottom: 0.5em;
 }

@@ -7,10 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jake Barlow">
-<meta name="dcterms.date" content="2021-12-08">
-<meta name="description" content="A simple tool to quickly perform basic Bayesian analysis of published trial data.">
 
-<title>Bayesian Trial Evaluation | C. Jake Barlow</title>
+<title>Publications | C. Jake Barlow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,27 +21,46 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../assets/favicon32x32.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./assets/favicon32x32.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -66,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -76,10 +93,10 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./assets/larynx-small.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">C. Jake Barlow</span>
     </a>
   </div>
@@ -90,15 +107,15 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html" rel="" target="">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../writing.html" rel="" target="">
+    <a class="nav-link" href="./writing.html" rel="" target="">
  <span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../publications.html" rel="" target="">
+    <a class="nav-link active" href="./publications.html" rel="" target="" aria-current="page">
  <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -107,11 +124,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-education">    
         <li>
-    <a class="dropdown-item" href="../pages/part_one.html" rel="" target="">
+    <a class="dropdown-item" href="./pages/part_one.html" rel="" target="">
  <span class="dropdown-text">Part One</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/bs.html" rel="" target="">
+    <a class="dropdown-item" href="./pages/bs.html" rel="" target="">
  <span class="dropdown-text">Bedside Scientist</span></a>
   </li>  
     </ul>
@@ -122,7 +139,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
         <li>
-    <a class="dropdown-item" href="../pages/bayes_trial_eval.html" rel="" target="">
+    <a class="dropdown-item" href="./pages/bayes_trial_eval.html" rel="" target="">
  <span class="dropdown-text">Bayesian Trial Evaluation</span></a>
   </li>  
     </ul>
@@ -146,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../atom.xml" rel="" target="">
+    <a class="nav-link" href="./atom.xml" rel="" target="">
  <span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
   </li>  
 </ul>
@@ -166,46 +183,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Bayesian Trial Evaluation</h1>
+<h1 class="title">Publications</h1>
 </div>
 
-<div>
-  <div class="description">
-    <p>A simple tool to quickly perform basic Bayesian analysis of published trial data.</p>
-  </div>
-</div>
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Authors</div>
-  <div class="quarto-title-meta-heading">Affiliations</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author"><a href="https://chrisjake.github.io/">Jake Barlow</a> </p>
-  </div>
-    <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Fellow, CVICU, Auckland City Hospital
-          </p>
-      </div>
-      <div class="quarto-title-meta-contents">
-    <p class="author">David Sidebotham </p>
-  </div>
-    <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Consultant, CVICU, Auckland City Hospital
-          </p>
-      </div>
-    </div>
 
 <div class="quarto-title-meta">
 
-      
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 8, 2021</p>
-    </div>
-  </div>
+    
   
     
   </div>
@@ -213,22 +198,37 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="how-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use">How to Use</h2>
-<ol type="1">
-<li>Input the trial data into the contingency table and select whether or not the results were found significant.</li>
-<li>Next, set the pre-test probability based on your own prior, or leave it at 0.5 if you have equipoise.</li>
-<li>If necessary, adjust the Bayesian analysis strategy based on the characteristics of the trial.</li>
-</ol>
-<script type="text/javascript">
-  function resizeIframe(iframe) {
-    iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
-  }
-</script>
-<p><iframe frameborder="no" scrolling="no" class="l-page" height="1300px" width="100%" src="https://chrisjake.shinyapps.io/shiny-bayes/"> </iframe></p>
+<div id="refs" class="references csl-bib-body" data-line-spacing="2" role="list">
+<div id="ref-Sidebotham_2023_2" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Sidebotham D, Barlow CJ. The winners curse: Why large effect sizes in discovery trials always get smaller and often disappear completely. Anaesthesia [Internet]. 2023 Oct; <div class="csl-block"><div class="csl-block">Available from: <a href="https://doi.org/10.1111%2Fanae.16161">https://doi.org/10.1111%2Fanae.16161</a></div></div></div>
+</div>
+<div id="ref-Sidebotham_2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Sidebotham D, Barlow CJ, Martin J, Jones PM. Interpreting frequentist hypothesis tests: Insights from bayesian inference. Canadian Journal of Anesthesia/Journal canadien d<span></span>anesth<span>é</span>sie [Internet]. 2023 Oct; <div class="csl-block"><div class="csl-block">Available from: <a href="https://doi.org/10.1007%2Fs12630-023-02557-5">https://doi.org/10.1007%2Fs12630-023-02557-5</a></div></div></div>
+</div>
+<div id="ref-Seretny_2022" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Seretny M, Barlow J, Sidebotham D. The credibility plot for extreme explanations and all explanations in between. Anaesthesia [Internet]. 2022 Dec; <div class="csl-block"><div class="csl-block">Available from: <a href="https://doi.org/10.1111%2Fanae.15935">https://doi.org/10.1111%2Fanae.15935</a></div></div></div>
+</div>
+<div id="ref-Seretny_2022.2" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Seretny M, Barlow J, Sidebotham D. Multicentre randomised trials in anaesthesia: An analysis using bayesian metrics. Anaesthesia [Internet]. 2022 Sep; <div class="csl-block"><div class="csl-block">Available from: <a href="https://doi.org/10.1111%2Fanae.15867">https://doi.org/10.1111%2Fanae.15867</a></div></div></div>
+</div>
+<div id="ref-Noyahr_2022" class="csl-entry" role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">Noyahr JK, Tatucu-Babet OA, Chapple LS, Barlow CJ, Chapman MJ, Deane AM, et al. Methodological rigor and transparency in clinical practice guidelines for nutrition care in critically ill adults: A systematic review using the <span>AGREE</span> <span>II</span> and <span>AGREE</span>-<span>REX</span> tools. Nutrients [Internet]. 2022 Jun;14(13):2603. <div class="csl-block"><div class="csl-block">Available from: <a href="https://doi.org/10.3390%2Fnu14132603">https://doi.org/10.3390%2Fnu14132603</a></div></div></div>
+</div>
+<div id="ref-Sidebotham_2022" class="csl-entry" role="listitem">
+<div class="csl-left-margin">6. </div><div class="csl-right-inline">Sidebotham D, Barlow CJ. False-positive and false-negative risks for individual multicentre trials in critical care. <span>BJA</span> Open [Internet]. 2022 Mar;1:100003. <div class="csl-block"><div class="csl-block">Available from: <a href="https://doi.org/10.1016%2Fj.bjao.2022.100003">https://doi.org/10.1016%2Fj.bjao.2022.100003</a></div></div></div>
+</div>
+<div id="ref-Bersten2018-an" class="csl-entry" role="listitem">
+<div class="csl-left-margin">7. </div><div class="csl-right-inline">Barlow CJ, Pilcher D. Severity scoring and outcome prediction. In: Bersten AD, Handy J, editors. Oh’s intensive care manual. 8th ed. Elsevier; 2018. </div>
+</div>
+<div id="ref-Barlow_2015" class="csl-entry" role="listitem">
+<div class="csl-left-margin">8. </div><div class="csl-right-inline">Barlow CJ, Morrison S, Stephens HO, Jenkins E, Bailey MJ, Pilcher D. Unprofessional behaviour on social media by medical students. Medical Journal of Australia [Internet]. 2015 Dec;203(11):439–9. <div class="csl-block"><div class="csl-block">Available from: <a href="https://doi.org/10.5694%2Fmja15.00272">https://doi.org/10.5694%2Fmja15.00272</a></div></div></div>
+</div>
+<div id="ref-Barlow_2012" class="csl-entry" role="listitem">
+<div class="csl-left-margin">9. </div><div class="csl-right-inline">Barlow CJD. Use of adrenaline in digital nerve blocks. Medical Journal of Australia [Internet]. 2012 Sep;197(6):334–4. <div class="csl-block"><div class="csl-block">Available from: <a href="https://doi.org/10.5694%2Fmja12.10633">https://doi.org/10.5694%2Fmja12.10633</a></div></div></div>
+</div>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -468,7 +468,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left"><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2020–2023 C. Jake Barlow</span><br> <span class="faux-block">Licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></div>   
-    <div class="nav-footer-center"><span class="faux-block"><i class="fa-solid fa-key" aria-label="key"></i> <a href="../public.pgp.txt">PGP public key</a> <br><br> <i class="fa-solid fa-fingerprint" aria-label="fingerprint"></i> Fingerprint:<br><span class="fingerprint">EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A</span></span><br>
+    <div class="nav-footer-center"><span class="faux-block"><i class="fa-solid fa-key" aria-label="key"></i> <a href="public.pgp.txt">PGP public key</a> <br><br> <i class="fa-solid fa-fingerprint" aria-label="fingerprint"></i> Fingerprint:<br><span class="fingerprint">EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A</span></span><br>
 </div>
     <div class="nav-footer-right"><span class="faux-block">Built with <i class="fa-brands fa-r-project" aria-label="r-project"></i> and <a href="https://quarto.org/">Quarto</a></span></div>
   </div>

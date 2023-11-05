@@ -1,10 +1,31 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "cjdbarlow.github.io",
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
     "section": "",
-    "text": "Anaesthetic and Intensive Care registrar fellow currently living and working in Auckland, New Zealand. I like everything at the pointy end of medicine, as well as physical computing, biotech, education, statistics, and data visualisation.\nI like doing things, so please feel free to contact me about projects, ideas, or hairbrained schemes that are: medical (cardiac ++, trauma +), humanitarian, challenging (but tractable), electronic, adventurous (low predicted mortality preferred), educational, stats (prediction modelling, Bayesian, and data visualisation); or any combination of the above."
+    "text": "1. Sidebotham D, Barlow CJ. The winners curse: Why large effect sizes in discovery trials always get smaller and often disappear completely. Anaesthesia [Internet]. 2023 Oct; Available from: https://doi.org/10.1111%2Fanae.16161\n\n\n2. Sidebotham D, Barlow CJ, Martin J, Jones PM. Interpreting frequentist hypothesis tests: Insights from bayesian inference. Canadian Journal of Anesthesia/Journal canadien danesthésie [Internet]. 2023 Oct; Available from: https://doi.org/10.1007%2Fs12630-023-02557-5\n\n\n3. Seretny M, Barlow J, Sidebotham D. The credibility plot for extreme explanations and all explanations in between. Anaesthesia [Internet]. 2022 Dec; Available from: https://doi.org/10.1111%2Fanae.15935\n\n\n4. Seretny M, Barlow J, Sidebotham D. Multicentre randomised trials in anaesthesia: An analysis using bayesian metrics. Anaesthesia [Internet]. 2022 Sep; Available from: https://doi.org/10.1111%2Fanae.15867\n\n\n5. Noyahr JK, Tatucu-Babet OA, Chapple LS, Barlow CJ, Chapman MJ, Deane AM, et al. Methodological rigor and transparency in clinical practice guidelines for nutrition care in critically ill adults: A systematic review using the AGREE II and AGREE-REX tools. Nutrients [Internet]. 2022 Jun;14(13):2603. Available from: https://doi.org/10.3390%2Fnu14132603\n\n\n6. Sidebotham D, Barlow CJ. False-positive and false-negative risks for individual multicentre trials in critical care. BJA Open [Internet]. 2022 Mar;1:100003. Available from: https://doi.org/10.1016%2Fj.bjao.2022.100003\n\n\n7. Barlow CJ, Pilcher D. Severity scoring and outcome prediction. In: Bersten AD, Handy J, editors. Oh’s intensive care manual. 8th ed. Elsevier; 2018. \n\n\n8. Barlow CJ, Morrison S, Stephens HO, Jenkins E, Bailey MJ, Pilcher D. Unprofessional behaviour on social media by medical students. Medical Journal of Australia [Internet]. 2015 Dec;203(11):439–9. Available from: https://doi.org/10.5694%2Fmja15.00272\n\n\n9. Barlow CJD. Use of adrenaline in digital nerve blocks. Medical Journal of Australia [Internet]. 2012 Sep;197(6):334–4. Available from: https://doi.org/10.5694%2Fmja12.10633"
+  },
+  {
+    "objectID": "pages/part_one.html",
+    "href": "pages/part_one.html",
+    "title": "Part One",
+    "section": "",
+    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
+  },
+  {
+    "objectID": "pages/part_one.html#what-it-is",
+    "href": "pages/part_one.html#what-it-is",
+    "title": "Part One",
+    "section": "",
+    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
+  },
+  {
+    "objectID": "pages/bs.html",
+    "href": "pages/bs.html",
+    "title": "Bedside Scientist",
+    "section": "",
+    "text": "These are my notes built up over my anaesthetic and intensive care training, and serves as an easily-searchable personal reference when I am on the floor. As the goal is to provide guidance in uncertainty, it tends to be highly opinionated - irrespective of the level of evidence supporting those opinions. Reasonable people may disagree.\nUnlike Part One, which is (or at least, was) “complete”, this is still very much under construction. Many core topics are absent, others will be covered only partially and sometimes incorrectly, particularly if it is a topic I stumbled upon years ago and have not dusted off since.\nIn particular (and somewhat counter-intuitively), things I know quite well are often covered poorly (if at all), and may reflect the incomplete or incorrect understanding I held when I first came across them. Conversely, topics I can claim only a passing association or interest with may be covered in unrestrained detail as I need to refresh heavily each time they arise.\nIt can be viewed here."
   },
   {
     "objectID": "pages/bayes_trial_eval.html",
@@ -21,25 +42,11 @@
     "text": "Input the trial data into the contingency table and select whether or not the results were found significant.\nNext, set the pre-test probability based on your own prior, or leave it at 0.5 if you have equipoise.\nIf necessary, adjust the Bayesian analysis strategy based on the characteristics of the trial."
   },
   {
-    "objectID": "pages/bs.html",
-    "href": "pages/bs.html",
-    "title": "Bedside Scientist",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "cjdbarlow.github.io",
     "section": "",
-    "text": "These are my notes built up over my anaesthetic and intensive care training, and serves as an easily-searchable personal reference when I am on the floor. As the goal is to provide guidance in uncertainty, it tends to be highly opinionated - irrespective of the level of evidence supporting those opinions. Reasonable people may disagree.\nUnlike Part One, which is (or at least, was) “complete”, this is still very much under construction. Many core topics are absent, others will be covered only partially and sometimes incorrectly, particularly if it is a topic I stumbled upon years ago and have not dusted off since.\nIn particular (and somewhat counter-intuitively), things I know quite well are often covered poorly (if at all), and may reflect the incomplete or incorrect understanding I held when I first came across them. Conversely, topics I can claim only a passing association or interest with may be covered in unrestrained detail as I need to refresh heavily each time they arise.\nIt can be viewed here."
-  },
-  {
-    "objectID": "pages/part_one.html",
-    "href": "pages/part_one.html",
-    "title": "Part One",
-    "section": "",
-    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
-  },
-  {
-    "objectID": "pages/part_one.html#what-it-is",
-    "href": "pages/part_one.html#what-it-is",
-    "title": "Part One",
-    "section": "",
-    "text": "Part One is a reference for trainees preparing for the CICM and ANZCA Primary Exams.\n\nPart One is:\n\nDesigned to cover the assessed sections of the CICM and ANZCA curricula in enough detail to pass\nA rough guide for the expected depth of knowledge required on a topic\nA tool to correct your written answers\nA source of information you might find difficult to find elsewhere\n\nPart One is not:\n\nA textbook\n\nThe definitive guide to the primary exam\nA complete reference\nThere will be both omissions and errors. If you find any, please let me know."
+    "text": "Anaesthetic and Intensive Care registrar fellow currently living and working in Auckland, New Zealand. I like everything at the pointy end of medicine, as well as physical computing, biotech, education, statistics, and data visualisation.\nI like doing things, so please feel free to contact me about projects, ideas, or hairbrained schemes that are: medical (cardiac ++, trauma +), humanitarian, challenging (but tractable), electronic, adventurous (low predicted mortality preferred), educational, stats (prediction modelling, Bayesian, and data visualisation); or any combination of the above."
   },
   {
     "objectID": "writing.html",
