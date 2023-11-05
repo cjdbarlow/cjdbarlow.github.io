@@ -120,11 +120,6 @@
               <text variable="container-title" strip-periods="true"/>
             </else>
           </choose>
-          <choose>
-            <if variable="URL">
-              <text term="internet" prefix="[" suffix="]" text-case="capitalize-first"/>
-            </if>
-          </choose>
         </group>
         <text macro="edition" prefix=" "/>
       </if>
