@@ -2,18 +2,18 @@
   {
     "listing": "/writing.html",
     "items": [
-      "/posts/electioneering-part-one.html",
       "/posts/electioneering-part-three.html",
       "/posts/electioneering-part-two.html",
+      "/posts/electioneering-part-one.html",
       "/posts/wordle.html"
     ]
   },
   {
     "listing": "/atom.html",
     "items": [
-      "/posts/electioneering-part-one.html",
       "/posts/electioneering-part-three.html",
       "/posts/electioneering-part-two.html",
+      "/posts/electioneering-part-one.html",
       "/posts/wordle.html"
     ]
   }
