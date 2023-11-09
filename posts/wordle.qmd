@@ -5,7 +5,7 @@ description: |
   What are the best starting words in Wordle?
 
   An approach to optimise the opening gambit, using R.
-image: assets/wordle.png
+image: assets/wordle/wordle-broken.png
 categories:
   - R
 
@@ -33,7 +33,7 @@ First up, load the word list. We'll also get a count of all the letters in each 
 
 ```{r message = FALSE, echo = FALSE}
 # Load
-words = as.data.frame(readLines("assets/word_list.txt"))
+words = as.data.frame(readLines("assets/wordle/word_list.txt"))
 colnames(words) = "word"
 ```
 

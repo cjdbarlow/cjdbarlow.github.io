@@ -14,8 +14,9 @@ website:
     left:
       - text: "About"
         href: index.qmd
-      - writing.qmd
       - publications.qmd
+      - text: "Commentaries"
+        href: writing.qmd
       - text: "Education"
         menu:
           - pages/part_one.qmd
@@ -71,7 +72,11 @@ format:
   html:
     theme: materia
     css: styles.css
-    toc: false
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    toc-title: Contents
+    title-block-banner: true
     code-link: true
     anchor-sections: true
     fig-cap-location: margin
@@ -79,7 +84,7 @@ format:
     footnotes-hover: true
     highlight-style: monokai
 
-freeze: true
+freeze: auto
 
 execute:
   freeze: auto

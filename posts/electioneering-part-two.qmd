@@ -1,0 +1,394 @@
+---
+title: "Electioneering: Part II"
+date: 2023-11-08
+image: assets/electioneering/e2.png
+description: |
+  Part two of a three-part series looking at how the composition of the Australian Federal parliament might vary under different electorate systems.
+  
+  In this part, we simulate the makeup of the House of Representatives after the 2022 federal election under three different voting systems.
+
+categories:
+  - R
+  - auspol
+  
+df-print: kable
+
+execute:
+    warning: false
+    message: false
+    echo: true
+    freeze: auto 
+---
+
+```{r}
+#| output: false
+#| echo: false
+
+# Libraries
+require(tidyverse)    # For data wrangling
+require(magrittr)     # For piping arithmetic (actually)
+require(sf)           # For producing maps
+require(ggiraph)      # For producing interactive maps without D3
+require(patchwork)    # For combining maps
+
+require(DT)    # For displaying interactive tables in this document
+
+source("assets/electioneering/functions.R")
+source("assets/electioneering/colours.R")
+
+# Load Data
+load(file = "assets/electioneering/part1.RData")
+
+## Set girafe default options
+set_girafe_defaults(
+  opts_tooltip = opts_tooltip(offx = 10, offy = 10),
+  opts_hover = opts_hover(css = "filter: brightness(150%);"))
+```
+
+Previously, we conducted data cleaning and set ourselves up for a (hopefully) painless analysis. In this part, we'll determine what the makeup of the lower house would be under each electorate system, based on the 2022 election results.
+
+If you've arrived *in medias res*, a reminder that the whole series is divided into three parts:
+
+* [Part One](electioneering-part-one.qmd)\
+Will define the question, provide some overview of the different electorate systems, and clean the data.
+* Part Two\
+Conduct the analysis, and generate some preliminary results.
+* [Part Three](electioneering-part-three.qmd)\
+Refine the analysis, and offer some interpetation.
+
+
+## Single Transferrable Vote
+
+We'll start with Single Transferable Vote, as it is the current system in use. It's also easy - the AEC has done all the work already.
+
+```{r}
+stv = votes %>%
+  group_by(DivisionID) %>%
+  # Take the highest count
+  slice_max(CountNumber, n = 1) %>%
+  # Calculate the margin of victory
+  arrange(desc(prefCount), .by_group = TRUE) %>%
+  mutate(margin = prefCount - lead(prefCount)) %>%
+  # Take the winner
+  slice_max(prefCount, n = 1) %>%
+  ungroup()
+```
+
+You can explore the outcomes for STV in the table below. Comparative analysis will have to wait for part 3.
+
+```{r}
+#| echo: false
+
+stv %>%
+  ungroup() %>%
+  mutate(name = paste(GivenNm, Surname)) %>%
+  select(StateAb, DivisionNm, name, PartyNm, prefCount, prefPC, margin) %>%
+  fn.col_pretty() %>%
+  datatable(options = list(pageLength = 5),
+            caption = "Single Transferrable Vote")
+```
+
+## First Past the Post
+
+First past the post is also straightforward - it's whoever won the first round of preferences. We'll calculate a couple of other metrics here as well, firstly the margin of victory to get a sense of the fragility of the system, and also put together a tooltip, which we will use when mapping this result.
+
+```{r}
+fptp = votes %>%
+  group_by(DivisionID) %>%
+  # Restrict to the first round of preferences
+  filter(CountNumber == 0) %>%
+  # Calculate the margin between first and second
+  arrange(desc(prefCount), .by_group = TRUE) %>%
+  mutate(margin = prefCount - lead(prefCount)) %>%
+  # Identify the person with the most votes
+  slice_max(prefCount, n = 1) %>%
+  mutate(tooltip = paste0(DivisionNm, "\n",
+                          GivenNm, " ", Surname, "\n",
+                          PartyNm, " by ", margin)) %>%
+  ungroup()
+```
+
+```{r}
+#| echo: false
+
+fptp %>%
+  ungroup() %>%
+  mutate(name = paste(GivenNm, Surname)) %>%
+  select(StateAb, DivisionNm, name, PartyNm, prefCount, prefPC, margin) %>%
+  fn.col_pretty() %>%
+  datatable(options = list(pageLength = 5),
+            caption = "First Past the Post")
+```
+
+## Mixed Member Proportional
+
+This is the most complex of the three, as we are trying to map existing votes to a different electorate system. So, we'll have to make some assumptions:
+
+* Continue to ignore the senate, and focus solely on the lower house
+* Addition of 63^[This makes the ratio of list:electorate MPs to be equivalent to that used by the NZ parliament, which is 50:70.] list MPs, surplus^[Redrawing the current electorate boundaries to maintain 151 total seats is left as an exercise to the reader (or the AEC).] to the current electorate MPs\
+* Party vote will be defined as the percentage of 1^st^ preference votes that were **not** for an independent\
+This is probably the most objectionable - my anecdotal experience of one New Zealand election and the associated commentary is that some people may vote quite differently (including either major party) based on their relative opinion of their local candidates and the party as a whole^[I find this a colourable explanation - all politics is local, and popular local members seemed to hold their seats by greater margins than the national swing would assume.], as well as for strategic voting.
+* Independents are allowed to run, but can only win electorate seats, and don't contribute to party vote^[A consequence of this is all independent MPs will cause an overhang.]\
+New Zealand independents seem to run as a member of a single-person party, but this assumption holds in practice because they don't receive significant proportion of the national vote and so don't reach the 5% threshold required for list MPs.
+
+The composition of parliament in an MMP system is done by determining:
+
+1. What the proportion of seats in parliament that each party should receive
+2. The number of these seats that will be filled by electorate wins\
+Additional seats are allocated based on the ratio of electorate seats to the proportional seats.
+    * If the number of **proportional**ly allocated **seats** is **greater than** the number of **electorate seats**^[This is usual and expected.], the party receives additional **list** seats
+    * If the number of **electorate seats** is **greater than** the number of **proportionally allocated** seats, then this is an **overhang**\
+    In this case, party keeps all their electorate seats and gains no list seats^[There are a [variety of different methods](https://en.wikipedia.org/wiki/Overhang_seat) to deal with an overhang, this is the method used by New Zealand, and is comparatively simple.].
+    
+
+First, a quick check to see if there are any parties that have only one member - we will count those as independents.
+
+```{r}
+party.size = votes %>%
+  group_by(PartyAb) %>%
+  summarise(n = n()) %>%
+  arrange(n)
+```
+
+The next step is to determine, for each party, the:
+
+* Number of electorate seats won
+* Proportion of the party vote received
+* Number of seats that they are entitled to
+
+```{r}
+# Calculate the number of electorate seats
+# This uses FPTP - we can reuse our above code
+mmp.elec = votes %>%
+  group_by(DivisionID) %>%
+  # Restrict to the first round of preferences, and then the most votes
+  filter(CountNumber == 0) %>%
+  slice_max(prefCount, n = 1)
+
+
+# Calculate the total makeup of parliament
+mmp = votes %>%
+  # Drop the later rounds of voting, and the independents
+  # If there were any single-member parties, we'd drop those too
+  filter(!PartyAb %in% c("IND"),
+         CountNumber == 0) %>%
+  droplevels() %>%
+  group_by(PartyAb) %>%
+  # Calculate the total party vote received (and proportion)
+  summarise(partyVote = sum(prefCount)) %>%
+  mutate(partyVotePC = (partyVote / sum(partyVote)) %>%
+           multiply_by(100) %>%
+           round(digits = 2)) %>%
+  # Add the number of electorate seats won
+  # Full join adds the independents back in, without their vote count or PC
+  full_join(mmp.elec %>%
+              group_by(PartyAb) %>%
+              summarise(seatsElecN = n())) %>%
+  mutate(seatsElecN = replace_na(seatsElecN, 0),
+         seatsElecPC = (seatsElecN / length(levels(votes$DivisionNm))) %>%
+           multiply_by(100) %>%
+           round(digits = 2))
+```
+
+Now we allocate the list MPs. Exact allocation is not possible, as MPs don't share seats^[This could be interesting, though.], and so some system for distributing seats to try and minimise apportionment paradoxes^[Apportionment paradoxes occur when seat allocation is unexpected given the voting behaviour of the electorate.]. New Zealand uses the Sainte-Laguë system, which is designed to maximise proportional representation and iteratively allocates seats based on the following rule:
+
+$$Quotient = {Votes \over {2 \times Seats + 1}}$$
+
+Where:
+
+* The party with the highest $quotient$ gets the next seat
+* $Votes$ is the number of votes that party received\
+This doesn't change between iterations.
+* $Seats$ is the number of seats allocated by the system\
+This starts at 0 for all parties.
+
+We calculate the number of MPs in our new parliament, which we could easily do by hand but instead do by piping a frankly excessive number of functions, and then calculate the quotient, which would be a pain to do by hand.
+
+```{r}
+# Determine number of pre-overhang seats that we will allocate to non-independents
+n.mp = votes$DivisionNm %>%
+  levels() %>%
+  length() %>%
+  # Multiply by the ratio of NZ list:electorate MPs
+  multiply_by(1 + (50/120)) %>%
+  ceiling() # 214 total seats: 63 list, 151 electorate
+
+# Initial conditions
+mmp$seatsEntitledN = 0
+
+# Determine number of entitled seats based on party vote
+for(i in 1:n.mp){
+  mmp = mmp %>%
+    # Calculate quotient
+    mutate(quot = fn.saint_lague(votes = partyVote,
+                                 seats = seatsEntitledN),
+           # Drop parties that don't receive 5% of the vote, have an electorate seat, or aren't a party
+           quot = case_when(seatsElecN == 0 & partyVotePC <5 ~ NA_real_,
+                            PartyAb == "IND" ~ NA_real_,
+                            .default = quot))
+  
+  # Identify the party with the highest quotient, and increment their entitled seat count
+  mmp[which.max(mmp$quot),]$seatsEntitledN = mmp[which.max(mmp$quot),]$seatsEntitledN + 1
+}
+```
+
+Now we'll tidy this up a bit.
+
+```{r}
+# Calculate overhang
+mmp = mmp %>%
+  mutate(overhang = ifelse((seatsElecN > seatsEntitledN) & !is.na(quot), seatsElecN - seatsEntitledN, 0))
+
+
+# Determine the makeup of parliament
+mmp = mmp %>%
+  mutate(seatsListN = ifelse(seatsEntitledN > seatsElecN, seatsEntitledN - seatsElecN, 0),
+         seatsTotalN = seatsElecN + seatsListN,
+         # Calculate percentages
+         seatsTotalPC = (seatsTotalN / sum(seatsTotalN)) %>%
+           multiply_by(100) %>%
+           round(digits = 2),
+         seatsEntitledPC = (seatsEntitledN/sum(seatsEntitledN)) %>%
+           multiply_by(100) %>%
+           round(digits = 2)) %>%
+  select(-quot) %>%
+  left_join(votes %>%
+              group_by(PartyAb, PartyNm) %>%
+              summarise()) %>%
+  relocate(seatsEntitledPC,
+           .after = "seatsEntitledN") %>%
+  relocate(PartyNm,
+           .after = "PartyAb")
+```
+
+There's a couple of observations that leap out to me here:
+
+* We have a moderate number of overhang seats^[This ratio appears proportional to me. Given that the independents are guaranteed under the assumptions (and are therefore "free"), we end up with ~1 overhang seat per 55 total seats, which is similar to the current NZ parliament.]
+    * 3 for the LNP
+    * 1 for the nationals
+    * 3 independents
+* The seat allocations nicely match the proportion of 1^st^ preference votes\
+This really shouldn't be that surprising (it is, after all, the system working as designed) but it is nice to see that it validates some of the other assumptions made about translating preferences to party vote.
+
+
+```{r}
+#| echo: false
+
+mmp %>%
+  ungroup() %>%
+  select(PartyNm, partyVote, partyVotePC,
+         seatsTotalN, seatsTotalPC,
+         seatsElecN,
+         seatsListN,
+         overhang,
+         seatsEntitledN, seatsEntitledPC) %>%
+  column_to_rownames(var = "PartyNm") %>%
+  arrange(desc(seatsTotalN)) %>%
+  fn.col_pretty() %>%
+  datatable(options = list(pageLength = 10),
+            caption = "Mixed Member Proportional",
+            rownames = TRUE)
+```
+
+
+## Mapping the Results
+
+The next step is to plot the result onto an interactive map of the electorates, with insets for the high density regions. Geophysical analysis is often pretty verbose, but we'll step through it in a logical sequence. We'll illustrate this with first past the post data.
+
+Firstly, we join our shapefile `ced` to our FPTP outcomes data. This is easy - we've already checked and ensured the electorate names share a common variable in both dataframes during data preparation. We then reduce the complexity of the graph^[`st_simplify` is a handy function that combines adjacent vectors, which decreases the time it takes to produce the plot (relevant when iterating through cosmetic choices) as well as the size of the overall file. We could do this in the data cleaning stage, but I want to keep a high level of detail for the insets, so we'll do it each time instead.] and produce our map with standard `ggplot` functions.
+
+```{r}
+map.data.fptp = ced %>%
+  left_join(fptp)
+
+map.fptp = map.data.fptp %>%
+  st_simplify(dTolerance = 1000) %>% # We do this here because we want the insets to be high detail
+  ggplot() +
+  geom_sf_interactive(aes(fill = PartyAb,
+                          tooltip = tooltip,
+                          data_id = DivisionID),
+                      lwd = 0.05) +
+
+  # Themeing
+  scale_fill_manual(values = colourScale) +
+  labs(fill = element_blank(),
+       x = NULL,
+       y = NULL) +
+  theme_void() +
+  theme(plot.margin = unit(c(0,0,0,0), "cm")) # ("left", "right", "bottom", "top")
+
+girafe(ggobj = map.fptp)
+```
+
+Not a bad start, but as expected the districts in the urban regions are too small to be interpretable. We can improve the readability of this by creating some insets for the major cities^[We define `fn.mini_map` to automate this - basically it draws a circle of a given radius around a point, captures all the electorates that are fully or partially within that circle, and then draws a new map of that subset.].
+
+```{r}
+# Make a mini-map for Melbourne
+map.fptp.mel = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "mel",]$lat,
+                           long = loc[loc$city == "mel",]$long,
+                           rad = loc[loc$city == "mel",]$rad)
+
+# ... Repeat for the other cities
+```
+
+We then combine these insets with the full map to produce a hybrid map. There's still room for improvement, but this is good enough for now I think.
+
+```{r}
+#| echo: false
+
+# Make the rest of the insets
+map.fptp.syd = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "syd",]$lat,
+                           long = loc[loc$city == "syd",]$long,
+                           rad = loc[loc$city == "syd",]$rad)
+
+map.fptp.bri = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "bri",]$lat,
+                           long = loc[loc$city == "bri",]$long,
+                           rad = loc[loc$city == "bri",]$rad)
+
+map.fptp.ade = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "ade",]$lat,
+                           long = loc[loc$city == "ade",]$long,
+                           rad = loc[loc$city == "ade",]$rad)
+
+map.fptp.per = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "per",]$lat,
+                           long = loc[loc$city == "per",]$long,
+                           rad = loc[loc$city == "per",]$rad)
+
+# Add them all together
+map.fptp.full = map.fptp +
+  inset_element(map.fptp.mel,
+                left = 0.75, right = 0.9,
+                bottom = 0.05, top = 0.2,
+                align_to = "full") +
+  inset_element(map.fptp.syd,
+                left = 0.8, right = 1.1,
+                bottom = 0.2, top = 0.5,
+                align_to = "full") +
+  inset_element(map.fptp.bri,
+                left = 0.75, right = 0.9,
+                bottom = 0.45, top = 0.6,
+                align_to = "full") +
+  inset_element(map.fptp.ade,
+                left = 0.35, right = 0.6,
+                bottom = 0.08, top = 0.23,
+                align_to = "full") +
+  inset_element(map.fptp.per,
+                left = -0.1, right = 0.05,
+                bottom = 0.25, top = 0.4,
+                align_to = "full")
+
+girafe(ggobj = map.fptp.full)
+```
+
+We'll finish up with part 3, doing some comparative analysis of each system.
+
+```{r}
+#| output: false
+#| echo: false
+
+save(mmp, stv, fptp, n.mp, file = "assets/electioneering/part2.RData")
+```

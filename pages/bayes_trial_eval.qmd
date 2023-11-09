@@ -13,6 +13,8 @@ author:
 date: 12-08-2021
 aliases: 
   - /bayes_trial_eval.html
+  - /bayes-trial-eval.html
+
 ---
 
 ## How to Use
@@ -20,6 +22,9 @@ aliases:
 1. Input the trial data into the contingency table and select whether or not the results were found significant.
 2. Next, set the pre-test probability based on your own prior, or leave it at 0.5 if you have equipoise.
 3. If necessary, adjust the Bayesian analysis strategy based on the characteristics of the trial.
+
+
+## Risk Calculator
 
 <script type="text/javascript">
   function resizeIframe(iframe) {

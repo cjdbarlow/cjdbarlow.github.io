@@ -1,0 +1,409 @@
+---
+title: "Electioneering: Part III"
+date: 2023-11-09
+image: assets/electioneering/e3.png
+description: |
+  Final part a three-part series looking at how the composition of the Australian Federal parliament might vary under different electoral systems.
+  
+  In this part, we conduct a comparative analysis of each voting system.
+
+categories:
+  - R
+  - auspol
+  
+df-print: kable
+
+execute:
+    warning: false
+    message: false
+    echo: true
+    freeze: auto 
+---
+
+```{r}
+#| output: false
+#| echo: false
+
+# Libraries
+require(tidyverse)    # For data wrangling
+require(magrittr)     # For piping arithmetic (actually)
+require(sf)           # For producing maps
+require(ggiraph)      # For producing interactive maps without D3
+require(patchwork)    # For combining maps
+
+require(DT)     # For displaying interactive tables in this document
+require(gt)     # For pretty tables in the final analysis
+
+source("assets/electioneering/functions.R")
+source("assets/electioneering/colours.R")
+
+# Load Data
+load(file = "assets/electioneering/part1.RData")
+load(file = "assets/electioneering/part2.RData")
+
+## Set girafe default options
+set_girafe_defaults(
+  opts_tooltip = opts_tooltip(offx = 10, offy = 10),
+  opts_hover = opts_hover(css = "filter: brightness(150%);"))
+```
+
+Last time we determined the makeup of parliament under the three different systems. This time, we'll reframe these results so we can perform a side-to-side analysis and draw some reasonable inferences. If you've skipped to the end^[This is the good bit, though.], a reminder that the series is divided into three parts:
+
+* [Part One](electioneering-part-one.qmd)\
+Will define the question, provide some overview of the different electoral systems, and clean the data.
+* [Part Two](electioneering-part-two.qmd)\
+Conduct the analysis, and generate some preliminary results.
+* Part Three\
+Refine the analysis, and offer some interpetation.
+
+Due to the presence of list seats in an MMP system, looking at electorates alone elides the comparative advantage of the MMP system. For this reason, I've broken this section into two subsections: the first determines the total composition of parliament under each of FPTP, MMP, and STV, whilst the second compares the winners of electorates under FPTP and STV.
+
+## Composition by Party
+
+First, we'll pull all our results for each electorate system into a single table. We'll also calculate the percentage difference in party vote and received seats as a marker of how well each system reflects the preferences of the electorate.
+
+```{r}
+compare.parliament = votes %>%
+  group_by(PartyAb) %>%
+  filter(CountNumber == 0) %>%
+  summarise(partyVoteN = sum(prefCount)) %>%
+  mutate(partyVotePC = (partyVoteN / sum(partyVoteN)) %>%
+           multiply_by(100) %>%
+           round(digits = 2)) %>%
+  # Join to MMP
+  full_join(mmp %>%
+              select(PartyAb,
+                     mmpElecSeatsN = seatsElecN,
+                     mmpListSeatsN = seatsListN,
+                     mmpTotSeatsN = seatsTotalN,
+                     mmpTotSeatsPC = seatsTotalPC)) %>%
+  # Join to STV
+  full_join(stv %>%
+              group_by(PartyAb) %>%
+              summarise(stvSeatsN = n())) %>%
+  # Join to FPTP
+  full_join(fptp %>%
+              group_by(PartyAb) %>%
+              summarise(fptpSeatsN = n())) %>%
+  # Tidy up the missing
+  mutate(across(c(stvSeatsN, fptpSeatsN), ~ ifelse(is.na(.), 0, .)),
+         stvSeatsPC = (stvSeatsN / sum(stvSeatsN)) %>%
+                  multiply_by(100) %>%
+                  round(digits = 2),
+         fptpSeatsPC = (fptpSeatsN / sum(fptpSeatsN)) %>%
+           multiply_by(100) %>%
+           round(digits = 2)) %>%
+  # Difference from party vote
+  mutate(across(ends_with("SeatsPC"), ~ . - partyVotePC, .names = "{.col}_diff"))
+```
+
+```{r}
+#| column: screen
+#| echo: false
+
+compare.parliament %>%
+  arrange(desc(partyVotePC)) %>%
+  filter(partyVoteN >30000) %>%
+  # Join up the party colours so we can use them to style colours, we'll drop them later
+  left_join(colours %>%
+              select(-Name) %>%
+              distinct())  %>%
+  mutate(across(ends_with("PC_diff"), abs, .names = "{.col}_abs")) %>%
+  # Make table
+  gt() %>%
+  # Styling
+  tab_spanner(label = "Mixed Member Proportional",
+              columns = c(mmpElecSeatsN, mmpListSeatsN, mmpTotSeatsN, mmpTotSeatsPC, mmpTotSeatsPC_diff)) %>%
+  tab_spanner(label = "Single Transferrable Vote",
+              columns = c(stvSeatsN, stvSeatsPC, stvSeatsPC_diff)) %>%
+  tab_spanner(label = "First Past the Post",
+              columns = c(fptpSeatsN, fptpSeatsPC, fptpSeatsPC_diff)) %>%
+  ## Data colours
+  data_color(target_columns = c(mmpTotSeatsPC_diff, stvSeatsPC_diff, fptpSeatsPC_diff),
+             columns = c(mmpTotSeatsPC_diff_abs, stvSeatsPC_diff_abs, fptpSeatsPC_diff_abs),
+             fn = scales::col_bin(
+               palette = c("#1a9641", "#F58231", "#d7191c"),
+               bins = c(0, 2, 5, 10, Inf),
+               alpha = 0.8)) %>%
+  ## Row header
+  tab_style(style = list(cell_fill(color = from_column(column = "PartyColour")),
+                         cell_text(color = "white")),
+            locations = cells_body(columns = PartyAb)) %>%
+  ## Remove unwanted columns
+  cols_hide(columns = c(PartyColour, partyVoteN,
+                        mmpTotSeatsPC_diff_abs, stvSeatsPC_diff_abs, fptpSeatsPC_diff_abs)) %>%
+  ## Labels
+  cols_label(PartyAb = "Party",
+             partyVotePC = "Total Vote (%)",
+             mmpElecSeatsN = "Electorate Seats (n)",
+             mmpListSeatsN = "List Seats (n)",
+             mmpTotSeatsN = "Total Seats (n)",
+             mmpTotSeatsPC = "Seats (%)",
+             mmpTotSeatsPC_diff = "Deviance (%)",
+             stvSeatsN = "Seats (n)",
+             stvSeatsPC = "Seats (%)",
+             stvSeatsPC_diff = "Deviance (%)",
+             fptpSeatsN = "Seats (n)",
+             fptpSeatsPC = "Seats (%)",
+             fptpSeatsPC_diff = "Deviance (%)") %>%
+  tab_header(title = md("Comparison of Parliament Under Three Voting Systems"),
+             subtitle = md("Australian Federal Election 2022")) %>%
+  ## Other
+  tab_footnote("NB: Parties receiving fewer than 30,000 votes are not displayed.") %>%
+  tab_footnote(md("Deviance is the percentage difference between the proportion of seats held compared to the 1^st^ preference vote.")) %>%
+  tab_footnote(md("Total vote percentage includes independents, whilst the 5% threshold for qualification for list seats was based on *party* vote, which excluded independents.
+
+This is why One Nation received list seats, despite receiving <5% of the total vote."))
+```
+
+I was initially a bit surprised by these results, as my assumption when I started this project was that STV would be the superior system as it removes the need for tactical voting. This reflects my own biases - the MMP system is explicitly designed to produce a parliament that reflects the voting preferences of the electorate.
+
+What is impressive about the MMP system is just how *well* it achieves this, which suggests my subjective anxiety for tactical voting is probably overstated. With the exception of independents, who receive significantly fewer seats under the MMP system^[This also reflects the approach I took by explicitly disqualifying independents from competing for list seats. This compromise was made because independents don't exist under the MMP system, but significantly the independent cohort relative to parties.], prominent minor parties gain a significant number of seats that better reflects voter preference. Another unexpected finding was how both FPTP and STV demonstrated similar levels of deviance.
+
+One of the key limitations here is that as STV removes the benefit of tactical voting, this does not necessarily reflect what Australian voter behaviour would look like under an MMP system.
+
+
+## Composition by Electorates
+
+Now we will compare the outcomes of electorates under STV and FPTP, highlighting electorates where the outcome was different. As MMP uses FPTP to determine the winner of electorates, there is no additional value for including MMP in this comparison.
+
+```{r}
+compare.seat = full_join(
+  stv %>%
+    mutate(name = paste(GivenNm, Surname)) %>%
+    select(StateAb, DivisionNm,
+           stvID = CandidateID, stvName = name, stvParty = PartyAb, stvCount = prefCount, stvMargin = margin),
+  fptp %>%
+    mutate(name = paste(GivenNm, Surname)) %>%
+    select(StateAb, DivisionNm,
+           fptpID = CandidateID, fptpName = name, fptpParty = PartyAb, fptpCount = prefCount, fptpMargin = margin),
+  by = c("StateAb", "DivisionNm")) %>%
+  mutate(identical = ifelse(stvID == fptpID, TRUE, FALSE)) %>%
+  select(-c(stvID, fptpID))
+```
+
+```{r}
+#| column: screen
+#| echo: false
+
+compare.seat %>%
+  left_join(colours %>%
+              select(-Name) %>%
+              distinct() %>%
+              rename(stvParty = PartyAb,
+                     stvCol = PartyColour)) %>%
+    left_join(colours %>%
+              select(-Name) %>%
+              distinct() %>%
+              rename(fptpParty = PartyAb,
+                     fptpCol = PartyColour)) %>%
+  filter(!identical) %>%
+  arrange(DivisionNm) %>%
+  gt(rowname_col = "DivisionNm") %>%
+  ## Format
+  fmt_number(decimals = 2,
+             sep_mark = ",") %>%
+  ## Margin Colours
+  data_color(target_columns = c(stvMargin, fptpMargin),
+             columns = c(stvMargin, fptpMargin),
+             fn = scales::col_bin(
+               palette = c("#d7191c", "#F58231", "#1a9641"),
+               bins = c(0, 1000, 3000, Inf),
+               alpha = 0.8)) %>%
+  ## Party Colours
+  tab_style(style = list(cell_fill(color = from_column(column = "stvCol")),
+                         cell_text(color = "white")),
+            locations = cells_body(columns = c(stvName, stvParty))) %>%
+  tab_style(style = list(cell_fill(color = from_column(column = "fptpCol")),
+                         cell_text(color = "white")),
+            locations = cells_body(columns = c(fptpName, fptpParty))) %>%
+  ## Remove unwanted columns
+  cols_hide(columns = c(stvCol, fptpCol, identical)) %>%
+  # Styling
+  tab_spanner(label = "First Past the Post",
+              columns = c(fptpName, fptpParty, fptpCount, fptpMargin)) %>%
+  tab_spanner(label = "Single Transferable Vote",
+              columns = c(stvName, stvParty, stvCount, stvMargin)) %>%
+  ## Labels
+  cols_label(StateAb = "State",
+             stvName = "Elected Member",
+             stvParty = "Party",
+             stvCount = "Votes (n)",
+             stvMargin = "Margin (n)",
+             fptpName = "Elected Member",
+             fptpParty = "Party",
+             fptpCount = "Votes (n)",
+             fptpMargin = "Margin (n)") %>%
+  tab_header(title = md("Comparison of Electorates with Differing Outcomes Under STV and FPTP"),
+             subtitle = md("Australian Federal Election 2022"))
+
+```
+
+There are a couple of interesting observations here. Firstly, the teal wave would not have occurred in a FPTP system^[Teal candidates include Kylea Tink, Sophie Scamps, Allegra Spender, Monique Ryan and Zoe Daniel. The only teal who would have held her seat under FPTP was Zali Steggall.]. This may reflect the fact that centrist independents are uniquely positioned to draw preferences from both major parties and the Greens. Secondly, the L/NP benefits significantly more than Labor under FPTP. This may reflect the greater number of minor parties on the left wing, which dilutes the Labor vote.
+
+Again, one of the key limitations here is that as STV removes the benefit of tactical voting, first preferences may not reflect voter behaviour under FPTP.
+
+
+### Electoral Maps
+
+The below maps are very similar, reflecting that ~90% of the parliament remains unchanged in each system^[This is still significant though!]. The fact that the changed electorates were in dense urban areas further adds to the unimpressiveness.
+
+::: {.panel-tabset}
+## First Past the Post
+```{r}
+#| echo: false
+# Due to Github size restrictions, we copy-paste this from part 2
+map.data.fptp = ced %>%
+  left_join(fptp)
+
+map.fptp = map.data.fptp %>%
+  st_simplify(dTolerance = 1000) %>% # We do this here because we want the insets to be high detail
+  ggplot() +
+  geom_sf_interactive(aes(fill = PartyAb,
+                          tooltip = tooltip,
+                          data_id = DivisionID),
+                      lwd = 0.05) +
+
+  # Themeing
+  scale_fill_manual(values = colourScale) +
+  labs(fill = element_blank(),
+       x = NULL,
+       y = NULL) +
+  theme_void() +
+  theme(plot.margin = unit(c(0,0,0,0), "cm")) # ("left", "right", "bottom", "top")
+
+# Make the the insets
+map.fptp.mel = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "mel",]$lat,
+                           long = loc[loc$city == "mel",]$long,
+                           rad = loc[loc$city == "mel",]$rad)
+
+map.fptp.syd = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "syd",]$lat,
+                           long = loc[loc$city == "syd",]$long,
+                           rad = loc[loc$city == "syd",]$rad)
+
+map.fptp.bri = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "bri",]$lat,
+                           long = loc[loc$city == "bri",]$long,
+                           rad = loc[loc$city == "bri",]$rad)
+
+map.fptp.ade = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "ade",]$lat,
+                           long = loc[loc$city == "ade",]$long,
+                           rad = loc[loc$city == "ade",]$rad)
+
+map.fptp.per = fn.mini_map(st = map.data.fptp,
+                           lat = loc[loc$city == "per",]$lat,
+                           long = loc[loc$city == "per",]$long,
+                           rad = loc[loc$city == "per",]$rad)
+
+# Add them all together
+map.fptp.full = map.fptp +
+  inset_element(map.fptp.mel,
+                left = 0.75, right = 0.9,
+                bottom = 0.05, top = 0.2,
+                align_to = "full") +
+  inset_element(map.fptp.syd,
+                left = 0.8, right = 1.1,
+                bottom = 0.2, top = 0.5,
+                align_to = "full") +
+  inset_element(map.fptp.bri,
+                left = 0.75, right = 0.9,
+                bottom = 0.45, top = 0.6,
+                align_to = "full") +
+  inset_element(map.fptp.ade,
+                left = 0.35, right = 0.6,
+                bottom = 0.08, top = 0.23,
+                align_to = "full") +
+  inset_element(map.fptp.per,
+                left = -0.1, right = 0.05,
+                bottom = 0.25, top = 0.4,
+                align_to = "full")
+
+girafe(ggobj = map.fptp.full)
+```
+
+## Single Transferable Vote
+```{r}
+#| echo: false
+
+map.data.stv = ced %>%
+  left_join(stv) %>%
+  mutate(tooltip = paste0(DivisionNm, "\n",
+                          GivenNm, " ", Surname, "\n",
+                          PartyNm))
+
+map.stv = map.data.stv %>%
+  st_simplify(dTolerance = 1000) %>% # We do this here because we want the insets to be high detail
+  ggplot() +
+  geom_sf_interactive(aes(fill = PartyAb,
+                          tooltip = tooltip,
+                          data_id = DivisionID),
+                      lwd = 0.05) +
+
+  # Themeing
+  scale_fill_manual(values = colourScale) +
+  labs(fill = element_blank(),
+       x = NULL,
+       y = NULL) +
+  theme_void() +
+  theme(plot.margin = unit(c(0,0,0,0), "cm"))
+
+
+## Insets
+map.stv.mel = fn.mini_map(st = map.data.stv,
+                          lat = loc[loc$city == "mel",]$lat,
+                          long = loc[loc$city == "mel",]$long,
+                          rad = loc[loc$city == "mel",]$rad)
+
+map.stv.syd = fn.mini_map(st = map.data.stv,
+                           lat = loc[loc$city == "syd",]$lat,
+                           long = loc[loc$city == "syd",]$long,
+                           rad = loc[loc$city == "syd",]$rad)
+
+map.stv.bri = fn.mini_map(st = map.data.stv,
+                           lat = loc[loc$city == "bri",]$lat,
+                           long = loc[loc$city == "bri",]$long,
+                           rad = loc[loc$city == "bri",]$rad)
+
+map.stv.ade = fn.mini_map(st = map.data.stv,
+                           lat = loc[loc$city == "ade",]$lat,
+                           long = loc[loc$city == "ade",]$long,
+                           rad = loc[loc$city == "ade",]$rad)
+
+map.stv.per = fn.mini_map(st = map.data.stv,
+                           lat = loc[loc$city == "per",]$lat,
+                           long = loc[loc$city == "per",]$long,
+                           rad = loc[loc$city == "per",]$rad)
+
+# All together now
+map.stv.full = map.stv +
+  inset_element(map.stv.mel,
+                left = 0.75, right = 0.9,
+                bottom = 0.05, top = 0.2,
+                align_to = "full") +
+  inset_element(map.stv.syd,
+                left = 0.8, right = 1.1,
+                bottom = 0.2, top = 0.5,
+                align_to = "full") +
+  inset_element(map.stv.bri,
+                left = 0.75, right = 0.9,
+                bottom = 0.45, top = 0.6,
+                align_to = "full") +
+  inset_element(map.stv.ade,
+                left = 0.35, right = 0.6,
+                bottom = 0.08, top = 0.23,
+                align_to = "full") +
+  inset_element(map.stv.per,
+                left = -0.1, right = 0.05,
+                bottom = 0.25, top = 0.4,
+                align_to = "full")
+
+girafe(ggobj = map.stv.full)
+```
+:::
+
+## Conclusions
+
+After this, I think that MMP is a better system for mapping voter preferences to parliament composition. Whilst I think STV tends to track voter preferences at an electorate level, it's failing is that it only tips relatively unsafe seats and so only makes a difference on the margins. Conversely, MMP works at the level parliament rather than electorate level, and so better expresses views that are held by a small percentage of the population across a wide geographical area.
