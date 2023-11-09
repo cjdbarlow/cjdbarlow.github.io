@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://cjdbarlow.au/atom.html</loc>
-    <lastmod>2023-11-05T20:43:08.846Z</lastmod>
+    <loc>https://cjdbarlow.au/posts/electioneering-part-one.html</loc>
+    <lastmod>2023-11-09T03:33:34.352Z</lastmod>
   </url>
   <url>
-    <loc>https://cjdbarlow.au/publications.html</loc>
-    <lastmod>2023-11-05T20:43:07.818Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cjdbarlow.au/pages/part_one.html</loc>
-    <lastmod>2023-11-05T20:43:06.926Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cjdbarlow.au/pages/bs.html</loc>
-    <lastmod>2023-11-05T20:43:05.122Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cjdbarlow.au/pages/bayes_trial_eval.html</loc>
-    <lastmod>2023-11-05T20:43:06.054Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cjdbarlow.au/index.html</loc>
-    <lastmod>2023-11-05T20:43:07.362Z</lastmod>
+    <loc>https://cjdbarlow.au/posts/electioneering-part-two.html</loc>
+    <lastmod>2023-11-09T03:33:30.068Z</lastmod>
   </url>
   <url>
     <loc>https://cjdbarlow.au/writing.html</loc>
-    <lastmod>2023-11-05T20:43:08.338Z</lastmod>
+    <lastmod>2023-11-09T03:33:25.636Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/index.html</loc>
+    <lastmod>2023-11-09T03:33:24.804Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/pages/bayes_trial_eval.html</loc>
+    <lastmod>2023-11-09T03:33:24.180Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/pages/bs.html</loc>
+    <lastmod>2023-11-09T03:33:23.564Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/pages/part_one.html</loc>
+    <lastmod>2023-11-09T03:33:24.508Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/publications.html</loc>
+    <lastmod>2023-11-09T03:33:25.104Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/atom.html</loc>
+    <lastmod>2023-11-09T03:33:26.088Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/posts/electioneering-part-three.html</loc>
+    <lastmod>2023-11-09T03:33:33.460Z</lastmod>
   </url>
   <url>
     <loc>https://cjdbarlow.au/posts/wordle.html</loc>
-    <lastmod>2023-11-05T20:43:10.074Z</lastmod>
+    <lastmod>2023-11-09T03:33:35.136Z</lastmod>
   </url>
 </urlset>

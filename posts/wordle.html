@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -194,44 +194,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Breaking Wordle</h1>
+                  <div>
+        <div class="description">
+          <p>What are the best starting words in Wordle?</p>
+          <p>An approach to optimise the opening gambit, using R.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+              </div>
+                  </div>
+  </div>
     
-<!-- main -->
-<main class="content" id="quarto-document-content">
+  
+  <div class="quarto-title-meta">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Breaking Wordle</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">R</div>
-  </div>
-  </div>
-
-<div>
-  <div class="description">
-    <p>What are the best starting words in Wordle?</p>
-    <p>An approach to optimise the opening gambit, using R.</p>
-  </div>
-</div>
-
-
-<div class="quarto-title-meta">
-
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">January 27, 2022</p>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 27, 2022</p>
+      </div>
     </div>
-  </div>
-  
     
-  </div>
+      
+    </div>
+    
   
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#data-and-data-cleaning" id="toc-data-and-data-cleaning" class="nav-link active" data-scroll-target="#data-and-data-cleaning">0. Data, and Data Cleaning</a></li>
+  <li><a href="#what-letters" id="toc-what-letters" class="nav-link" data-scroll-target="#what-letters">1. What Letters?</a></li>
+  <li><a href="#what-words" id="toc-what-words" class="nav-link" data-scroll-target="#what-words">2. What Words?</a></li>
+  <li><a href="#where-letters" id="toc-where-letters" class="nav-link" data-scroll-target="#where-letters">3. … Where Letters?</a>
+  <ul class="collapse">
+  <li><a href="#combinations" id="toc-combinations" class="nav-link" data-scroll-target="#combinations">4. Combinations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
-</header>
+
+
 
 <p>Like much of the internet, I have been fascinated with the game <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a>. For those unaware, the basic premise is to guess a five letter word in less than six attempts. Unlike many such games, there is no initial clue. Your first guess is made blind, and then refined in subsequent rounds based on whether the letter was:</p>
 <ol type="1">
