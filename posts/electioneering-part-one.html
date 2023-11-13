@@ -253,11 +253,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="page-columns page-full"><p>As an Australian who has been resident in New Zealand for a couple of years I was entitled to vote in the recent federal election, and as a big fan of liberal democracy I was keen take part and see how the whole thing worked across the ditch. Although most democracies follow a “one man, one vote” system<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, the actual make-up of parliament can vary depending on the system used to translate votes into representation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Unlike Australia which uses a Single Transferable Vote (STV) to assign seats in both the upper and lower houses, New Zealand uses Mixed Member Proportional (MMP) voting to allocate all seats in a unicameral parliament.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;Or do now, at least.</p></li><li id="fn2"><p><sup>2</sup>&nbsp;There are of course lots of ways that this can be distorted - like gerrymandering - but we’ll focus just on the voting system here.</p></li></div></div>
 <p>I thought this was interesting, and so decided to run a few simulations on what the makeup of the Australian parliament, in particular the House of Representatives, would be under different electoral systems. The series is divided into three parts:</p>
 <ul>
-<li>Part one<br>
+<li>Part One<br>
 Will define the question, provide some overview of the different electoral systems, and clean the data.</li>
-<li>Part two<br>
+<li><a href="../posts/electioneering-part-two.html">Part Two</a><br>
 Conduct the analysis, and generate some preliminary results.</li>
-<li>Part three<br>
+<li><a href="../posts/electioneering-part-three.html">Part Three</a><br>
 Refine the analysis, and offer some interpetation.</li>
 </ul>
 <section id="the-contenders" class="level2 page-columns page-full">
@@ -290,7 +290,11 @@ This is a national vote which allocates a number of further seats based on the p
 <section id="the-plan" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-plan">The Plan</h2>
 <p>The goal is to see how the makeup of the Australian parliament differs under each of these systems. This will require:</p>
-<ul>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>I’ve made an editorial decision here that code used to <em>conduct</em> analysis will be included in the documents but most of the code used to <em>present</em> analysis will be hidden. This allows the logic of the analysis to be followed along with, without drowning the reader in code that is fundamentally cosmetic.</p>
+<p>If you want to see (for instance) how the tables are put together, the full source code for this pages are available on the <a href="https://www.github.com/chrisjake/cjdbarlow.github.io">Github repo</a>.</p>
+</div></div><ul>
 <li>Voting data<br>
 We’ll use the 2022 <a href="https://www.aec.gov.au/election/downloads.htm">federal election data</a>, courtesy of the Australian Electoral Commission.</li>
 <li>A map of the electorates<br>
