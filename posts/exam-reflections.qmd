@@ -1,0 +1,155 @@
+---
+title: "Reflections on the Fellowship Exam"
+date: 2023-12-14
+description: |
+  Thoughts on how the assessment process of the CICM Fellowship Exam could be improved, developed from ideas formed during the process of exam preparation.
+image: assets/reflections/birb.jpg
+
+bibliography: assets/reflections/references.bib
+csl: ../assets/vancouver_custom.csl
+
+categories:
+  - medicine
+
+execute:
+    warning: false
+    message: false
+    echo: true
+    freeze: auto 
+---
+
+I am a current CICM trainee and recently passed through the crucible of the CICM Fellowship exam. During my preparation I started to reflect on how the process might be able to be improved, and made some notes as these thoughts came to mind. What follows is the development of those ideas^[I had excellent mentors who helped me substantially with exam preparation, and who expressed some interest in my thoughts on the process. This was written for them, but I decided to archive it here.].
+
+These fell into two broad categories or areas of impact. The first relates to the calibration of the exam. That is, how the exam can best identify candidates who meet the relevant competency requirements. The second relate to optimising candidate performance. This involves both better preparation of trainees in general, and enabling them to perform at their best on the day. These elements are interconnected: a lack of confidence in the assessment process is a significant independent stressor that will adversely affect performance.
+
+
+## Exam Calibration
+
+The aim of the CICM training program is to produce an intensivist who can perform safely and competently as a junior consultant in a general ICU. The fellowship exam is the major hurdle for program completion, and the major determinant of whether a candidate will become an ICU specialist.
+
+Anecdotally, many senior and very capable trainees who would (and do) make excellent intensivists repeatedly fail the exam. This strongly suggests a failure of the exam as a reliable tool for identifying candidates ready to progress in their career. It follows that candidates who fail repeatedly will have spent several years both studying and practising at a relatively senior level. It is therefore reasonable to conclude that significant number of failures are “false negatives”. A well calibrated exam will have fewer false negatives (and false positives) than one which is poorly calibrated.
+
+Calibration may be improved by decreasing the importance of exam technique, which has a disproportionate effect on exam success given its lack of importance in clinical practice.
+
+
+### Written Exam
+
+The written exam tests several qualities, including:
+
+* Reading comprehension under intense pressure
+* Breadth and depth of knowledge
+* Rapid recall of knowledge
+* Organisation of thought
+
+
+All of these factors - except knowledge - relate to exam technique. I think the current format overvalues organisation and question comprehension at the expense of knowledge. This is not to say these other factors are unimportant - I think having an organised mind is *highly* desirable, but my concern with these questions is that organisation they reward structure (and exam technique) *equally* to knowledge, which I think should not be the intent. On one of my examiner-marked practice exams, I increased my score on a question from a four to an eight by re-organising the information. The first structure was admittedly poor, but an improvement in short-answer structure should not be worth *twice* as much as correct content.
+
+Similarly, the length of the questions means that reading time has to be rationed as it was not possible for me to completely read either paper. Consequently, reading time is used to get a sense of where the pinch points are, rather than drafting answer structures.
+
+The following suggestions aim to decrease the weight of the these other factors on the short answer questions, and therefore increase the weight given to knowledge:
+
+* **Limit nesting of task verbs**\
+Questions that nest task verbs^["**Describe** the important features of Down’s Syndrome and **outline** the impact they may have on his management."] are significantly more complex than than asking either component in isolation, as they demand a more nuanced answer.
+* **Bold the task verbs**\
+Emphasising the key verb reminds candidates to tailor their answer to the desired output.
+* **Increasing reading time to fifteen minutes**\
+The stem for many questions are much longer than the primary exam, in particular the data interpretation questions. Ten minutes is less than one minute per question - and some questions take an entire page - meaning all questions cannot be considered in detail before writing time begins.
+* **Allow writing on the question paper during reading time**\
+Reading data interpretation questions would become more valuable as you can highlight key elements, such as abnormal results. This would give candidates more time to plan answers, and should result in an increase in answer quality.
+* **Balance depth and breadth**\
+Most questions should focus predominantly on a narrow range of core ICU content, and expect a high standard in these answers. Questions on rare or subspecialty areas should focus on a safe approach to an unusual scenario, with marks awarded for appropriate consultation.  The paper should be balanced such that it should be possible to pass the written component with solid marks in core content questions alone. I thought the 2023.2 paper achieved this balance well.
+* **Increase the number of answer booklets**\
+I mismanaged the numbering of booklets on multiple occasions. Several questions I wrote in their own booklet, so I was out-of-order for the requested numbering. One question I reached the end of a booklet, and wasn't sure if I should break an answer over two booklets, so I cut my answer short and moved on. I have had this this issue in previous exams and requested extra booklets at the start but was only allocated one in the first paper and none in the second. Though I was given permission to request more as I needed them, I felt discouraged from doing so. Increasing the number of booklets to one per question would alleviate this.
+
+
+### Hot Cases
+
+Hot Cases are artificial scenarios, but in my view are the most valuable part of the exam. Preparation for the Hot Case has contributed the most to my improvement in bedside performance. However, I am concerned that success in this section relies too much on luck, with respect to the personal strengths of the candidate and which two cases they receive on the day. Any benefit to one candidate over another could be reduced by **increasing the number of cases**, say to three, and either:
+
+* Grading all three cases, with failure on two of three hot cases being an overall fail, or
+* Discarding the worst score (perhaps with an exception for catastrophic errors of judgment, and grading the remaining two using the current system
+
+
+## Performance Optimisation
+
+Candidate performance could be improved by ensuring that trainees presenting for the exam have adequate clinical experience, understand the exam process and have confidence in the method of assessment, and have prepared appropriately for the nature of the the assessment. 
+
+
+### Trainee Readiness
+
+There is an argument that trainees fail due to inadequate breadth of clinical experience. I think there may be some truth to this – the CICM exam can be sat after only ~18 months of clinical intensive care training. In fact it is optimal to do so to advance as efficiently as possible through training. But I also think this is good program design. Trainees with substantial unaccredited ICU time or clinical experience from another specialty may have sufficient knowledge to progress, whilst trainees who don’t will complete additional core time and gain knowledge there. This leads to a variable-length training program that is tailored to the learning requirements of each trainee.
+
+However, this does feel like a side effect of the design rather than a specific aim. I think trainees would benefit from better messaging and guidance on when to sit the exam from both the examiner body and supervisors of training.  Both candidates and supervisors would be aided by a better understanding of which candidates succeed or fail. Evidence to support this understanding could be provided by analysis of the following data:
+
+* Clinical experience
+    * Post graduate experience
+    * Years of CICM training
+    * Years of ICU experience\
+    And the level of the units trained in.
+    * Other fellowships
+* Exam technique
+    * Number of attempts
+    * Number of questions answered/not answered
+    * Pages per question
+
+
+### Pass Rate Variability
+
+Exam pass rates vary significantly year to year, a fact that is well recognised by the College. Such variation must be attributable to either a change in the quality of the candidates, or to a change in the difficulty of the exam, or to inconsistency in the assessment process. It is unlikely that candidate variability explains a major variance in exam pass rates, and so I believe the exam is responsible. Notably, the Court appears to agree @KARCHER_20196.
+
+This change in pass rate is  of major importance to trainees. Examiners prepare for the exams every year (including multiple times per year) for a 12 year stretch and may take a longer view on pass rates. Conversely, trainees prepare for a single exam with fanatical intensity over a relatively shorter time. It is devastating for them if their exam shows a >30% relative reduction in pass rate compared to their peers in adjacent settings. This continually challenges the validity of the assessment process.
+
+Whether or not inter-exam variability in pass rates is significant, it is certainly *perceived* to be significant by the trainees and should be quantitatively evaluated. Approaches could include:
+
+* **Analysis of exam performance data**\
+A published review of exam pass rates based on the characteristics of trainees, including their previous exam performance would be useful in confirming whether or not there is a significant difference in overall performance between exams, as well as possible contributing factors (e.g. pandemic effect on trainee case mix, changes in seniority of trainees, performance of different trainee demographics).
+* **Assessment of the effect of repeated attempts on pass rates**\
+Determine whether candidates who required repeated attempts to pass the exam routinely demonstrated improvement in their scores prior to succeeding. If so, it would suggest they were sitting exams of equivalent rigour on each occasion, eventually making the threshold.
+
+
+If there is significant inter-exam variation in pass rates, methods to reduce it could include:
+
+* **Normalisation**\
+Adjusting raw scores to account for variations in the difficulty of different exams, keeping a similar pass rate.
+* **Standardisation**\
+Standardisation of question difficulty by having practicing intensivists (e.g. SOTs, examiners) sitting questions under exam conditions.
+
+
+### The Angoff
+
+The Angoff has been adopted in part as an attempt to standardise pass rates @KARCHER_20196. As pass rates appear to have remained variable after introduction of the Angoff score, I do not think this attempt has been successful. In addition, its use generates substantial confusion on the part of trainees. “Harder” questions may also have a lower expected standard on the marking rubric, meaning that an adjustment for question difficulty is already being made by the examiners. In which case, any further adjustments will have diminishing returns.
+
+The robustness of the Angoff score in this exam could be evaluated by reviewing the candidates’ scores on each question since its introduction and determining the relative pass rates (for each question and for the exam overall) for both the Angoff and the traditional standard.
+
+
+### Exam Resources
+
+There are many resources for candidates preparing for this exam. Some of these are gated to regions, for example the Queensland trainee group, or courses (WICM, Bala’s Brisbane course) or individual units. By comparison, offerings on the College website are sparse.
+
+My suggestion is to add an on-line pre-exam course to the CICM portal that should be completed within six months of applying to sit the exam. The course should cover the structure of the exam and could include much of the content that Michaela presented on Zoom over the last year. 
+
+
+### Exam Feedback
+
+Returning of marked questions to unsuccessful candidates should occur. I know that this subject has been raised (repeatedly) and is said not to be feasible under the current management system. I find this explanation difficult to understand. If it is, in fact, the case, there is almost certainly a technical solution to it.
+
+Along with returning of marked questions, inclusion of the median score and some measure of spread (e.g., IQR) would provide the candidate with some indication of where they sit relative to the cohort. If nothing else, this may assist them in planning of next steps.
+
+
+## Exam Reports
+
+Exam reports are essential to written exam preparation, and could be made better by increasing the detail of example answers. Options could include:
+
+* **Model answers**\
+I know that these have been used in the past and are now removed. But the benefits by way of insight they provided into what the examiner was looking for far outweighed any cost of candidates learning those answers by rote.
+* **Anonymised answers**\
+The critique of anonymised answers on Zoom was very helpful to my understanding of what examiners seek in a response. I believe that providing anonymised answers corresponding to a best answer, borderline pass, and clear fail would be extremely valuable for prospective candidates. I do appreciate that a lot of work would be involved in setting this up, but it could be limited to a set of key discriminatory questions. It is likely that candidates who received the best mark for a question would not object to having their answer anonymised, which would significantly reduce the workload to the college for providing this. If available, this would be my preference over model answers.
+
+
+## Conclusion
+
+
+Naturally, all of the above is based on my own experiences, and is therefore biased. I also have a second fellowship, am relatively young, have good exam technique (as demonstrated by good performance on post-graduate exams), have a very supportive partner, and no children. I am not a candidate who was dogged by additional challenges or would warrant special consideration. Tailoring the exam for candidates like me may make it more poorly calibrated for the trainee body as a whole. Despite these caveats, I hope some of it is useful.
+
+
+## References
