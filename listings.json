@@ -1,7 +1,8 @@
 [
   {
-    "listing": "/writing.html",
+    "listing": "/atom.html",
     "items": [
+      "/posts/exam-reflections.html",
       "/posts/electioneering-part-three.html",
       "/posts/electioneering-part-two.html",
       "/posts/electioneering-part-one.html",
@@ -9,8 +10,9 @@
     ]
   },
   {
-    "listing": "/atom.html",
+    "listing": "/writing.html",
     "items": [
+      "/posts/exam-reflections.html",
       "/posts/electioneering-part-three.html",
       "/posts/electioneering-part-two.html",
       "/posts/electioneering-part-one.html",

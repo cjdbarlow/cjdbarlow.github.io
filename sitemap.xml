@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://cjdbarlow.au/posts/electioneering-part-one.html</loc>
-    <lastmod>2023-12-14T10:01:25.683Z</lastmod>
+    <loc>https://cjdbarlow.au/posts/wordle.html</loc>
+    <lastmod>2023-12-14T10:23:10.960Z</lastmod>
   </url>
   <url>
     <loc>https://cjdbarlow.au/posts/electioneering-part-three.html</loc>
-    <lastmod>2023-12-14T10:01:23.947Z</lastmod>
+    <lastmod>2023-12-14T10:23:09.500Z</lastmod>
   </url>
   <url>
-    <loc>https://cjdbarlow.au/writing.html</loc>
-    <lastmod>2023-12-14T10:01:18.475Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cjdbarlow.au/index.html</loc>
-    <lastmod>2023-12-14T10:01:17.611Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cjdbarlow.au/pages/part_one.html</loc>
-    <lastmod>2023-12-14T10:01:16.999Z</lastmod>
+    <loc>https://cjdbarlow.au/posts/electioneering-part-one.html</loc>
+    <lastmod>2023-12-14T10:23:03.740Z</lastmod>
   </url>
   <url>
     <loc>https://cjdbarlow.au/pages/bayes_trial_eval.html</loc>
-    <lastmod>2023-12-14T10:01:16.375Z</lastmod>
+    <lastmod>2023-12-14T10:23:01.712Z</lastmod>
   </url>
   <url>
-    <loc>https://cjdbarlow.au/pages/bs.html</loc>
-    <lastmod>2023-12-14T10:01:17.315Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cjdbarlow.au/publications.html</loc>
-    <lastmod>2023-12-14T10:01:17.907Z</lastmod>
+    <loc>https://cjdbarlow.au/index.html</loc>
+    <lastmod>2023-12-14T10:23:01.084Z</lastmod>
   </url>
   <url>
     <loc>https://cjdbarlow.au/atom.html</loc>
-    <lastmod>2023-12-14T10:01:18.951Z</lastmod>
+    <lastmod>2023-12-14T10:23:00.180Z</lastmod>
   </url>
   <url>
-    <loc>https://cjdbarlow.au/posts/wordle.html</loc>
-    <lastmod>2023-12-14T10:01:24.747Z</lastmod>
+    <loc>https://cjdbarlow.au/publications.html</loc>
+    <lastmod>2023-12-14T10:23:00.764Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/pages/bs.html</loc>
+    <lastmod>2023-12-14T10:23:01.396Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/pages/part_one.html</loc>
+    <lastmod>2023-12-14T10:23:02.028Z</lastmod>
   </url>
   <url>
     <loc>https://cjdbarlow.au/posts/electioneering-part-two.html</loc>
-    <lastmod>2023-12-14T10:01:27.967Z</lastmod>
+    <lastmod>2023-12-14T10:23:06.012Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/posts/exam-reflections.html</loc>
+    <lastmod>2023-12-14T10:23:10.184Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cjdbarlow.au/writing.html</loc>
+    <lastmod>2023-12-14T10:23:11.516Z</lastmod>
   </url>
 </urlset>
