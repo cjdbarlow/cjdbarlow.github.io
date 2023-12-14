@@ -13,6 +13,7 @@ execute:
     warning: false
     message: false
     echo: true
+    freeze: auto 
 ---
 
 Like much of the internet, I have been fascinated with the game [Wordle](https://www.powerlanguage.co.uk/wordle/). For those unaware, the basic premise is to guess a five letter word in less than six attempts. Unlike many such games, there is no initial clue. Your first guess is made blind, and then refined in subsequent rounds based on whether the letter was:
