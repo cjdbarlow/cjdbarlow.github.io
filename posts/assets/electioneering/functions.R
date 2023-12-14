@@ -11,7 +11,7 @@ fn.df_to_scale = function(df, nameVar, colourVar){
 fn.col_pretty = function(df) {
   names = c("State" = "StateAb",
             "Electorate" = "DivisionNm",
-            "Elector" = "name",
+            "Candidate" = "name",
             "Party" = "PartyNm",
             "Votes (n)" = "prefCount",
             "Votes (%)" = "prefPC",

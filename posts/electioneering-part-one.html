@@ -128,12 +128,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../writing.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../publications.html" rel="" target="">
  <span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../writing.html" rel="" target="">
+ <span class="menu-text">Commentaries</span></a>
   </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-education" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
@@ -250,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="page-columns page-full"><p>As an Australian who has been resident in New Zealand for a couple of years I was entitled to vote in the recent federal election, and as a big fan of liberal democracy I was keen take part and see how the whole thing worked across the ditch. Although most democracies follow a “one man, one vote” system<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, the actual make-up of parliament can vary depending on the system used to translate votes into representation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Unlike Australia which uses a Single Transferable Vote (STV) to assign seats in both the upper and lower houses, New Zealand uses Mixed Member Proportional (MMP) voting to allocate all seats in a unicameral parliament.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;Or do now, at least.</p></li><li id="fn2"><p><sup>2</sup>&nbsp;There are of course lots of ways that this can be distorted - like gerrymandering - but we’ll focus just on the voting system here.</p></li></div></div>
+<div class="page-columns page-full"><p>As an Australian who has been resident in New Zealand for a couple of years I was entitled to vote in the recent general<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> election, and as a big fan of liberal democracy I was keen take part and see how the whole thing worked across the ditch. Although most democracies follow a “one man, one vote” system<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, the actual make-up of parliament can vary depending on the system used to translate votes into representation<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Unlike Australia which uses a Single Transferable Vote (STV) to assign seats in both the upper and lower houses, New Zealand uses Mixed Member Proportional (MMP) voting to allocate all seats in a unicameral parliament.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;Federal, for those of you used to states.</p></li><li id="fn2"><p><sup>2</sup>&nbsp;Or do now, at least.</p></li><li id="fn3"><p><sup>3</sup>&nbsp;There are of course lots of ways that this can be distorted - like gerrymandering - but we’ll focus just on the voting system here.</p></li></div></div>
 <p>I thought this was interesting, and so decided to run a few simulations on what the makeup of the Australian parliament, in particular the House of Representatives, would be under different electoral systems. The series is divided into three parts:</p>
 <ul>
 <li>Part One<br>
@@ -269,40 +269,40 @@ FPTP is a simple and widely used system. Each voter casts a single vote for thei
 <br>
 </li>
 <li><strong>Single Transferable Vote</strong><br>
-STV is the system used in Australian elections. Candidates have to reach the quota (&gt;50% of the vote) to be elected, whilst voters preference candidates in order from most-preferred to least-preferred. The counting process occurs in a defined sequence<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:
+STV is the system used in Australian elections. Candidates have to reach the quota (&gt;50% of the vote) to be elected, whilst voters preference candidates in order from most-preferred to least-preferred. The counting process occurs in a defined sequence<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:
 <ul>
 <li>All first-preference votes are tallied</li>
 <li>If a candidate reaches the quota, they win</li>
 <li>If no candidate reaches the quota, then the candidate with the lowest number of votes has their votes redistributed to the remaining candidates, based on the preferences of the voter</li>
 <li>Each candidates votes are then tallied again, and if the quota is reached then that candidate wins</li>
-<li>The re-distribution-and-counting cycle continues until someone reaches quota</li>
+<li>The redistribution-and-counting cycle continues until someone reaches quota</li>
 </ul></li>
 <li><strong>Mixed Member Proportional</strong><br>
-MMP is the system used in New Zealand. It is a hybrid hybrid voting method that combines elements of both FPTP and proportional representation. Two votes are cast:
+MMP is the system used in New Zealand. It is a hybrid voting method that combines elements of both FPTP and proportional representation. Two votes are cast:
 <ol type="1">
-<li>Electoral vote<br>
-Vote for your local electorate - this uses FPTP. New Zealand has 70 electorates, and so 70 electoral MPs.</li>
+<li>Electorate vote<br>
+Vote for your local electorate - this uses FPTP. New Zealand has 70 electorates, and so 70 electorate MPs.</li>
 <li>Party vote<br>
-This is a national vote which allocates a number of further seats based on the proportion of votes that each party received. The NZ parliament contains 120<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> total seats, so there are an additional 50 MPs who are placed from the party vote and don’t have an electorate - these are known as ‘list’ MPs. To be eligible to receive seats from the list, a party must win an electorate seat <em>or</em> receive &gt;5% of the party vote.</li>
+This is a national vote which allocates a number of further seats based on the proportion of votes that each party received. The NZ parliament contains 120<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> total seats, so there are an additional 50 MPs who are placed from the party vote and don’t have an electorate - these are known as ‘list’ MPs. To be eligible to receive seats from the list, a party must win an electorate seat <em>or</em> receive &gt;5% of the party vote.</li>
 </ol></li>
 </ol>
-<div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;This only applies to the lower house. The senate uses a slightly different system, which isn’t relevant to us here as we’re only looking at the House of Representatives.</p></li><li id="fn4"><p><sup>4</sup>&nbsp;-ish, see the discussion in part 2 about overhang.</p></li></div></section>
+<div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;This only applies to the lower house. The senate uses a slightly different system, which isn’t relevant to us here as we’re only looking at the House of Representatives.</p></li><li id="fn5"><p><sup>5</sup>&nbsp;-ish, see the discussion in part 2 about overhang.</p></li></div></section>
 <section id="the-plan" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-plan">The Plan</h2>
 <p>The goal is to see how the makeup of the Australian parliament differs under each of these systems. This will require:</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
-<p>I’ve made an editorial decision here that code used to <em>conduct</em> analysis will be included in the documents but most of the code used to <em>present</em> analysis will be hidden. This allows the logic of the analysis to be followed along with, without drowning the reader in code that is fundamentally cosmetic.</p>
+<p>I’ve made an editorial decision here that code used to <em>conduct</em> analysis will be included in the documents but most of the code used to <em>present</em> analysis will be hidden. This allows the logic of the analysis to be followed along with, without drowning the reader in cosmetics.</p>
 <p>If you want to see (for instance) how the tables are put together, the full source code for this pages are available on the <a href="https://www.github.com/chrisjake/cjdbarlow.github.io">Github repo</a>.</p>
 </div></div><ul>
 <li>Voting data<br>
 We’ll use the 2022 <a href="https://www.aec.gov.au/election/downloads.htm">federal election data</a>, courtesy of the Australian Electoral Commission.</li>
 <li>A map of the electorates<br>
-We’ll use the 2021 <a href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files">Commonwealth Electoral Divisions</a> shapefile, courtesy of the Australian Bureau of Statistics<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</li>
-<li>A blueprint for an MMP parliament<br>
+We’ll use the 2021 <a href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files">Commonwealth Electoral Divisions</a> shapefile, courtesy of the Australian Bureau of Statistics<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</li>
+<li>A blueprint for a MMP parliament<br>
 We’ll make this up.</li>
 </ul>
-<div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;The ABS is definitely my favourite government department (a tough decision, obviously) - there’s a huge amount of freely available data on a dizzying number of topics that are usually amenable to merging into medical datasets - if you’re doing any multi-site or multi-state analysis it is definitely worth poking around here.</p></li></div></section>
+<div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;The ABS is definitely my favourite government department (a tough decision, obviously) - there’s a huge amount of freely available data on a dizzying number of topics that are usually amenable to merging into medical datasets - if you’re doing any multi-site or multi-state analysis it is definitely worth poking around here.</p></li></div></section>
 <section id="data-wrangling" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
 <p>First, we’ll do the usual environment set up:</p>
@@ -320,7 +320,7 @@ We’ll make this up.</li>
 
 </div>
 <p>We’ve loaded up the voting data behind the scenes, and are going to tidy up the data types. I’m not sure if we’ll need all of these columns yet, but since there aren’t that many of them it’s convenient to just transform them all now.</p>
-<div class="page-columns page-full"><p>We make the binary <code>Elected</code> variables into logical, and identify the key factor variables. We of course don’t need to touch the character or numeric variables as R has classified these already<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;We also do a cheeky find-and-replace on the <code>DivisionNm</code> variable (which identifies the electorates), as special characters can play havoc when it comes time to plot maps. Replacing hyphens with an en dash insures us against typographic shenanigans. I’ve got my eye on you, Eden-Monaro.</p></li></div></div>
+<div class="page-columns page-full"><p>We make the binary <code>Elected</code> variables into logical, and identify the key factor variables. We of course don’t need to touch the character or numeric variables as R has classified these already<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;We also do a cheeky find-and-replace on the <code>DivisionNm</code> variable (which identifies the electorates), as special characters can play havoc when it comes time to plot maps. Replacing hyphens with an en dash insures us against typographic shenanigans. I’ve got my eye on you, Eden-Monaro.</p></li></div></div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data cleaning</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>votes <span class="ot">=</span> votes <span class="sc">%&gt;%</span></span>
@@ -426,7 +426,7 @@ We’ll make this up.</li>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crop</span>(<span class="at">xmin =</span> <span class="dv">110</span>, <span class="at">xmax =</span> <span class="dv">160</span>,</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">ymin =</span> <span class="sc">-</span><span class="dv">45</span>, <span class="at">ymax =</span> <span class="sc">-</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="page-columns page-full"><p>We should also put together a list of the state capitals. Electorates are drawn with the aim of having a similar number of enrolled voters in each<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>, and so tend to cluster around major cities. We’ll put some insets into our graphs so changes won’t be overshadowed by the large electorates that dominate much of the landmass</p><div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;Although the actual number can vary quite a bit.</p></li></div></div>
+<div class="page-columns page-full"><p>We should also put together a list of the state capitals. Electorates are drawn with the aim of having a similar number of enrolled voters in each<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, and so tend to cluster around major cities. We’ll put some insets into our graphs so changes won’t be overshadowed by the large electorates that dominate much of the landmass.</p><div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;Although the actual number can vary quite a bit.</p></li></div></div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set geography for insets</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A list of cities, their latitude and longitude, and the radius around them that we'll capture the electorates from</span></span>
@@ -437,7 +437,7 @@ We’ll make this up.</li>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>              <span class="st">"ade"</span> , <span class="sc">-</span><span class="fl">34.7894706</span>, <span class="fl">138.5687859</span>, <span class="dv">15000</span>,</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>              <span class="st">"per"</span> , <span class="sc">-</span><span class="fl">32.0212408</span>, <span class="fl">115.8735055</span>, <span class="dv">15000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The last thing we need to do for the setup is define some cosmetic options, so that each party is drawn in an appropriate colour. To spare the tedious process, we will do this off screen. If you want to follow along, the files (and the source data) are in the Github repository.</p>
+<p>The last thing we need to do for the setup is define some cosmetic options, so that each party is drawn in an appropriate colour. To spare the tedium, we’ll do this off screen. If you want to follow along, the files (and the source data) are in the <a href="https://www.github.com/cjdbarlow/cjdbarlow.github.io">Github repository</a>.</p>
 <p>Next time - some actual analysis!</p>
 <div class="cell">
 
