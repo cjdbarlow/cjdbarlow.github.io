@@ -14,10 +14,7 @@ website:
     left:
       - text: "About"
         href: index.qmd
-      - publications.qmd
-      - text: "Commentaries"
-        href: writing.qmd
-      - text: "Education"
+      - text: "Medicine"
         menu:
           - pages/part_one.qmd
           - pages/bs.qmd
@@ -25,6 +22,9 @@ website:
         menu:
         - text: "Bayesian Trial Evaluation"
           href: pages/bayes_trial_eval.qmd
+      - publications.qmd
+      - text: "Commentary"
+        href: writing.qmd
           
     right:
       - text: "{{< fa regular envelope >}}"
