@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
-
+<meta name="generator" content="quarto-1.4.193">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Jake Barlow">
 <meta name="dcterms.date" content="2022-01-27">
 <meta name="description" content="What are the best starting words in Wordle?An approach to optimise the opening gambit, using R.">
-
 <title>Breaking Wordle | C. Jake Barlow</title>
 <style>
 code{white-space: pre-wrap;}
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -77,14 +73,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
   "limit": 20,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -97,25 +97,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-
-
-<link rel="stylesheet" href="../styles.css">
+}</script><link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script><link rel="stylesheet" href="../styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo">
-    </a>
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">C. Jake Barlow</span>
     </a>
@@ -126,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
@@ -134,8 +125,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-medicine" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Medicine</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-medicine">    
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-medicine">
+<li>
     <a class="dropdown-item" href="../pages/part_one.html" rel="" target="">
  <span class="dropdown-text">Part One</span></a>
   </li>  
@@ -144,29 +135,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Bedside Scientist</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Statistics</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">
+<li>
     <a class="dropdown-item" href="../pages/bayes_trial_eval.html" rel="" target="">
  <span class="dropdown-text">Bayesian Trial Evaluation</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../publications.html" rel="" target="">
  <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../writing.html" rel="" target="">
- <span class="menu-text">Commentary</span></a>
+ <span class="menu-text">Miscellanea</span></a>
   </li>  
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
     <a class="nav-link" href="mailto:hello@cjdbarlow.au" rel="" target="">
  <span class="menu-text"><i class="fa-regular fa-envelope" aria-label="envelope"></i></span></a>
   </li>  
@@ -187,15 +178,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Breaking Wordle</h1>
                   <div>
@@ -227,32 +214,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#data-and-data-cleaning" id="toc-data-and-data-cleaning" class="nav-link active" data-scroll-target="#data-and-data-cleaning">0. Data, and Data Cleaning</a></li>
+<li><a href="#data-and-data-cleaning" id="toc-data-and-data-cleaning" class="nav-link active" data-scroll-target="#data-and-data-cleaning">0. Data, and Data Cleaning</a></li>
   <li><a href="#what-letters" id="toc-what-letters" class="nav-link" data-scroll-target="#what-letters">1. What Letters?</a></li>
   <li><a href="#what-words" id="toc-what-words" class="nav-link" data-scroll-target="#what-words">2. What Words?</a></li>
-  <li><a href="#where-letters" id="toc-where-letters" class="nav-link" data-scroll-target="#where-letters">3. … Where Letters?</a>
+  <li>
+<a href="#where-letters" id="toc-where-letters" class="nav-link" data-scroll-target="#where-letters">3. … Where Letters?</a>
   <ul class="collapse">
-  <li><a href="#combinations" id="toc-combinations" class="nav-link" data-scroll-target="#combinations">4. Combinations</a></li>
-  </ul></li>
+<li><a href="#combinations" id="toc-combinations" class="nav-link" data-scroll-target="#combinations">4. Combinations</a></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<p>Like much of the internet, I have been fascinated with the game <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a>. For those unaware, the basic premise is to guess a five letter word in less than six attempts. Unlike many such games, there is no initial clue. Your first guess is made blind, and then refined in subsequent rounds based on whether the letter was:</p>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p>Like much of the internet, I have been fascinated with the game <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a>. For those unaware, the basic premise is to guess a five letter word in less than six attempts. Unlike many such games, there is no initial clue. Your first guess is made blind, and then refined in subsequent rounds based on whether the letter was:</p>
 <ol type="1">
 <li>In the correct position,</li>
 <li>In the word, but in the incorrect position,</li>
@@ -260,75 +240,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>It’s a simple mechanic, and quite fun. Part of the appeal comes from the fact that it’s really a logic game. Since the potential solution space becomes very small very quickly; intelligent early guesses can remove vast swathes of dictionary from consideration. So the key question is; what are the best words to guess first?</p>
 <hr>
-<section id="data-and-data-cleaning" class="level1">
-<h1>0. Data, and Data Cleaning</h1>
+<section id="data-and-data-cleaning" class="level1"><h1>0. Data, and Data Cleaning</h1>
 <p>The first step is getting a list of words and cutting it down to size. A cursory inspection of the wordle javascript reveals that it includes two dictionaries. Without looking too closely, the first one appears to be a list of 2,300 or so simple words which I am assuming is an answer list, and the other is a (several times larger) list of real english words that are valid guesses but (I assume) won’t ever be correct answers. To keep things sporting, we’ll use the second list.</p>
 <p>First up, load the word list. We’ll also get a count of all the letters in each word, which we’ll use later.</p>
 <div class="cell">
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Libraries</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(stringi)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(rmarkdown)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>words <span class="ot">=</span> words <span class="sc">%&gt;%</span> <span class="co"># We've loaded this from a text file off-screen</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_length</span>(word) <span class="sc">==</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># There's definitely a more efficient way of doing this, but this works for now.</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">a =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"a"</span>),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">b =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"b"</span>),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">c =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"c"</span>),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">d =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"d"</span>),</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">e =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"e"</span>),</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">f =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"f"</span>),</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">g =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"g"</span>),</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">h =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"h"</span>),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">i =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"i"</span>),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">j =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"j"</span>),</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">k =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"k"</span>),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">l =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"l"</span>),</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">m =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"m"</span>),</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">n =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"n"</span>),</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">o =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"o"</span>),</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">p =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"p"</span>),</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">q =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"q"</span>),</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">r =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"r"</span>),</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">s =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"s"</span>),</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">t =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"t"</span>),</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">u =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"u"</span>),</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">v =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"v"</span>),</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>         <span class="at">w =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"w"</span>),</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"x"</span>),</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"y"</span>),</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">z =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"z"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://stringi.gagolewski.com/">stringi</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/rmarkdown">rmarkdown</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Clean</span></span>
+<span><span class="va">words</span> <span class="op">=</span> <span class="va">words</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># We've loaded this from a text file off-screen</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_length.html">str_length</a></span><span class="op">(</span><span class="va">word</span><span class="op">)</span> <span class="op">==</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># There's definitely a more efficient way of doing this, but this works for now.</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span>,</span>
+<span>         b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span>,</span>
+<span>         c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"c"</span><span class="op">)</span>,</span>
+<span>         d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"d"</span><span class="op">)</span>,</span>
+<span>         e <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         f <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"f"</span><span class="op">)</span>,</span>
+<span>         g <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"g"</span><span class="op">)</span>,</span>
+<span>         h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"h"</span><span class="op">)</span>,</span>
+<span>         i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"i"</span><span class="op">)</span>,</span>
+<span>         j <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"j"</span><span class="op">)</span>,</span>
+<span>         k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"k"</span><span class="op">)</span>,</span>
+<span>         l <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span>,</span>
+<span>         m <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"m"</span><span class="op">)</span>,</span>
+<span>         n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span>,</span>
+<span>         o <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"o"</span><span class="op">)</span>,</span>
+<span>         p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span>,</span>
+<span>         q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"q"</span><span class="op">)</span>,</span>
+<span>         r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>,</span>
+<span>         s <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span>,</span>
+<span>         t <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"t"</span><span class="op">)</span>,</span>
+<span>         u <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"u"</span><span class="op">)</span>,</span>
+<span>         v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"v"</span><span class="op">)</span>,</span>
+<span>         w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"w"</span><span class="op">)</span>,</span>
+<span>         x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span>,</span>
+<span>         y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span>,</span>
+<span>         z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"z"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="what-letters" class="level1">
-<h1>1. What Letters?</h1>
+</section><section id="what-letters" class="level1"><h1>1. What Letters?</h1>
 <p>Our first two words allow us to rule-in or rule-out 10 letters, which should let us clear the vowels and a few key consonants. Which ones exactly can be worked out pretty easily: what are the 10 most common letters in the Wordle dictionary?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>letters <span class="ot">=</span> words[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colSums</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">letters</span> <span class="op">=</span> <span class="va">words</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This bit of code takes our letter columns (we drop the singular column containing the full word for this exercise), takes the total sum of each column (how many times each letter appearing in our word list), and sorts them in descending order. The result is a little surprising, with ‘u’ as the lonely vowel not making the top-ten cut.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(letters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "a" "d" "e" "i" "l" "n" "o" "r" "s" "t"</code></pre>
 </div>
 </div>
 <p>If we did into this a little more, we see why:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>letters <span class="ot">=</span> words[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colSums</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>letters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">letters</span> <span class="op">=</span> <span class="va">words</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">letters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   s    e    a    o    r    i    l    t    n    d    u    m    p    y    c    h 
 5996 5429 5011 3684 3259 3088 2652 2566 2377 2060 2044 1660 1652 1649 1551 1371 
@@ -338,33 +315,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><code>U</code> is only slightly less common than <code>d</code>; and the standard wisdom of word construction would suggest that it’s better to know the presence or absence of all the vowels. We’ll make an executive decision here to include it, and drop the <code>d</code> to keep up at a round 10.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>letters <span class="ot">=</span> words[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colSums</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">11</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>letters <span class="ot">=</span> letters[<span class="fu">names</span>(letters) <span class="sc">!=</span> <span class="st">"d"</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>()</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>letters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">letters</span> <span class="op">=</span> <span class="va">words</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">letters</span> <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"d"</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">letters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "s" "e" "a" "o" "r" "i" "l" "t" "n" "u"</code></pre>
 </div>
 </div>
-</section>
-<section id="what-words" class="level1">
-<h1>2. What Words?</h1>
+</section><section id="what-words" class="level1"><h1>2. What Words?</h1>
 <p>The next part is also pretty simple; we want to cut our list of all words down to just those that use the letters in our top 10. We also want to avoid any duplicates so we can cover off all of the most common letters in our first two guesses.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>good_words <span class="ot">=</span> words <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sum =</span> <span class="fu">sum</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(letters)))) <span class="sc">%&gt;%</span> <span class="co"># sum of good letters</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sum <span class="sc">==</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="co"># drop those without a 5</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(letters), <span class="sc">~</span> .x <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)))  <span class="sc">%&gt;%</span> <span class="co"># drop those with more than one of each letter</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(word)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>good_words</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">good_words</span> <span class="op">=</span> <span class="va">words</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rowwise.html">rowwise</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># sum of good letters</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sum</span> <span class="op">==</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># drop those without a 5</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># drop those with more than one of each letter</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">word</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">good_words</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 407 × 1
    word 
@@ -383,48 +358,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>This is a pretty reasonable result - we’ve cut down our list to a tenth of the size and with a little more work we could match up pairs of words that don’t contain shared letters. But, there’s still a little more optimisation that we can do first.</p>
-</section>
-<section id="where-letters" class="level1">
-<h1>3. … Where Letters?</h1>
+</section><section id="where-letters" class="level1"><h1>3. … Where Letters?</h1>
 <p>The second (and more interesting!) part of this process is where the letters should go. Letter frequency isn’t uniformly distributed throughout words; lots of words tend to end with ‘s’, for example. Our best guesses should adjust for this too.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>common_pos <span class="ot">=</span> words[<span class="dv">1</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> word, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>, <span class="st">"5"</span>), <span class="at">sep =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="at">remove =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>word) <span class="sc">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"position"</span>, <span class="at">values_to =</span> <span class="st">"letter"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(position, letter) <span class="sc">%&gt;%</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(letter <span class="sc">%in%</span> letters) <span class="sc">%&gt;%</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">common_pos</span> <span class="op">=</span> <span class="va">words</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">word</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>, <span class="st">"5"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">word</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"position"</span>, values_to <span class="op">=</span> <span class="st">"letter"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">position</span>, <span class="va">letter</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">letter</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">letters</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The above block splits our word list into columns of each letter, and sums the frequency of letters in each column. We’ve used the full word list rather than our list of ideal words because the distribution of letters are different (and the results won’t always be from the ideal words), but then filter the final list to only ideal letters.</p>
-<p>We then plot a histogram of letter frequency by position in the word; <code>geom_col()</code> is used rather than <code>geom_histogram()</code> because we’ve already calculated the column count and don’t need <code>ggplot2</code> to do it for us.</p>
+<p>We then plot a histogram of letter frequency by position in the word; <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code> is used rather than <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> because we’ve already calculated the column count and don’t need <code>ggplot2</code> to do it for us.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>letter_hist <span class="ot">=</span> common_pos <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> position,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> count)) <span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>letter, <span class="at">ncol =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>letter_hist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">letter_hist</span> <span class="op">=</span> <span class="va">common_pos</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position</span>,</span>
+<span>             y <span class="op">=</span> <span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">letter</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">letter_hist</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="wordle_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can now cull our list of good words further into those with the most optimal (or, at least, not sub-optimal) letter positions. I’ve adjusted this manually because of the importance of vowel position, though you could define some logic to do it programmatically as well; this is left as an exercise to the reader.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>best_words <span class="ot">=</span> good_words <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> word, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>, <span class="st">"5"</span>), <span class="at">sep =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="at">remove =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"l|r|s|t"</span>, <span class="st">`</span><span class="at">1</span><span class="st">`</span>),</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">grepl</span>(<span class="st">"a|l|o|r|u"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span>),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">grepl</span>(<span class="st">"a|i|l|n|r|u"</span>, <span class="st">`</span><span class="at">3</span><span class="st">`</span>),</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>         <span class="fu">grepl</span>(<span class="st">"a|e|i|l|n|t"</span>, <span class="st">`</span><span class="at">4</span><span class="st">`</span>),</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">grepl</span>(<span class="st">"s|n"</span>, <span class="st">`</span><span class="at">5</span><span class="st">`</span>))</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(best_words[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">best_words</span> <span class="op">=</span> <span class="va">good_words</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">word</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>, <span class="st">"5"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"l|r|s|t"</span>, <span class="va">`1`</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"a|l|o|r|u"</span>, <span class="va">`2`</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"a|i|l|n|r|u"</span>, <span class="va">`3`</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"a|e|i|l|n|t"</span>, <span class="va">`4`</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"s|n"</span>, <span class="va">`5`</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html">paged_table</a></span><span class="op">(</span><span class="va">best_words</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["word"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"lanes"},{"1":"lants"},{"1":"lares"},{"1":"laris"},{"1":"larns"},{"1":"loans"},{"1":"loins"},{"1":"loran"},{"1":"lores"},{"1":"loris"},{"1":"louis"},{"1":"louns"},{"1":"louts"},{"1":"lunas"},{"1":"lunes"},{"1":"lunts"},{"1":"lures"},{"1":"rails"},{"1":"rains"},{"1":"raits"},{"1":"rales"},{"1":"ranis"},{"1":"rants"},{"1":"rauns"},{"1":"roans"},{"1":"roils"},{"1":"roins"},{"1":"roles"},{"1":"rones"},{"1":"ronts"},{"1":"rouen"},{"1":"roues"},{"1":"rouls"},{"1":"routs"},{"1":"ruins"},{"1":"rules"},{"1":"runes"},{"1":"runts"},{"1":"sarin"},{"1":"solan"},{"1":"tails"},{"1":"tains"},{"1":"tales"},{"1":"tares"},{"1":"tarns"},{"1":"toils"},{"1":"tolan"},{"1":"tolas"},{"1":"toles"},{"1":"tones"},{"1":"toran"},{"1":"toras"},{"1":"tores"},{"1":"touns"},{"1":"trans"},{"1":"tries"},{"1":"trins"},{"1":"trues"},{"1":"tuans"},{"1":"tules"},{"1":"tunas"},{"1":"tunes"},{"1":"turns"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -432,38 +404,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="combinations" class="level2">
-<h2 class="anchored" data-anchor-id="combinations">4. Combinations</h2>
+<section id="combinations" class="level2"><h2 class="anchored" data-anchor-id="combinations">4. Combinations</h2>
 <p>Lastly, we take our list of best words, cross them to make a list of all possible combinations, and then cut that list down to a combination that contains only one of each of the high-yield letters, in a high-yield position.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>best_combinations <span class="ot">=</span> <span class="fu">list</span>(<span class="at">first =</span> best_words<span class="sc">$</span>word,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">second =</span> best_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cross</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(as_tibble) <span class="sc">%&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">paste</span>(first, second, <span class="at">sep =</span> <span class="st">""</span>),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">a =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"a"</span>),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">e =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"e"</span>),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">i =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"i"</span>),</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">l =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"l"</span>),</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">n =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"n"</span>),</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">o =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"o"</span>),</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">r =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"r"</span>),</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">s =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"s"</span>),</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">t =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"t"</span>),</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">u =</span> <span class="fu">stri_count_fixed</span>(word, <span class="at">pattern =</span> <span class="st">"u"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">across</span>(<span class="sc">-</span><span class="fu">c</span>(first, second, word), <span class="sc">~</span> . <span class="sc">==</span> <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(first, second)</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(best_combinations,</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"First Word"</span>, <span class="st">"Second Word"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">best_combinations</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>first <span class="op">=</span> <span class="va">best_words</span><span class="op">$</span><span class="va">word</span>,</span>
+<span>               second <span class="op">=</span> <span class="va">best_words</span><span class="op">$</span><span class="va">word</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/cross.html">cross</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_df</a></span><span class="op">(</span><span class="va">as_tibble</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">first</span>, <span class="va">second</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
+<span>         a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span>,</span>
+<span>         e <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"i"</span><span class="op">)</span>,</span>
+<span>         l <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span>,</span>
+<span>         n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span>,</span>
+<span>         o <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"o"</span><span class="op">)</span>,</span>
+<span>         r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>,</span>
+<span>         s <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span>,</span>
+<span>         t <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"t"</span><span class="op">)</span>,</span>
+<span>         u <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_count.html">stri_count_fixed</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"u"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">first</span>, <span class="va">second</span>, <span class="va">word</span><span class="op">)</span>, <span class="op">~</span> <span class="va">.</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">first</span>, <span class="va">second</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">best_combinations</span>,</span>
+<span>             col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"First Word"</span>, <span class="st">"Second Word"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">First Word</th>
 <th style="text-align: left;">Second Word</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">tails</td>
@@ -480,11 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>There we have it! An unlikely combination.</p>
 
 
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -563,10 +528,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -576,8 +540,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -590,6 +563,60 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    if (id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        return container.innerHTML
+      } else {
+        return note.innerHTML;
+      }
+    } else {
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      try { hash = new URL(url).hash; } catch {}
+      const id = hash.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note !== null) {
+        try {
+          const html = processXRef(id, note);
+          instance.setContent(html);
+        } finally {
+          instance.enable();
+          instance.show();
+        }
+      } else {
+        // See if we can fetch this
+        fetch(url.split('#')[0])
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.getElementById(id);
+          if (note !== null) {
+            const html = processXRef(id, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -633,6 +660,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -718,15 +746,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left"><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2020–2023 C. Jake Barlow</span><br> <span class="faux-block">Licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></div>   
-    <div class="nav-footer-center"><span class="faux-block"><i class="fa-solid fa-key" aria-label="key"></i> <a href="../public.pgp.txt">PGP public key</a> <br><br> <i class="fa-solid fa-fingerprint" aria-label="fingerprint"></i> Fingerprint:<br><span class="fingerprint">EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A</span></span><br>
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2020–2024 C. Jake Barlow</span><br><span class="faux-block">Licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><span class="faux-block"><i class="fa-solid fa-key" aria-label="key"></i> <a href="../public.pgp.txt">PGP public key</a> <br><br><i class="fa-solid fa-fingerprint" aria-label="fingerprint"></i> Fingerprint:<br><span class="fingerprint">EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A</span></span></p>
 </div>
-    <div class="nav-footer-right"><span class="faux-block">Built with <i class="fa-brands fa-r-project" aria-label="r-project"></i> and <a href="https://quarto.org/">Quarto</a></span></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Built with <i class="fa-brands fa-r-project" aria-label="r-project"></i> and <a href="https://quarto.org/">Quarto</a></span></p>
+</div>
   </div>
 </footer>
-
 
 
 </body></html>
