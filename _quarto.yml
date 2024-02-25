@@ -23,8 +23,7 @@ website:
         - text: "Bayesian Trial Evaluation"
           href: pages/bayes_trial_eval.qmd
       - publications.qmd
-      - text: "Commentary"
-        href: writing.qmd
+      - writing.qmd
           
     right:
       - text: "{{< fa regular envelope >}}"
