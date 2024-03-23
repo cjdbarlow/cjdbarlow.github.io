@@ -2,6 +2,7 @@
   {
     "listing": "/writing.html",
     "items": [
+      "/posts/hdi.html",
       "/posts/shoe-rack.html",
       "/posts/exam-reflections.html",
       "/posts/electioneering-part-three.html",
@@ -13,6 +14,7 @@
   {
     "listing": "/atom.html",
     "items": [
+      "/posts/hdi.html",
       "/posts/shoe-rack.html",
       "/posts/exam-reflections.html",
       "/posts/electioneering-part-three.html",
