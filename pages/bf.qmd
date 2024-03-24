@@ -1,10 +1,10 @@
 ---
-title: "Bayesian Trial Evaluation"
+title: "Bayesian Hypothesis Testing"
 description: |
-  A simple tool to quickly perform basic Bayesian analysis of published trial data.
+  A simple tool to quickly perform basic Bayesian hypothesis testing for a binary outcome, using publication-level trial data.
 author:
   - name: Jake Barlow 
-    url: https://chrisjake.github.io/
+    url: https://www.cjdbarlow.au/
     affiliation: Fellow, CVICU, Auckland City Hospital
     affiliation_url: https://www.cvicu.co.nz/
   - name: David Sidebotham
@@ -26,12 +26,7 @@ aliases:
 
 ## Risk Calculator
 
-<script type="text/javascript">
-  function resizeIframe(iframe) {
-    iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
-  }
-</script>
-  
-  <iframe frameborder="no" scrolling="no" class="l-page" height="1300px" width="100%"
-src="https://chrisjake.shinyapps.io/shiny-bayes/">
-  </iframe>
+:::{.column-page .shinyBF}
+<iframe frameborder="no" scrolling="no" class="shinyFrame shinyBF"
+src="https://chrisjake.shinyapps.io/shiny-bayes/"></iframe>
+:::

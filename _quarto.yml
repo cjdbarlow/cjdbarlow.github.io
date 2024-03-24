@@ -20,8 +20,10 @@ website:
           - pages/bs.qmd
       - text: "Statistics"
         menu:
-        - text: "Bayesian Trial Evaluation"
-          href: pages/bayes_trial_eval.qmd
+        - text: "Bayesian Hypothesis Testing"
+          href: pages/bf.qmd
+        - text: "Bayesian Intervals"
+          href: pages/interval.qmd
       - publications.qmd
       - writing.qmd
           

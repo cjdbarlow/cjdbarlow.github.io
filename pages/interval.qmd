@@ -1,0 +1,31 @@
+---
+title: "Bayesian Intervals"
+description: |
+  A simple tool to quickly perform basic Bayesian parameter estimation for a binary outcome using a beta-binomial model, using publication-level trial data.
+author:
+  - name: Jake Barlow 
+    url: https://www.cjdbarlow.au/
+    affiliation: Fellow, CVICU, Auckland City Hospital
+    affiliation_url: https://www.cvicu.co.nz/
+  - name: David Sidebotham
+    affiliation: Consultant, CVICU, Auckland City Hospital
+    affiliation_url: https://www.cvicu.co.nz/
+date: 3-24-2024
+---
+
+## How to Use
+
+1. **Input** the **trial data** into the contingency table.
+2. Next, **set** a **prior** probability for the control and intervention groups.\
+The sliders will set 95% of the probability mass between each extreme, with the maximum value approximately between them. Identical rates in both groups indicate clinical equipoise.
+3. If required, **adjust** the Highest Density Interval (**HDI**) and Region of Practical Equivalence (**ROPE**) to the desired values.\
+    * The 95% threshold for the HDI is fundamentally arbitrary, but is used by convention.
+    * The Region of Practical Equivalence is the region where the effect size is weak enough to be considered clinically negligible. This is intervention-dependent: complex or expensive treatments will generally require a wider ROPE.
+
+
+## Risk Calculator
+
+:::{.column-page .shinyFrameDiv}
+<iframe frameborder="no" scrolling="no" class="shinyFrame shinyInterval"
+src="https://chrisjake.shinyapps.io/shiny-hdi/"></iframe>
+:::
