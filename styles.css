@@ -36,3 +36,23 @@
 .csl-entry{
     padding-bottom: 0.5em;
 }
+
+.shinyFrameDiv{
+  overflow:auto;
+  /*display: table;*/
+}
+
+.shinyFrame{
+ /* display: table-row;*/
+  position: static;
+  overflow: auto;
+  width: 100%;
+}
+
+.shinyInterval{
+  height: 110vh;
+}
+
+.shinyBF{
+  height: 100vh;
+}
