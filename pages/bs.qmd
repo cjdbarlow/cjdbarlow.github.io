@@ -1,5 +1,5 @@
 ---
-title: "Bedside Scientist"
+title: "Bedside Notebook"
 description: |
   A collection of notes for anaesthesia and intensive care.
 date: 09-08-2023
@@ -11,4 +11,4 @@ Unlike [Part One](https://partone.litfl.com/), which is (or at least, was) "comp
 
 In particular (and somewhat counter-intuitively), things I know quite well are often covered poorly (if at all), and may reflect the incomplete or incorrect understanding I held when I first came across them. Conversely, topics I can claim only a passing association or interest with may be covered in unrestrained detail as I need to refresh heavily each time they arise.
 
-It can be viewed [here](https://cjdbarlow.github.io/bedside-scientist).
+It can be viewed [here](https://cjdbarlow.github.io/bedside-notebook).
