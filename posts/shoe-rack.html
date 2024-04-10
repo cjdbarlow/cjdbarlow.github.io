@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.193">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -44,18 +44,22 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -64,6 +68,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -77,8 +82,8 @@ ul.task-list li input[type="checkbox"] {
 <body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
@@ -95,68 +100,68 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-medicine" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-medicine" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Medicine</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-medicine">    
         <li>
-    <a class="dropdown-item" href="../pages/part_one.html" rel="" target="">
+    <a class="dropdown-item" href="../pages/part_one.html">
  <span class="dropdown-text">Part One</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/bs.html" rel="" target="">
+    <a class="dropdown-item" href="../pages/bs.html">
  <span class="dropdown-text">Bedside Notebook</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Statistics</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
         <li>
-    <a class="dropdown-item" href="../pages/bf.html" rel="" target="">
+    <a class="dropdown-item" href="../pages/bf.html">
  <span class="dropdown-text">Bayesian Hypothesis Testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/interval.html" rel="" target="">
+    <a class="dropdown-item" href="../pages/interval.html">
  <span class="dropdown-text">Bayesian Intervals</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../publications.html" rel="" target="">
- <span class="menu-text">Publications</span></a>
+    <a class="nav-link" href="../publications.html"> 
+<span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../writing.html" rel="" target="">
- <span class="menu-text">Miscellany</span></a>
+    <a class="nav-link" href="../writing.html"> 
+<span class="menu-text">Miscellany</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="mailto:hello@cjdbarlow.au" rel="" target="">
- <span class="menu-text"><i class="fa-regular fa-envelope" aria-label="envelope"></i></span></a>
+    <a class="nav-link" href="mailto:hello@cjdbarlow.au"> 
+<span class="menu-text"><i class="fa-regular fa-envelope" aria-label="envelope"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://orcid.org/0000-0003-3713-8292" rel="me" target="">
- <span class="menu-text"><i class="fa-brands fa-orcid" aria-label="orcid"></i></span></a>
+    <a class="nav-link" href="https://orcid.org/0000-0003-3713-8292" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-orcid" aria-label="orcid"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/chrisjake" rel="me" target="">
- <span class="menu-text"><i class="fa-brands fa-github" aria-label="github"></i></span></a>
+    <a class="nav-link" href="https://github.com/chrisjake" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-github" aria-label="github"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://twitter.com/cjdbarlow" rel="" target="">
- <span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
+    <a class="nav-link" href="https://twitter.com/cjdbarlow"> 
+<span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../atom.xml" rel="" target="">
- <span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
+    <a class="nav-link" href="../atom.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -199,7 +204,7 @@ ul.task-list li input[type="checkbox"] {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Contents</h2>
    
@@ -222,12 +227,13 @@ ul.task-list li input[type="checkbox"] {
   </ul>
 </nav>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -249,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
 <p>The other changes were more minor. Based on the shape of our hallway, I decided to expand the width of the shelves to ~1m. I had also planned to have three levels for storing shoes, but decided to start with two and see how it goes in practice. The design itself also needed to be flexible, as the actual size of the frame will vary slightly depending on how far the pipes are screwed into the brackets - the tighter the pipe, the shorter that section of the frame becomes.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/rack/design.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p><a href="assets/rack/design.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/rack/design.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></a></p>
 </figure>
 </div>
 
@@ -326,8 +332,8 @@ Optional. I didn’t use these in the end.</li>
 </div><div class="">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/rack/measure.jpeg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">It is important to measure the actual pipe sections before you buy them - the lengths are not always as advertised.</figcaption>
+<p><a href="assets/rack/measure.jpeg" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="It is important to measure the actual pipe sections before you buy them - the lengths are not always as advertised."><img src="assets/rack/measure.jpeg" class="img-fluid figure-img" alt="It is important to measure the actual pipe sections before you buy them - the lengths are not always as advertised."></a></p>
+<figcaption>It is important to measure the actual pipe sections before you buy them - the lengths are not always as advertised.</figcaption>
 </figure>
 </div>
 </div></div>
@@ -352,7 +358,7 @@ Ideal for securing the saddle clips to the pine board.</li>
 <section id="methods" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <p>The most difficult part of construction is frame assembly. All pipes tighten in the same direction, and pipes are not designed to create loops. This means that there is a point when completing one side of a square section of frame that tightening one joint will loosen the opposing joint. The tedium of this can be minimised<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> by <em>over</em>-tightening one side, then engaging the opposing end and tightening that end, such that both end up moderately tightened. Maintaining a square shape whilst doing this takes some trial-and-error.</p>
-<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;But not mitigated, sadly.</p></li></div><p>My second tip for assembly is to build in stages, starting with assembling the part of the frame required for the shelving. This reduces the change that you will need to go-over old ground.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;But not mitigated, sadly.</p></div></div><p>My second tip for assembly is to build in stages, starting with assembling the part of the frame required for the shelving. This reduces the change that you will need to go-over old ground.</p>
 <section id="clean-the-pipes" class="level3">
 <h3 class="anchored" data-anchor-id="clean-the-pipes">0. Clean the pipes</h3>
 <p>Before beginning, clean the grease off the pipes and remove stickers. I did this at the end, and regretted it. I found acetone necessary to dissolve the glue.</p>
@@ -364,8 +370,8 @@ Ideal for securing the saddle clips to the pine board.</li>
 <div class="no-row-height column-margin column-container"><div class="">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/rack/tight.jpeg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">The 20mm pipe passes neatly through the 25mm T-piece, which is a convenient way to get extra torque.</figcaption>
+<p><a href="assets/rack/tight.jpeg" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" title="The 20mm pipe passes neatly through the 25mm T-piece, which is a convenient way to get extra torque."><img src="assets/rack/tight.jpeg" class="img-fluid figure-img" alt="The 20mm pipe passes neatly through the 25mm T-piece, which is a convenient way to get extra torque."></a></p>
+<figcaption>The 20mm pipe passes neatly through the 25mm T-piece, which is a convenient way to get extra torque.</figcaption>
 </figure>
 </div>
 </div></div><p>Assembling the horizontals accurately requires a good amount of torque, generated using some combination of vice, pipe wrench, and pipe.</p>
@@ -380,8 +386,8 @@ For the bottom shelf. If you want three shelves, you’ll need four of these.</l
 <div class="no-row-height column-margin column-container"><div class="">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/rack/length_check.jpeg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Check each piece for symmetry.</figcaption>
+<p><a href="assets/rack/length_check.jpeg" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4" title="Check each piece for symmetry."><img src="assets/rack/length_check.jpeg" class="img-fluid figure-img" alt="Check each piece for symmetry."></a></p>
+<figcaption>Check each piece for symmetry.</figcaption>
 </figure>
 </div>
 </div></div></section>
@@ -392,8 +398,8 @@ For the bottom shelf. If you want three shelves, you’ll need four of these.</l
 <div class="no-row-height column-margin column-container"><div class="">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/rack/check.jpeg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Double-check the width of the horizontals.</figcaption>
+<p><a href="assets/rack/check.jpeg" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5" title="Double-check the width of the horizontals."><img src="assets/rack/check.jpeg" class="img-fluid figure-img" alt="Double-check the width of the horizontals."></a></p>
+<figcaption>Double-check the width of the horizontals.</figcaption>
 </figure>
 </div>
 </div></div><p>To avoid creating a pipe-trapezoid, the tightness of each vertical has to be balanced - over-tightening a join will create a shorter side. This is made more complicated by the supporting horizontal beam, as now several connections have to be adjusted to create the required length.</p>
@@ -401,8 +407,8 @@ For the bottom shelf. If you want three shelves, you’ll need four of these.</l
 <p>I tried a few ways of positioning the pipes to assemble a neat square, and found the system pictured below the most effective. The vice held the top (the pipe-square is upside-down in the vice) horizontal steady, and allowed the pipe-wrench to be used to adjust the tightness of all the other joins. Getting the rear vertical correctly positioned required a lot of effort - the hex nipple, T-piece, and 150mm vertical had to be maximally tightened to provide enough play to fit the 250mm vertical in place.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="assets/rack/square.jpeg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">An almost-completed pipe-square. Note the left sided vertical is overtightened into the elbow so the T-piece can be positioned. Loosening it off will screw it into the T-piece and lock the square.</figcaption>
+<p><a href="assets/rack/square.jpeg" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6" title="An almost-completed pipe-square. Note the left sided vertical is overtightened into the elbow so the T-piece can be positioned. Loosening it off will screw it into the T-piece and lock the square."><img src="assets/rack/square.jpeg" class="img-fluid figure-img" alt="An almost-completed pipe-square. Note the left sided vertical is overtightened into the elbow so the T-piece can be positioned. Loosening it off will screw it into the T-piece and lock the square."></a></p>
+<figcaption class="margin-caption">An almost-completed pipe-square. Note the left sided vertical is overtightened into the elbow so the T-piece can be positioned. Loosening it off will screw it into the T-piece and lock the square.</figcaption>
 </figure>
 </div>
 </section>
@@ -413,8 +419,8 @@ For the bottom shelf. If you want three shelves, you’ll need four of these.</l
 <div class="no-row-height column-margin column-container"><div class="">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/rack/brackets.jpeg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Sizable flanges on the saddle clips.</figcaption>
+<p><a href="assets/rack/brackets.jpeg" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7" title="Sizable flanges on the saddle clips."><img src="assets/rack/brackets.jpeg" class="img-fluid figure-img" alt="Sizable flanges on the saddle clips."></a></p>
+<figcaption>Sizable flanges on the saddle clips.</figcaption>
 </figure>
 </div>
 </div></div><p>This is the <strong>time to determine the final length of the boards</strong>, as it depends on both the:</p>
@@ -424,13 +430,13 @@ For the bottom shelf. If you want three shelves, you’ll need four of these.</l
 The saddle clips can have quite large flanges, which may lead to unsightly protrusions. You can accommodate this with longer boards, or by trimming the flange with tin snips.</li>
 </ul>
 <p>At this point, the assembled frame should looking something like what is below. A quick test assembly with the wood planks is useful here, particularly to determine the width of the saddle clips. I ended up molding the saddle clips in an omega shape (Ω) to reduce their width, and trimming the edges of the flange with tin snips. You can mark and drill the pilot holes for the screws at this point if you wish.</p>
-<p><img src="assets/rack/frame_half.jpeg" class="img-fluid"></p>
+<p><a href="assets/rack/frame_half.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="assets/rack/frame_half.jpeg" class="img-fluid"></a></p>
 </section>
 <section id="prepare-the-wood" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="prepare-the-wood">4. Prepare the wood</h3>
 <p>At this point, we take a break from frame construction to prepare the wood. Firstly, cut the boards to the desired length.</p>
 <p>Next is staining. I tested a few different stains, and settled on a single coat of cedar:</p>
-<p><img src="assets/rack/stain.jpeg" class="img-fluid"></p>
+<p><a href="assets/rack/stain.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="assets/rack/stain.jpeg" class="img-fluid"></a></p>
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>Pine off-cuts with one to three coats of stain, either:</p>
@@ -448,24 +454,34 @@ The saddle clips can have quite large flanges, which may lead to unsightly protr
 <p>Next, build up a foundation and screw in the second shelf.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="assets/rack/assembly.jpeg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">One shelf completed, and building a foundation for the next one. Incidentally, this is the most use that my copy of Harrison’s has seen in at least a decade.</figcaption>
+<p><a href="assets/rack/assembly.jpeg" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10" title="One shelf completed, and building a foundation for the next one. Incidentally, this is the most use that my copy of Harrison’s has seen in at least a decade."><img src="assets/rack/assembly.jpeg" class="img-fluid figure-img" alt="One shelf completed, and building a foundation for the next one. Incidentally, this is the most use that my copy of Harrison’s has seen in at least a decade."></a></p>
+<figcaption class="margin-caption">One shelf completed, and building a foundation for the next one. Incidentally, this is the most use that my copy of Harrison’s has seen in at least a decade.</figcaption>
 </figure>
 </div>
 <p>Once the shelves are screwed in, flip the frame to the upright position. Loosely attach the 60mm 25mm pipe, the 25-20mm adaptor, and the 60mm 20mm pipes. Assembling the valves and 125mm pipe segments takes some finesse, with the primary goal to secure each piece tightly, so that the weight of bags on the valve handle doesn’t loosen the fitting<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
-<div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;This may vary depending on the brand of valve, but my valves open in a direction such that the fitting pipe would be loosened if enough weight is applied.</p></li></div></section>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;This may vary depending on the brand of valve, but my valves open in a direction such that the fitting pipe would be loosened if enough weight is applied.</p></div></div></section>
 </section>
 <section id="results" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <p>I am quite happy with how this turned out. I elected not to put the end caps on the bottom, as I think they narrow the floor contact and will end up applying more pressure to the floorboards. The T-pieces also sit flush with the floor. It’s quite stable, and doesn’t warp when moving it around or sitting on it. At this stage I am undecided about a third shelf - the height is ideal for sitting or lacing and raising it by another ~30cm may make it uncomfortably tall.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="assets/rack/final.jpeg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">The final product.</figcaption>
+<p><a href="assets/rack/final.jpeg" class="lightbox" data-glightbox="description: .lightbox-desc-11" data-gallery="quarto-lightbox-gallery-11" title="The final product."><img src="assets/rack/final.jpeg" class="img-fluid figure-img" alt="The final product."></a></p>
+<figcaption class="margin-caption">The final product.</figcaption>
 </figure>
 </div>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-2">It is important to measure the actual pipe sections before you buy them - the lengths are not always as advertised.</span>
+<span class="glightbox-desc lightbox-desc-3">The 20mm pipe passes neatly through the 25mm T-piece, which is a convenient way to get extra torque.</span>
+<span class="glightbox-desc lightbox-desc-4">Check each piece for symmetry.</span>
+<span class="glightbox-desc lightbox-desc-5">Double-check the width of the horizontals.</span>
+<span class="glightbox-desc lightbox-desc-6">An almost-completed pipe-square. Note the left sided vertical is overtightened into the elbow so the T-piece can be positioned. Loosening it off will screw it into the T-piece and lock the square.</span>
+<span class="glightbox-desc lightbox-desc-7">Sizable flanges on the saddle clips.</span>
+<span class="glightbox-desc lightbox-desc-10">One shelf completed, and building a foundation for the next one. Incidentally, this is the most use that my copy of Harrison’s has seen in at least a decade.</span>
+<span class="glightbox-desc lightbox-desc-11">The final product.</span>
+</div>
 </section>
 
 
@@ -549,6 +565,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/cjdbarlow\.au");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -583,24 +617,64 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
   const processXRef = (id, note) => {
-    if (id.startsWith('sec-')) {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
         }
         return container.innerHTML
       } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
-      return note.innerHTML;
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -609,27 +683,56 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       instance.disable();
       let url = xref.getAttribute('href');
       let hash = undefined; 
-      try { hash = new URL(url).hash; } catch {}
-      const id = hash.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note !== null) {
-        try {
-          const html = processXRef(id, note);
-          instance.setContent(html);
-        } finally {
-          instance.enable();
-          instance.show();
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
         }
       } else {
-        // See if we can fetch this
-        fetch(url.split('#')[0])
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
         .then(res => res.text())
         .then(html => {
           const parser = new DOMParser();
           const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.getElementById(id);
+          const note = htmlDoc.querySelector('main.content');
           if (note !== null) {
-            const html = processXRef(id, note);
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
             instance.setContent(html);
           } 
         }).finally(() => {
@@ -707,6 +810,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -780,6 +909,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 
