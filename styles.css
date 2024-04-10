@@ -37,14 +37,7 @@
   padding-bottom: 0.5em;
 }
 
-@media (min-width: 768px){
-  .columnPage .shinyDiv {
-    width: 100vw;
-    aspect-ratio: 1.4;
-  }
-
-  .shinyFrame {
-    width: 100%;
-    aspect-ratio: 1.4;
-  }
+.shinyFrame {
+  width: 1px;
+  min-width: 100%;
 }
