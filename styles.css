@@ -28,31 +28,16 @@
 
 /* Navbar padding */
 .navbar {
-    padding-top: 0rem;
-    padding-bottom: 0rem;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
 }
 
 /* Bibtex padding */
 .csl-entry{
-    padding-bottom: 0.5em;
+  padding-bottom: 0.5em;
 }
 
-.shinyFrameDiv{
-  overflow:auto;
-  /*display: table;*/
-}
-
-.shinyFrame{
- /* display: table-row;*/
-  position: static;
-  overflow: auto;
-  width: 100%;
-}
-
-.shinyInterval{
-  height: 110vh;
-}
-
-.shinyBF{
-  height: 100vh;
+.shinyFrame {
+  width: 1px;
+  min-width: 100%;
 }

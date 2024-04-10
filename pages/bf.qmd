@@ -26,7 +26,16 @@ aliases:
 
 ## Risk Calculator
 
-:::{.column-page .shinyBF}
-<iframe frameborder="no" scrolling="no" class="shinyFrame shinyBF"
-src="https://chrisjake.shinyapps.io/shiny-bayes/"></iframe>
+:::{.column-page}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js"></script>
+
+<iframe frameborder="no" scrolling="no" class="shinyFrame"
+src="https://chrisjake.shinyapps.io/shiny-bayes/">
+</iframe>
+
+<script>
+  iFrameResize({
+    heightCalculationMethod: 'taggedElement'
+  });
+</script>
 :::

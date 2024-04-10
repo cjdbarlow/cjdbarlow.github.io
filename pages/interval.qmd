@@ -25,7 +25,16 @@ The sliders will set 95% of the probability mass between each extreme, with the 
 
 ## Risk Calculator
 
-:::{.column-page .shinyFrameDiv}
-<iframe frameborder="no" scrolling="no" class="shinyFrame shinyInterval"
-src="https://chrisjake.shinyapps.io/shiny-hdi/"></iframe>
+:::{.column-page}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js"></script>
+
+<iframe frameborder="no" scrolling="no" class="shinyFrame"
+src="https://chrisjake.shinyapps.io/shiny-hdi/">
+</iframe>
+
+<script>
+  iFrameResize({
+    heightCalculationMethod: 'taggedElement'
+  });
+</script>
 :::
