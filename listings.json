@@ -1,6 +1,6 @@
 [
   {
-    "listing": "/atom.html",
+    "listing": "/writing.html",
     "items": [
       "/posts/hdi.html",
       "/posts/shoe-rack.html",
@@ -12,7 +12,7 @@
     ]
   },
   {
-    "listing": "/writing.html",
+    "listing": "/atom.html",
     "items": [
       "/posts/hdi.html",
       "/posts/shoe-rack.html",

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.193">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -50,12 +50,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -64,6 +65,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -102,14 +104,41 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="styles.css">
 <link rel="alternate" type="application/rss+xml" title="Jake's Notes" href="atom.xml" data-external="1"></head>
 
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
@@ -126,68 +155,68 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-medicine" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-medicine" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Medicine</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-medicine">    
         <li>
-    <a class="dropdown-item" href="./pages/part_one.html" rel="" target="">
+    <a class="dropdown-item" href="./pages/part_one.html">
  <span class="dropdown-text">Part One</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./pages/bs.html" rel="" target="">
+    <a class="dropdown-item" href="./pages/bs.html">
  <span class="dropdown-text">Bedside Notebook</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Statistics</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
         <li>
-    <a class="dropdown-item" href="./pages/bf.html" rel="" target="">
+    <a class="dropdown-item" href="./pages/bf.html">
  <span class="dropdown-text">Bayesian Hypothesis Testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./pages/interval.html" rel="" target="">
+    <a class="dropdown-item" href="./pages/interval.html">
  <span class="dropdown-text">Bayesian Intervals</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./publications.html" rel="" target="">
- <span class="menu-text">Publications</span></a>
+    <a class="nav-link" href="./publications.html"> 
+<span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./writing.html" rel="" target="">
- <span class="menu-text">Miscellany</span></a>
+    <a class="nav-link" href="./writing.html"> 
+<span class="menu-text">Miscellany</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="mailto:hello@cjdbarlow.au" rel="" target="">
- <span class="menu-text"><i class="fa-regular fa-envelope" aria-label="envelope"></i></span></a>
+    <a class="nav-link" href="mailto:hello@cjdbarlow.au"> 
+<span class="menu-text"><i class="fa-regular fa-envelope" aria-label="envelope"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://orcid.org/0000-0003-3713-8292" rel="me" target="">
- <span class="menu-text"><i class="fa-brands fa-orcid" aria-label="orcid"></i></span></a>
+    <a class="nav-link" href="https://orcid.org/0000-0003-3713-8292" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-orcid" aria-label="orcid"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/chrisjake" rel="me" target="">
- <span class="menu-text"><i class="fa-brands fa-github" aria-label="github"></i></span></a>
+    <a class="nav-link" href="https://github.com/chrisjake" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-github" aria-label="github"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://twitter.com/cjdbarlow" rel="" target="">
- <span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
+    <a class="nav-link" href="https://twitter.com/cjdbarlow"> 
+<span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./atom.xml" rel="" target="">
- <span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
+    <a class="nav-link" href="./atom.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -215,10 +244,10 @@ ul.task-list li input[type="checkbox"] {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
@@ -232,177 +261,182 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="statistics,bayes,R,ggPlot" data-listing-date-sort="1710943200000" data-listing-file-modified-sort="1711160809112" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="quarto-post image-right" data-index="0" data-categories="statistics,bayes,R,ggPlot" data-listing-date-sort="1710979200000" data-listing-file-modified-sort="1712755377914" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1574">
 <div class="thumbnail">
-<p><a href="./posts/hdi.html"> <img src="./posts/assets/hdi/hdi_ai.jpg" class="thumbnail-image"> </a></p>
+<p><a href="./posts/hdi.html" class="no-external"></a></p><a href="./posts/hdi.html" class="no-external">
+<p><img src="./posts/assets/hdi/hdi_ai.jpg" class="thumbnail-image"></p>
+</a><p><a href="./posts/hdi.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/hdi.html">
 <h3 class="no-anchor listing-title">
-Plotting Bayesian Intervals using ggPlot
+<a href="./posts/hdi.html" class="no-external">Plotting Bayesian Intervals using ggPlot</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/hdi.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>Using ggPlot without additional packages to cleanly plot Bayesian intervals on Beta distributions, including the Highest-Density Interval and the Region of Practical Equivalence.</p>
+<a href="./posts/hdi.html" class="no-external">Using ggPlot without additional packages to cleanly plot Bayesian intervals on Beta distributions, including the Highest-Density Interval and the Region of Practical Equivalence. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/hdi.html">
+<a href="./posts/hdi.html" class="no-external">
 <div class="listing-date">
 Mar 21, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="woodwork,DIY" data-listing-date-sort="1708783200000" data-listing-file-modified-sort="1708856813434" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="1" data-categories="woodwork,DIY" data-listing-date-sort="1708819200000" data-listing-file-modified-sort="1712755377914" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1785">
 <div class="thumbnail">
-<p><a href="./posts/shoe-rack.html"> <img src="./posts/assets/rack/ai_design.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/shoe-rack.html" class="no-external"></a></p><a href="./posts/shoe-rack.html" class="no-external">
+<p><img src="./posts/assets/rack/ai_design.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/shoe-rack.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/shoe-rack.html">
 <h3 class="no-anchor listing-title">
-Step by Step: Custom Shoe Rack Construction
+<a href="./posts/shoe-rack.html" class="no-external">Step by Step: Custom Shoe Rack Construction</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/shoe-rack.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>Better than IKEA.</p>
+<a href="./posts/shoe-rack.html" class="no-external">Better than IKEA. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/shoe-rack.html">
+<a href="./posts/shoe-rack.html" class="no-external">
 <div class="listing-date">
 Feb 25, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="medicine" data-listing-date-sort="1702476000000" data-listing-file-modified-sort="1702549294849" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<div class="quarto-post image-right" data-index="2" data-categories="medicine" data-listing-date-sort="1702512000000" data-listing-file-modified-sort="1712755377914" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2265">
 <div class="thumbnail">
-<p><a href="./posts/exam-reflections.html"> <img src="./posts/assets/reflections/birb.jpg" class="thumbnail-image"> </a></p>
+<p><a href="./posts/exam-reflections.html" class="no-external"></a></p><a href="./posts/exam-reflections.html" class="no-external">
+<p><img src="./posts/assets/reflections/birb.jpg" class="thumbnail-image"></p>
+</a><p><a href="./posts/exam-reflections.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/exam-reflections.html">
 <h3 class="no-anchor listing-title">
-Reflections on the Fellowship Exam
+<a href="./posts/exam-reflections.html" class="no-external">Reflections on the Fellowship Exam</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/exam-reflections.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>Thoughts on how the assessment process of the CICM Fellowship Exam could be improved, developed from ideas formed during the process of exam preparation.</p>
+<a href="./posts/exam-reflections.html" class="no-external">Thoughts on how the assessment process of the CICM Fellowship Exam could be improved, developed from ideas formed during the process of exam preparation. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/exam-reflections.html">
+<a href="./posts/exam-reflections.html" class="no-external">
 <div class="listing-date">
 Dec 14, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="R,auspol" data-listing-date-sort="1699452000000" data-listing-file-modified-sort="1702547987388" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23">
+<div class="quarto-post image-right" data-index="3" data-categories="R,auspol" data-listing-date-sort="1699488000000" data-listing-file-modified-sort="1712755377914" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4524">
 <div class="thumbnail">
-<p><a href="./posts/electioneering-part-three.html"> <img src="./posts/assets/electioneering/e3.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/electioneering-part-three.html" class="no-external"></a></p><a href="./posts/electioneering-part-three.html" class="no-external">
+<p><img src="./posts/assets/electioneering/e3.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/electioneering-part-three.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/electioneering-part-three.html">
 <h3 class="no-anchor listing-title">
-Electioneering: Part III
+<a href="./posts/electioneering-part-three.html" class="no-external">Electioneering: Part III</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/electioneering-part-three.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>Final part a three-part series looking at how the composition of the Australian Federal parliament might vary under different electoral systems. In this part, we conduct a comparative analysis of each voting system.</p>
+<p><a href="./posts/electioneering-part-three.html" class="no-external">Final part a three-part series looking at how the composition of the Australian Federal parliament might vary under different electoral systems.</a></p><a href="./posts/electioneering-part-three.html" class="no-external">
+In this part, we conduct a comparative analysis of each voting system. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/electioneering-part-three.html">
+<a href="./posts/electioneering-part-three.html" class="no-external">
 <div class="listing-date">
 Nov 9, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="R,auspol" data-listing-date-sort="1699365600000" data-listing-file-modified-sort="1702547987389" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17">
+<div class="quarto-post image-right" data-index="4" data-categories="R,auspol" data-listing-date-sort="1699401600000" data-listing-file-modified-sort="1712755377914" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3374">
 <div class="thumbnail">
-<p><a href="./posts/electioneering-part-two.html"> <img src="./posts/assets/electioneering/e2.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/electioneering-part-two.html" class="no-external"></a></p><a href="./posts/electioneering-part-two.html" class="no-external">
+<p><img src="./posts/assets/electioneering/e2.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/electioneering-part-two.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/electioneering-part-two.html">
 <h3 class="no-anchor listing-title">
-Electioneering: Part II
+<a href="./posts/electioneering-part-two.html" class="no-external">Electioneering: Part II</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/electioneering-part-two.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>Part two of a three-part series looking at how the composition of the Australian Federal parliament might vary under different electorate systems. In this part, we simulate the makeup of the House of Representatives after the 2022 federal election under three different voting systems.</p>
+<p><a href="./posts/electioneering-part-two.html" class="no-external">Part two of a three-part series looking at how the composition of the Australian Federal parliament might vary under different electorate systems.</a></p><a href="./posts/electioneering-part-two.html" class="no-external">
+In this part, we simulate the makeup of the House of Representatives after the 2022 federal election under three different voting systems. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/electioneering-part-two.html">
+<a href="./posts/electioneering-part-two.html" class="no-external">
 <div class="listing-date">
 Nov 8, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="R,auspol" data-listing-date-sort="1699192800000" data-listing-file-modified-sort="1702547987388" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="5" data-categories="R,auspol" data-listing-date-sort="1699228800000" data-listing-file-modified-sort="1712755377914" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2002">
 <div class="thumbnail">
-<p><a href="./posts/electioneering-part-one.html"> <img src="./posts/assets/electioneering/e1.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/electioneering-part-one.html" class="no-external"></a></p><a href="./posts/electioneering-part-one.html" class="no-external">
+<p><img src="./posts/assets/electioneering/e1.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/electioneering-part-one.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/electioneering-part-one.html">
 <h3 class="no-anchor listing-title">
-Electioneering: Part I
+<a href="./posts/electioneering-part-one.html" class="no-external">Electioneering: Part I</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/electioneering-part-one.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>First part of a three-part series looking at how the composition of the Australian Federal parliament might vary under different electoral systems. This part provides an overview of the electoral systems under review and preparing the data for analysis.</p>
+<p><a href="./posts/electioneering-part-one.html" class="no-external">First part of a three-part series looking at how the composition of the Australian Federal parliament might vary under different electoral systems.</a></p><a href="./posts/electioneering-part-one.html" class="no-external">
+This part provides an overview of the electoral systems under review and preparing the data for analysis. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/electioneering-part-one.html">
+<a href="./posts/electioneering-part-one.html" class="no-external">
 <div class="listing-date">
 Nov 6, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="R" data-listing-date-sort="1643205600000" data-listing-file-modified-sort="1702547915447" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="quarto-post image-right" data-index="6" data-categories="R" data-listing-date-sort="1643241600000" data-listing-file-modified-sort="1712755377914" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1599">
 <div class="thumbnail">
-<p><a href="./posts/wordle.html"> <img src="./posts/assets/wordle/wordle-broken.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/wordle.html" class="no-external"></a></p><a href="./posts/wordle.html" class="no-external">
+<p><img src="./posts/assets/wordle/wordle-broken.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/wordle.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/wordle.html">
 <h3 class="no-anchor listing-title">
-Breaking Wordle
+<a href="./posts/wordle.html" class="no-external">Breaking Wordle</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/wordle.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<p>What are the best starting words in Wordle? An approach to optimise the opening gambit, using R.</p>
+<p><a href="./posts/wordle.html" class="no-external">What are the best starting words in Wordle?</a></p><a href="./posts/wordle.html" class="no-external">
+An approach to optimise the opening gambit, using R. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/wordle.html">
+<a href="./posts/wordle.html" class="no-external">
 <div class="listing-date">
 Jan 27, 2022
 </div>
@@ -493,6 +527,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/cjdbarlow\.au");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -527,24 +579,64 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
   const processXRef = (id, note) => {
-    if (id.startsWith('sec-')) {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
         }
         return container.innerHTML
       } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
-      return note.innerHTML;
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -553,27 +645,56 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       instance.disable();
       let url = xref.getAttribute('href');
       let hash = undefined; 
-      try { hash = new URL(url).hash; } catch {}
-      const id = hash.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note !== null) {
-        try {
-          const html = processXRef(id, note);
-          instance.setContent(html);
-        } finally {
-          instance.enable();
-          instance.show();
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
         }
       } else {
-        // See if we can fetch this
-        fetch(url.split('#')[0])
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
         .then(res => res.text())
         .then(html => {
           const parser = new DOMParser();
           const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.getElementById(id);
+          const note = htmlDoc.querySelector('main.content');
           if (note !== null) {
-            const html = processXRef(id, note);
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
             instance.setContent(html);
           } 
         }).finally(() => {
@@ -651,6 +772,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
