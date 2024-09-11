@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
-
+<meta name="generator" content="quarto-1.4.193">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Jake Barlow">
 <meta name="dcterms.date" content="2023-11-06">
 <meta name="description" content="First part of a three-part series looking at how the composition of the Australian Federal parliament might vary under different electoral systems.This part provides an overview of the electoral systems under review and preparing the data for analysis.">
-
 <title>Electioneering: Part I | C. Jake Barlow</title>
 <style>
 code{white-space: pre-wrap;}
@@ -25,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -77,20 +73,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 50,
+  "limit": 20,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -99,27 +93,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
-<link rel="stylesheet" href="../styles.css">
+}</script><link rel="stylesheet" href="../styles.css">
 </head>
-
 <body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo">
-    </a>
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">C. Jake Barlow</span>
     </a>
@@ -130,80 +116,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
-<span class="menu-text">About</span></a>
+<li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-medicine" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-medicine" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Medicine</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-medicine">    
-        <li>
-    <a class="dropdown-item" href="../pages/part_one.html">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-medicine">
+<li>
+    <a class="dropdown-item" href="../pages/part_one.html" rel="" target="">
  <span class="dropdown-text">Part One</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/bs.html">
+    <a class="dropdown-item" href="../pages/bs.html" rel="" target="">
  <span class="dropdown-text">Bedside Notebook</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Statistics</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
-        <li>
-    <a class="dropdown-item" href="../pages/bf.html">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">
+<li>
+    <a class="dropdown-item" href="../pages/bf.html" rel="" target="">
  <span class="dropdown-text">Bayesian Hypothesis Testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/interval.html">
+    <a class="dropdown-item" href="../pages/interval.html" rel="" target="">
  <span class="dropdown-text">Bayesian Intervals</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
-    <a class="nav-link" href="../publications.html"> 
-<span class="menu-text">Publications</span></a>
+    <a class="nav-link" href="../publications.html" rel="" target="">
+ <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../writing.html"> 
-<span class="menu-text">Miscellany</span></a>
-  </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="mailto:hello@cjdbarlow.au"> 
-<span class="menu-text"><i class="fa-regular fa-envelope" aria-label="envelope"></i></span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://orcid.org/0000-0003-3713-8292" rel="me"> 
-<span class="menu-text"><i class="fa-brands fa-orcid" aria-label="orcid"></i></span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://github.com/chrisjake" rel="me"> 
-<span class="menu-text"><i class="fa-brands fa-github" aria-label="github"></i></span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://twitter.com/cjdbarlow"> 
-<span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../atom.xml"> 
-<span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
+    <a class="nav-link" href="../writing.html" rel="" target="">
+ <span class="menu-text">Miscellany</span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="mailto:hello@cjdbarlow.au" rel="" target="">
+ <span class="menu-text"><i class="fa-regular fa-envelope" aria-label="envelope"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://orcid.org/0000-0003-3713-8292" rel="me" target="">
+ <span class="menu-text"><i class="fa-brands fa-orcid" aria-label="orcid"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/chrisjake" rel="me" target="">
+ <span class="menu-text"><i class="fa-brands fa-github" aria-label="github"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/cjdbarlow" rel="" target="">
+ <span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../atom.xml" rel="" target="">
+ <span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Electioneering: Part I</h1>
                   <div>
@@ -236,51 +218,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#the-contenders" id="toc-the-contenders" class="nav-link active" data-scroll-target="#the-contenders">The Contenders</a></li>
+<li><a href="#the-contenders" id="toc-the-contenders" class="nav-link active" data-scroll-target="#the-contenders">The Contenders</a></li>
   <li><a href="#the-plan" id="toc-the-plan" class="nav-link" data-scroll-target="#the-plan">The Plan</a></li>
-  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data Wrangling</a>
+  <li>
+<a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data Wrangling</a>
   <ul class="collapse">
-  <li><a href="#voting-data" id="toc-voting-data" class="nav-link" data-scroll-target="#voting-data">Voting Data</a></li>
+<li><a href="#voting-data" id="toc-voting-data" class="nav-link" data-scroll-target="#voting-data">Voting Data</a></li>
   <li><a href="#geometric-data" id="toc-geometric-data" class="nav-link" data-scroll-target="#geometric-data">Geometric Data</a></li>
-  </ul></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</li>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
-
-
-
-
-
-<p>As an Australian who has been resident in New Zealand for a couple of years I was entitled to vote in the recent general<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> election, and as a big fan of liberal democracy I was keen take part and see how the whole thing worked across the ditch. Although most democracies follow a “one man, one vote” system<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, the actual make-up of parliament can vary depending on the system used to translate votes into representation<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Unlike Australia which uses a Single Transferable Vote (STV) to assign seats in both the upper and lower houses, New Zealand uses Mixed Member Proportional (MMP) voting to allocate all seats in a unicameral parliament.</p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Federal, for those of you used to states.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;Or do now, at least.</p></div><div id="fn3"><p><sup>3</sup>&nbsp;There are of course lots of ways that this can be distorted - like gerrymandering - but we’ll focus just on the voting system here.</p></div></div><p>I thought this was interesting, and so decided to run a few simulations on what the makeup of the Australian parliament, in particular the House of Representatives, would be under different electoral systems. The series is divided into three parts:</p>
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><p>As an Australian who has been resident in New Zealand for a couple of years I was entitled to vote in the recent general<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> election, and as a big fan of liberal democracy I was keen take part and see how the whole thing worked across the ditch. Although most democracies follow a “one man, one vote” system<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, the actual make-up of parliament can vary depending on the system used to translate votes into representation<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Unlike Australia which uses a Single Transferable Vote (STV) to assign seats in both the upper and lower houses, New Zealand uses Mixed Member Proportional (MMP) voting to allocate all seats in a unicameral parliament.</p>
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;Federal, for those of you used to states.</p></li><li id="fn2"><p><sup>2</sup>&nbsp;Or do now, at least.</p></li><li id="fn3"><p><sup>3</sup>&nbsp;There are of course lots of ways that this can be distorted - like gerrymandering - but we’ll focus just on the voting system here.</p></li></div><p>I thought this was interesting, and so decided to run a few simulations on what the makeup of the Australian parliament, in particular the House of Representatives, would be under different electoral systems. The series is divided into three parts:</p>
 <ul>
 <li>Part One<br>
 Will define the question, provide some overview of the different electoral systems, and clean the data.</li>
-<li><a href="../posts/electioneering-part-two.html">Part Two</a><br>
+<li>
+<a href="../posts/electioneering-part-two.html">Part Two</a><br>
 Conduct the analysis, and generate some preliminary results.</li>
-<li><a href="../posts/electioneering-part-three.html">Part Three</a><br>
+<li>
+<a href="../posts/electioneering-part-three.html">Part Three</a><br>
 Refine the analysis, and offer some interpetation.</li>
 </ul>
-<section id="the-contenders" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="the-contenders">The Contenders</h2>
+<section id="the-contenders" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-contenders">The Contenders</h2>
 <p>We’ll review three different voting systems:</p>
 <ol type="1">
-<li><strong>First Past the Post</strong><br>
-FPTP is a simple and widely used system. Each voter casts a single vote for their preferred candidate, and the candidate with the most votes wins, regardless of whether they have an absolute majority. This is a winner-takes-all system, and so tends to favour larger, entrenched parties. It is still widely used in many countries, such as the US, the UK, and Papua New Guinea.<br>
-<br>
+<li>
+<strong>First Past the Post</strong><br>
+FPTP is a simple and widely used system. Each voter casts a single vote for their preferred candidate, and the candidate with the most votes wins, regardless of whether they have an absolute majority. This is a winner-takes-all system, and so tends to favour larger, entrenched parties. It is still widely used in many countries, such as the US, the UK, and Papua New Guinea.<br><br>
 </li>
-<li><strong>Single Transferable Vote</strong><br>
+<li>
+<strong>Single Transferable Vote</strong><br>
 STV is the system used in Australian elections. Candidates have to reach the quota (&gt;50% of the vote) to be elected, whilst voters preference candidates in order from most-preferred to least-preferred. The counting process occurs in a defined sequence<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:
 <ul>
 <li>All first-preference votes are tallied</li>
@@ -288,19 +264,19 @@ STV is the system used in Australian elections. Candidates have to reach the quo
 <li>If no candidate reaches the quota, then the candidate with the lowest number of votes has their votes redistributed to the remaining candidates, based on the preferences of the voter</li>
 <li>Each candidates votes are then tallied again, and if the quota is reached then that candidate wins</li>
 <li>The redistribution-and-counting cycle continues until someone reaches quota</li>
-</ul></li>
-<li><strong>Mixed Member Proportional</strong><br>
+</ul>
+</li>
+<li>
+<strong>Mixed Member Proportional</strong><br>
 MMP is the system used in New Zealand. It is a hybrid voting method that combines elements of both FPTP and proportional representation. Two votes are cast:
 <ol type="1">
 <li>Electorate vote<br>
 Vote for your local electorate - this uses FPTP. New Zealand has 70 electorates, and so 70 electorate MPs.</li>
 <li>Party vote<br>
 This is a national vote which allocates a number of further seats based on the proportion of votes that each party received. The NZ parliament contains 120<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> total seats, so there are an additional 50 MPs who are placed from the party vote and don’t have an electorate - these are known as ‘list’ MPs. To be eligible to receive seats from the list, a party must win an electorate seat <em>or</em> receive &gt;5% of the party vote.</li>
-</ol></li>
 </ol>
-<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;This only applies to the lower house. The senate uses a slightly different system, which isn’t relevant to us here as we’re only looking at the House of Representatives.</p></div><div id="fn5"><p><sup>5</sup>&nbsp;-ish, see the discussion in part 2 about overhang.</p></div></div></section>
-<section id="the-plan" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="the-plan">The Plan</h2>
+</li>
+</ol><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;This only applies to the lower house. The senate uses a slightly different system, which isn’t relevant to us here as we’re only looking at the House of Representatives.</p></li><li id="fn5"><p><sup>5</sup>&nbsp;-ish, see the discussion in part 2 about overhang.</p></li></div></section><section id="the-plan" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-plan">The Plan</h2>
 <p>The goal is to see how the makeup of the Australian parliament differs under each of these systems. This will require:</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
@@ -313,56 +289,50 @@ We’ll use the 2022 <a href="https://www.aec.gov.au/election/downloads.htm">fed
 We’ll use the 2021 <a href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files">Commonwealth Electoral Divisions</a> shapefile, courtesy of the Australian Bureau of Statistics<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</li>
 <li>A blueprint for a MMP parliament<br>
 We’ll make this up.</li>
-</ul>
-<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;The ABS is definitely my favourite government department (a tough decision, obviously) - there’s a huge amount of freely available data on a dizzying number of topics that are usually amenable to merging into medical datasets - if you’re doing any multi-site or multi-state analysis it is definitely worth poking around here.</p></div></div></section>
-<section id="data-wrangling" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
+</ul><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;The ABS is definitely my favourite government department (a tough decision, obviously) - there’s a huge amount of freely available data on a dizzying number of topics that are usually amenable to merging into medical datasets - if you’re doing any multi-site or multi-state analysis it is definitely worth poking around here.</p></li></div></section><section id="data-wrangling" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
 <p>First, we’ll do the usual environment set up:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Libraries</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(tidyverse)    <span class="co"># For data wrangling</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(magrittr)     <span class="co"># For piping arithmetic (actually)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(sf)           <span class="co"># For producing maps</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggiraph)      <span class="co"># For producing interactive maps without D3</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)    <span class="co"># For combining maps</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>    <span class="co"># For data wrangling</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>     <span class="co"># For piping arithmetic (actually)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>           <span class="co"># For producing maps</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://davidgohel.github.io/ggiraph/">ggiraph</a></span><span class="op">)</span>      <span class="co"># For producing interactive maps without D3</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>    <span class="co"># For combining maps</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="voting-data" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="voting-data">Voting Data</h3>
+<section id="voting-data" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="voting-data">Voting Data</h3>
 <div class="cell">
 
 </div>
 <p>We’ve loaded up the voting data behind the scenes, and are going to tidy up the data types. I’m not sure if we’ll need all of these columns yet, but since there aren’t that many of them it’s convenient to just transform them all now.</p>
 <p>We make the binary <code>Elected</code> variables into logical, and identify the key factor variables. We of course don’t need to touch the character or numeric variables as R has classified these already<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p>
-<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;We also do a cheeky find-and-replace on the <code>DivisionNm</code> variable (which identifies the electorates), as special characters can play havoc when it comes time to plot maps. Replacing hyphens with an en dash insures us against typographic shenanigans. I’ve got my eye on you, Eden-Monaro.</p></div></div><div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data cleaning</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>votes <span class="ot">=</span> votes <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DivisionNm =</span> <span class="fu">gsub</span>(<span class="st">"-"</span>, <span class="st">"–"</span>, DivisionNm),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">ends_with</span>(<span class="st">"Elected"</span>), <span class="sc">~</span> <span class="fu">ifelse</span>(. <span class="sc">==</span> <span class="st">"N"</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">c</span>(StateAb, DivisionNm, PartyAb, CalculationType), as.factor)) <span class="sc">%&gt;%</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Pivot out the vote counts and percentages</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> CalculationType,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> CalculationValue) <span class="sc">%&gt;%</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">prefCount =</span> <span class="st">"Preference Count"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">prefPC =</span> <span class="st">"Preference Percent"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">tranCount =</span> <span class="st">"Transfer Count"</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">tranPC =</span> <span class="st">"Transfer Percent"</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the parties in more detail</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>parties <span class="ot">=</span> votes <span class="sc">%&gt;%</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PartyAb, PartyNm) <span class="sc">%&gt;%</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>()</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(parties)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;We also do a cheeky find-and-replace on the <code>DivisionNm</code> variable (which identifies the electorates), as special characters can play havoc when it comes time to plot maps. Replacing hyphens with an en dash insures us against typographic shenanigans. I’ve got my eye on you, Eden-Monaro.</p></li></div><div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Data cleaning</span></span>
+<span><span class="va">votes</span> <span class="op">=</span> <span class="va">votes</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>DivisionNm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="st">"–"</span>, <span class="va">DivisionNm</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Elected"</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">.</span> <span class="op">==</span> <span class="st">"N"</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">StateAb</span>, <span class="va">DivisionNm</span>, <span class="va">PartyAb</span>, <span class="va">CalculationType</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Pivot out the vote counts and percentages</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">CalculationType</span>,</span>
+<span>              values_from <span class="op">=</span> <span class="va">CalculationValue</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>prefCount <span class="op">=</span> <span class="st">"Preference Count"</span>,</span>
+<span>         prefPC <span class="op">=</span> <span class="st">"Preference Percent"</span>,</span>
+<span>         tranCount <span class="op">=</span> <span class="st">"Transfer Count"</span>,</span>
+<span>         tranPC <span class="op">=</span> <span class="st">"Transfer Percent"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Inspect the parties in more detail</span></span>
+<span><span class="va">parties</span> <span class="op">=</span> <span class="va">votes</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">PartyAb</span>, <span class="va">PartyNm</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">parties</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="table table-sm table-striped small">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">PartyAb</th>
 <th style="text-align: left;">PartyNm</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -395,59 +365,57 @@ We’ll make this up.</li>
 </div>
 <p>The other thing that needs correcting are the party names and abbreviations as there are some clear duplicates. There’s a couple of judgement calls here, but we follow established conventions and I think the ambiguity reduction is beneficial.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>votes <span class="ot">=</span> votes <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PartyAb =</span> PartyAb <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(<span class="st">"GRN"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"GVIC"</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"IND"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">""</span>)),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">PartyNm =</span> PartyNm <span class="sc">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>           forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(<span class="st">"Independent"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">""</span>),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Labor"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"A.L.P."</span>, <span class="st">"Australian Labor Party"</span>),</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Democratic Alliance"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Drew Pavlou Democratic Alliance"</span>),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"The Greens"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"The Greens (WA)"</span>, <span class="st">"Queensland Greens"</span>),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Katter's Australian Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Katter's Australian Party (KAP)"</span>),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Liberal Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Liberal National Party of Queensland"</span>),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"The Nationals"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"National Party"</span>),</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"The New Liberals"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"TNL"</span>),</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Western Australia Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"WESTERN AUSTRALIA PARTY"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">votes</span> <span class="op">=</span> <span class="va">votes</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>PartyAb <span class="op">=</span> <span class="va">PartyAb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>           <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_collapse.html">fct_collapse</a></span><span class="op">(</span><span class="st">"GRN"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"GVIC"</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"IND"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         PartyNm <span class="op">=</span> <span class="va">PartyNm</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>           <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_collapse.html">fct_collapse</a></span><span class="op">(</span><span class="st">"Independent"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"Labor"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A.L.P."</span>, <span class="st">"Australian Labor Party"</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"Democratic Alliance"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Drew Pavlou Democratic Alliance"</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"The Greens"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"The Greens (WA)"</span>, <span class="st">"Queensland Greens"</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"Katter's Australian Party"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Katter's Australian Party (KAP)"</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"Liberal Party"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Liberal National Party of Queensland"</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"The Nationals"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"National Party"</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"The New Liberals"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TNL"</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"Western Australia Party"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"WESTERN AUSTRALIA PARTY"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="geometric-data" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="geometric-data">Geometric Data</h3>
+</section><section id="geometric-data" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="geometric-data">Geometric Data</h3>
 <p>With the voting data cleaned, we can turn our attention to the geometric data. The first order of business is to check that the names of the electorates in our shapefile (<code>ced</code>) line up with the names in the voting data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ced <span class="ot">=</span> ced <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CED_NAME21 =</span> <span class="fu">gsub</span>(<span class="st">"-"</span>, <span class="st">"–"</span>, CED_NAME21))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> ced<span class="sc">$</span>CED_NAME2</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">unique</span>(votes<span class="sc">$</span>DivisionNm)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(x, y)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(y, x)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ced</span> <span class="op">=</span> <span class="va">ced</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>CED_NAME21 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="st">"–"</span>, <span class="va">CED_NAME21</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">x</span> <span class="op">=</span> <span class="va">ced</span><span class="op">$</span><span class="va">CED_NAME2</span></span>
+<span><span class="va">y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">votes</span><span class="op">$</span><span class="va">DivisionNm</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>All names align except the “no usual address” geoms, which we will strip out. We’ll also transform our geographic data to use the EPSG:4326/WGS84 coordinate system. Coordinate systems are complex and interesting, it is enough for our purposes to say that this datum lets us plot latitudes and longitudes from a map without having to think too hard about it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ced <span class="ot">=</span> ced <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">### Drop the unnecessary data and restrict our map geoms to the electorates</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(CED_CODE21, STE_CODE21, AUS_CODE21, AUS_NAME21, LOCI_URI21)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CED_NAME21 <span class="sc">%in%</span> votes<span class="sc">$</span>DivisionNm) <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DivisionNm =</span> CED_NAME21) <span class="sc">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Transform the CRS</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reduce the window to cover continental Australia</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crop</span>(<span class="at">xmin =</span> <span class="dv">110</span>, <span class="at">xmax =</span> <span class="dv">160</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">ymin =</span> <span class="sc">-</span><span class="dv">45</span>, <span class="at">ymax =</span> <span class="sc">-</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ced</span> <span class="op">=</span> <span class="va">ced</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co">### Drop the unnecessary data and restrict our map geoms to the electorates</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">CED_CODE21</span>, <span class="va">STE_CODE21</span>, <span class="va">AUS_CODE21</span>, <span class="va">AUS_NAME21</span>, <span class="va">LOCI_URI21</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">CED_NAME21</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">votes</span><span class="op">$</span><span class="va">DivisionNm</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>DivisionNm <span class="op">=</span> <span class="va">CED_NAME21</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Transform the CRS</span></span>
+<span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span>crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Reduce the window to cover continental Australia</span></span>
+<span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crop.html">st_crop</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="fl">110</span>, xmax <span class="op">=</span> <span class="fl">160</span>,</span>
+<span>          ymin <span class="op">=</span> <span class="op">-</span><span class="fl">45</span>, ymax <span class="op">=</span> <span class="op">-</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We should also put together a list of the state capitals. Electorates are drawn with the aim of having a similar number of enrolled voters in each<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, and so tend to cluster around major cities. We’ll put some insets into our graphs so changes won’t be overshadowed by the large electorates that dominate much of the landmass.</p>
-<div class="no-row-height column-margin column-container"><div id="fn8"><p><sup>8</sup>&nbsp;Although the actual number can vary quite a bit.</p></div></div><div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set geography for insets</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A list of cities, their latitude and longitude, and the radius around them that we'll capture the electorates from</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">tribble</span>(<span class="sc">~</span> city, <span class="sc">~</span> lat      , <span class="sc">~</span> long     , <span class="sc">~</span> rad,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"mel"</span> , <span class="sc">-</span><span class="fl">37.8142354</span>, <span class="fl">144.9668884</span>, <span class="dv">45000</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">"syd"</span> , <span class="sc">-</span><span class="fl">33.8386302</span>, <span class="fl">151.0310312</span>, <span class="dv">40000</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">"bri"</span> , <span class="sc">-</span><span class="fl">27.4671551</span>, <span class="fl">153.0169995</span>, <span class="dv">15000</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>              <span class="st">"ade"</span> , <span class="sc">-</span><span class="fl">34.7894706</span>, <span class="fl">138.5687859</span>, <span class="dv">15000</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>              <span class="st">"per"</span> , <span class="sc">-</span><span class="fl">32.0212408</span>, <span class="fl">115.8735055</span>, <span class="dv">15000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;Although the actual number can vary quite a bit.</p></li></div><div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Set geography for insets</span></span>
+<span><span class="co"># A list of cities, their latitude and longitude, and the radius around them that we'll capture the electorates from</span></span>
+<span><span class="va">loc</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span>, <span class="op">~</span> <span class="va">lat</span>      , <span class="op">~</span> <span class="va">long</span>     , <span class="op">~</span> <span class="va">rad</span>,</span>
+<span>              <span class="st">"mel"</span> , <span class="op">-</span><span class="fl">37.8142354</span>, <span class="fl">144.9668884</span>, <span class="fl">45000</span>,</span>
+<span>              <span class="st">"syd"</span> , <span class="op">-</span><span class="fl">33.8386302</span>, <span class="fl">151.0310312</span>, <span class="fl">40000</span>,</span>
+<span>              <span class="st">"bri"</span> , <span class="op">-</span><span class="fl">27.4671551</span>, <span class="fl">153.0169995</span>, <span class="fl">15000</span>,</span>
+<span>              <span class="st">"ade"</span> , <span class="op">-</span><span class="fl">34.7894706</span>, <span class="fl">138.5687859</span>, <span class="fl">15000</span>,</span>
+<span>              <span class="st">"per"</span> , <span class="op">-</span><span class="fl">32.0212408</span>, <span class="fl">115.8735055</span>, <span class="fl">15000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The last thing we need to do for the setup is define some cosmetic options, so that each party is drawn in an appropriate colour. To spare the tedium, we’ll do this off screen. If you want to follow along, the files (and the source data) are in the <a href="https://www.github.com/cjdbarlow/cjdbarlow.github.io">Github repository</a>.</p>
 <p>Next time - some actual analysis!</p>
@@ -456,12 +424,7 @@ We’ll make this up.</li>
 </div>
 
 
-</section>
-</section>
-
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -540,24 +503,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/cjdbarlow\.au");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -592,64 +537,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
   const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
+    if (id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
         }
         return container.innerHTML
       } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
         return note.innerHTML;
       }
     } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -658,56 +563,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       instance.disable();
       let url = xref.getAttribute('href');
       let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
+      try { hash = new URL(url).hash; } catch {}
+      const id = hash.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note !== null) {
+        try {
+          const html = processXRef(id, note);
+          instance.setContent(html);
+        } finally {
+          instance.enable();
+          instance.show();
         }
       } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
+        // See if we can fetch this
+        fetch(url.split('#')[0])
         .then(res => res.text())
         .then(html => {
           const parser = new DOMParser();
           const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
+          const note = htmlDoc.getElementById(id);
           if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
+            const html = processXRef(id, note);
             instance.setContent(html);
           } 
         }).finally(() => {
@@ -785,32 +661,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -871,21 +721,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
-<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2020–2024 C. Jake Barlow</span><br> <span class="faux-block">Licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
+<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2020–2024 C. Jake Barlow</span><br><span class="faux-block">Licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
 </div>   
     <div class="nav-footer-center">
-<p><span class="faux-block"><i class="fa-solid fa-key" aria-label="key"></i> <a href="../public.pgp.txt">PGP public key</a> <br><br> <i class="fa-solid fa-fingerprint" aria-label="fingerprint"></i> Fingerprint:<br><span class="fingerprint">EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A</span></span></p>
+<p><span class="faux-block"><i class="fa-solid fa-key" aria-label="key"></i> <a href="../public.pgp.txt">PGP public key</a> <br><br><i class="fa-solid fa-fingerprint" aria-label="fingerprint"></i> Fingerprint:<br><span class="fingerprint">EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A</span></span></p>
 </div>
     <div class="nav-footer-right">
 <p><span class="faux-block">Built with <i class="fa-brands fa-r-project" aria-label="r-project"></i> and <a href="https://quarto.org/">Quarto</a></span></p>
 </div>
   </div>
 </footer>
-
-
 
 
 </body></html>
