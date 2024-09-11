@@ -6,7 +6,6 @@ description: |
 
 image: assets/rack/ai_design.png
 categories:
-  - woodwork
   - DIY
 
 lightbox: true
