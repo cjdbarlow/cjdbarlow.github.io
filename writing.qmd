@@ -1,5 +1,5 @@
 ---
-title: "Miscellany"
+title: "Notes"
 listing:
     contents: posts
     sort: "date desc"
