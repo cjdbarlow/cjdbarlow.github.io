@@ -17,7 +17,7 @@ website:
       - text: "Medicine"
         menu:
           - pages/part_one.qmd
-          - pages/bs.qmd
+          - pages/bn.qmd
       - text: "Statistics"
         menu:
         - text: "Bayesian Hypothesis Testing"
