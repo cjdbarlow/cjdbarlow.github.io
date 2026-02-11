@@ -1,0 +1,169 @@
+# Reference file for non-drug entries, like vital signs
+
+# Normal vital signs ranges by age (inclusive lower, exclusive upper for age_months)
+# Tidal volume is weight-based (mL/kg), not age-based
+vital_signs:
+  tidal_volume_ml_kg: { lower: 4, upper: 6 }
+  circulating_volume_ml_kg: 80
+  ranges:
+    - age_months: { lower: 0, upper: 3 }
+      sbp: { lower: 60, upper: 95 }
+      hr: { lower: 120, upper: 170 }
+      rr: { lower: 25, upper: 60 }
+    - age_months: { lower: 3, upper: 6 }
+      sbp: { lower: 60, upper: 105 }
+      hr: { lower: 115, upper: 170 }
+      rr: { lower: 25, upper: 60 }
+    - age_months: { lower: 6, upper: 12 }
+      sbp: { lower: 75, upper: 105 }
+      hr: { lower: 110, upper: 170 }
+      rr: { lower: 20, upper: 55 }
+    - age_months: { lower: 12, upper: 24 }
+      sbp: { lower: 70, upper: 105 }
+      hr: { lower: 105, upper: 150 }
+      rr: { lower: 20, upper: 45 }
+    - age_months: { lower: 24, upper: 48 }
+      sbp: { lower: 70, upper: 105 }
+      hr: { lower: 95, upper: 150 }
+      rr: { lower: 20, upper: 40 }
+    - age_months: { lower: 48, upper: 72 }
+      sbp: { lower: 75, upper: 110 }
+      hr: { lower: 80, upper: 150 }
+      rr: { lower: 17, upper: 30 }
+    - age_months: { lower: 72, upper: 96 }
+      sbp: { lower: 80, upper: 115 }
+      hr: { lower: 75, upper: 140 }
+      rr: { lower: 16, upper: 30 }
+    - age_months: { lower: 96, upper: 120 }
+      sbp: { lower: 80, upper: 115 }
+      hr: { lower: 70, upper: 130 }
+      rr: { lower: 16, upper: 30 }
+    - age_months: { lower: 120, upper: 144 }
+      sbp: { lower: 85, upper: 120 }
+      hr: { lower: 60, upper: 130 }
+      rr: { lower: 15, upper: 25 }
+    - age_months: { lower: 144, upper: 168 }
+      sbp: { lower: 90, upper: 120 }
+      hr: { lower: 65, upper: 120 }
+      rr: { lower: 15, upper: 25 }
+    - age_months: { lower: 168, upper: 192 }
+      sbp: { lower: 90, upper: 125 }
+      hr: { lower: 60, upper: 115 }
+      rr: { lower: 14, upper: 25 }
+    - age_months: { lower: 192, upper: 204 }
+      sbp: { lower: 90, upper: 130 }
+      hr: { lower: 60, upper: 115 }
+      rr: { lower: 14, upper: 25 }
+    - age_months: { lower: 204, upper: 216 }
+      sbp: { lower: 90, upper: 135 }
+      hr: { lower: 60, upper: 115 }
+      rr: { lower: 14, upper: 25 }
+
+# Discrete stops for the age ring on the select page
+# One entry per stop. Increments are variable.
+# TODO: Replace height with actual WHO/CDC 50th centile values
+age_stops:
+  - age_months: 0
+    label: "Neonate"
+    weight: 3
+    height: 50
+  - age_months: 1
+    label: "1 month"
+    weight: 4.5 # TODO: Check
+    height: 55
+  - age_months: 2
+    label: "2 months"
+    weight: 5.5 # TODO: Check
+    height: 58
+  - age_months: 3
+    label: "3 months"
+    weight: 6
+    height: 61
+  - age_months: 6
+    label: "6 months"
+    weight: 7
+    height: 67
+  - age_months: 9
+    label: "9 months"
+    weight: 9.0 # TODO: Check
+    height: 72
+  - age_months: 12
+    label: "1"
+    weight: 10
+    height: 75
+  - age_months: 18
+    label: "18 months"
+    weight: 12
+    height: 82
+  - age_months: 24
+    label: "2"
+    weight: 13
+    height: 86
+  - age_months: 36
+    label: "3"
+    weight: 14.5
+    height: 95
+  - age_months: 48
+    label: "4"
+    weight: 17
+    height: 102
+  - age_months: 60
+    label: "5"
+    weight: 18.5
+    height: 109
+  - age_months: 72
+    label: "6"
+    weight: 21
+    height: 116
+  - age_months: 84
+    label: "7"
+    weight: 23.0
+    height: 122
+  - age_months: 96
+    label: "8"
+    weight: 25
+    height: 128
+  - age_months: 108
+    label: "9"
+    weight: 28.5
+    height: 133
+  - age_months: 120
+    label: "10"
+    weight: 33
+    height: 138
+  - age_months: 132
+    label: "11"
+    weight: 37
+    height: 144
+  - age_months: 144
+    label: "12"
+    weight: 40
+    height: 150
+  - age_months: 156
+    label: "13"
+    weight: 45.0
+    height: 157
+  - age_months: 168
+    label: "14"
+    weight: 50
+    height: 163
+  - age_months: 180
+    label: "15"
+    weight: 55.0 # TODO: Check
+    height: 167
+  - age_months: 192
+    label: "16"
+    weight: 60
+    height: 170
+  - age_months: 204
+    label: "17"
+    weight: 65
+    height: 172
+  - age_months: 216
+    label: "18"
+    weight: 65
+    height: 173
+  - age_months: 240
+    label: ">18"
+    weight: 65
+    height: 173

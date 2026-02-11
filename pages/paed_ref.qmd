@@ -1,0 +1,276 @@
+---
+title: "Paediatric Dose Reference"
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+This page contains a series of formulas and references for paediatric vital signs, drug doses, and equipment sizing.
+
+:::column-margin
+![](/assets/millipede_smol.jpg){fig-alt="Millipaed app logo" fig-align="center"}
+:::
+
+With the exception of formulas, the source data for these tables is the source data for the Millipaed app — what you see here is exactly what the app uses. This makes it easy to spot any errors in the underlying values, as well as doubling as a standalone reference. Consequently, the tables are auto-generated and a bit rough around the edges — apologies for the formatting.
+
+References may vary with the values (particularly maximum doses) they list, understandably, as they are a product of the context they were developed for. I have endeavored to provide sensible defaults, but this does not replace the clinical judgement of the provider caring for the patient in front of them.
+
+## Formulas
+
+Formulas are used to calculate some values, these include:
+
+:::column-margin
+For completeness, here is the Dart code of the formulas:
+```
+// ETT cuffed size (mm): age_years / 4 + 3.5, rounded down to nearest 0.5
+double _ettCuffedSize(double ageMonths) {
+  final raw = ageMonths / 12 / 4 + 3.5;
+  return (raw * 2).floorToDouble() / 2;
+}
+
+// ETT ID x 2 - 2
+double _ettSuctionSize(double ageMonths) {
+  final ettSize = ageMonths / 12 / 4 + 3.5;
+  final raw = ettSize * 2 - 2;
+  return (raw * 2).floorToDouble() / 2;
+}
+
+// Age/2 + 12
+double _ettDepthOral(double ageMonths) {
+  final raw = ageMonths / 12 / 2 + 12;
+  return raw.ceilToDouble();
+}
+
+// Age/2 + 15
+double _ettDepthNasal(double ageMonths) {
+  final raw = ageMonths / 12 / 2 + 15;
+  return raw.ceilToDouble();
+}
+
+// ETT ID x 2
+double _idcSize(double ageMonths) {
+  final ettSize = ageMonths / 12 / 4 + 3.5;
+  final raw = ettSize * 2;
+  return raw.floorToDouble();
+}
+
+// ETT ID x 4
+double _iccSize(double ageMonths) {
+  final ettSize = ageMonths / 12 / 4 + 3.5;
+  final raw = ettSize * 4;
+  return raw.floorToDouble();
+}
+
+```
+:::
+
+* Cuffed ETT size (mm): ${Age \over 4} + 3.5$\
+Rounded down.
+* Airway suction catheter size (Fr): $ETT \ Size \times 2 - 2$
+* Oral ETT depth (cm): ${Age \over 2} + 12$\
+Rounded up.
+* Nasal ETT depth (cm): ${Age \over 2} + 15$\
+Rounded up.
+* IDC size (Fr): $ETT \ Size \times 2$
+* ICC size (Fr): $ETT \ Size \times 4$
+
+
+```{r}
+#| label: setup
+
+library(yaml)
+
+data = yaml::read_yaml("../assets/millipaed/item_reference.yaml")
+unit_data = yaml::read_yaml("../assets/millipaed/unit_reference.yaml")
+
+# Convert a month value to a human-readable label
+fmt_months = function(m) {
+  if (m == 0) return("Birth")
+  if (m < 24) return(paste0(m, " mo"))
+  y = m %/% 12
+  rem = m %% 12
+  if (rem == 0) return(paste0(y, " yr"))
+  paste0(y, "y ", rem, "mo")
+}
+
+# Convert a month range to a human-readable label
+months_to_label = function(lower, upper) {
+  if (is.null(lower) || is.null(upper)) return("All ages")
+  paste(fmt_months(lower), "-", fmt_months(upper))
+}
+
+# Check if a dose entry uses a formula
+has_formula = function(dose_entry) {
+  !is.null(dose_entry$formula)
+}
+
+# Format a dose range for display
+format_dose_range = function(lower, upper, unit) {
+  if (is.null(lower) || is.null(upper)) return("")
+  unit_str = if (nchar(unit) > 0) paste0(" ", unit) else ""
+  if (lower == upper) {
+    paste0(lower, unit_str)
+  } else {
+    paste0(lower, " - ", upper, unit_str)
+  }
+}
+
+# Parse a group into a flat data frame
+parse_group = function(group_name, group_data) {
+  rows = list()
+
+  for (item_name in names(group_data$items)) {
+    item = group_data$items[[item_name]]
+    for (dose in item$doses) {
+      if (has_formula(dose)) next
+
+      range_label = if (!is.null(dose$age_months)) {
+        months_to_label(dose$age_months$lower, dose$age_months$upper)
+      } else if (!is.null(dose$weight_kg)) {
+        paste0(dose$weight_kg$lower, " - ", dose$weight_kg$upper, " kg")
+      } else {
+        "All ages"
+      }
+
+      max_parts = c()
+      base_unit = sub("/kg", "", dose$unit)
+      if (!is.null(dose$max)) {
+        max_parts = c(max_parts, paste0(dose$max, " ", base_unit))
+      }
+      if (!is.null(dose$max_per_kg)) {
+        max_parts = c(max_parts, paste0(dose$max_per_kg, " ", dose$unit))
+      }
+      max_str = paste(max_parts, collapse = "; ")
+
+      dilution_str = if (!is.null(item$standard_dilution)) {
+        paste0(item$standard_dilution$value, " ", item$standard_dilution$unit)
+      } else {
+        ""
+      }
+
+      rows = c(rows, list(data.frame(
+        Item = item_name,
+        `Standard Dilution` = dilution_str,
+        Range = range_label,
+        Dose = format_dose_range(dose$lower, dose$upper, dose$unit),
+        `Max Dose` = max_str,
+        check.names = FALSE,
+        stringsAsFactors = FALSE
+      )))
+    }
+  }
+
+  if (length(rows) == 0) return(data.frame())
+  do.call(rbind, rows)
+}
+
+# Filter groups by type
+drug_groups = data[sapply(data, \(g) g$type == "drug")]
+equipment_groups = data[sapply(data, \(g) g$type == "equipment")]
+```
+
+## Median Values by Age
+
+This table lists median height and weight, by sex, for the Australian population.
+
+```{r}
+rows = lapply(unit_data$age_stops, function(s) {
+  data.frame(
+    `Age (months)` = s$age_months,
+    Label = s$label,
+    `Weight (kg)` = s$weight,
+    `Height (cm)` = s$height,
+    check.names = FALSE,
+    stringsAsFactors = FALSE
+  )
+})
+
+df = do.call(rbind, rows)
+align = c("l", rep("r", ncol(df) - 1))
+knitr::kable(df, align = align)
+```
+
+## Vital Signs
+
+### Scalars
+
+```{r}
+#| results: asis
+
+vs = unit_data$vital_signs
+
+cat("- **Tidal Volume:** ", vs$tidal_volume_ml_kg$lower, " - ", vs$tidal_volume_ml_kg$upper,  " mL/kg\n", sep = "")
+cat("- **Circulating Volume:** ", vs$circulating_volume_ml_kg, " mL/kg\n\n", sep = "")
+```
+
+### Ranges
+
+```{r}
+#| results: asis
+
+vs = unit_data$vital_signs
+
+rows = lapply(vs$ranges, function(r) {
+  data.frame(
+    `Age (months)` = paste(r$age_months$lower, "-", r$age_months$upper),
+    `Age (label)` = months_to_label(r$age_months$lower, r$age_months$upper),
+    SBP = paste(r$sbp$lower, "-", r$sbp$upper),
+    HR = paste(r$hr$lower, "-", r$hr$upper),
+    RR = paste(r$rr$lower, "-", r$rr$upper),
+    check.names = FALSE,
+    stringsAsFactors = FALSE
+  )
+})
+
+df = do.call(rbind, rows)
+align = c("l", rep("r", ncol(df) - 1))
+print(knitr::kable(df, align = align))
+```
+
+## Drug Dosing
+
+```{r}
+#| results: asis
+
+for (group_name in names(drug_groups)) {
+  group = drug_groups[[group_name]]
+  df = parse_group(group_name, group)
+
+  if (nrow(df) > 0) {
+    cat("\n### ", group_name, "\n\n", sep = "")
+    align = c("l", rep("r", ncol(df) - 1))
+    print(knitr::kable(df, align = align))
+    cat("\n\n")
+  }
+}
+```
+
+## Equipment
+
+```{r}
+#| results: asis
+
+for (group_name in names(equipment_groups)) {
+  group = equipment_groups[[group_name]]
+  df = parse_group(group_name, group)
+
+  if (nrow(df) > 0) {
+    cat("\n### ", group_name, "\n\n", sep = "")
+    align = c("l", rep("r", ncol(df) - 1))
+    print(knitr::kable(df, align = align))
+    cat("\n\n")
+  }
+}
+```
+
+---
+
+## References
+
+1. Children’s Health Queensland Hospital and Health Service. [Children's Resuscitation Emergency Drug Dosage (CREDD)](/assets/millipaed/credd.pdf). 3rd Edition. Queensland Government.
+2. Perth Children's Hospital. [Medication Monographs](https://pch.health.wa.gov.au/For-health-professionals/Medication-monographs). Government of Western Australia Child and Adolescent Health Service.\
+Used monographs include: [Adrenaline](/assets/millipaed/Adrenaline.pdf), [Atracurium](/assets/millipaed/Atracurium.pdf), [Glyceryl Trinitrate](/assets/millipaed/GlycerylTrinitrate.pdf), [Glycopyrronium](/assets/millipaed/Glycopyrronium.pdf), [Metaraminol](/assets/millipaed/Metaraminol.pdf), [Midazolam](/assets/millipaed/Midazolam.pdf), [Milrinone](/assets/millipaed/Milrinone.pdf), [Morphine](/assets/millipaed/Morphine.pdf), [Neostigmine](/assets/millipaed/Neostigmine.pdf), [Noradrenaline](/assets/millipaed/Noradrenaline.pdf), [Oxycodone](/assets/millipaed/Oxycodone.pdf), [Paracetamol](/assets/millipaed/Paracetamol.pdf), [Parecoxib](/assets/millipaed/parecoxib.pdf), [Sodium Nitroprusside](/assets/millipaed/SodiumNitroprusside.pdf), [Sugammadex](/assets/millipaed/Sugammadex.pdf), [Suxamethonium](/assets/millipaed/suxamethonium_anmf.pdf).
+3. Royal Children's Hospital. [Sedative Premedication Guidelines](/assets/millipaed/rch_sedative_premed.pdf). Royal Children's Hospital, Melbourne.
+4. Cooksley, D. The Cooksley Cards. 2021 edition.\
+IYKYK.
