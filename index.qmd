@@ -8,6 +8,6 @@ toc-location: right #We don't have a toc, but this avoids a bug: https://github.
 title-block-banner: false
 ---
  
-Cardiac anaesthesia and Intensive Care ~~registrar~~ fellow currently living and working in Auckland, New Zealand. I like everything at the pointy end of medicine, and have eclectic interests across medical education, physical computing and biotech, and statistics and data visualisation.
+Cardiac anaesthetist and intensivist from Melbourne, Australia. I like everything at the pointy end of medicine, and have eclectic interests across medical education, software, physical computing and biotech, and statistics and data visualisation.
 
 I **like doing things**, so please feel free to **[contact me](mailto:hello@cjdbarlow.au)** about projects, ideas, or hairbrained schemes where I could have a positive impact: medical (cardiac ++, trauma +), humanitarian, challenging (but tractable), educational, stats (prediction modelling, Bayesian, and data visualisation); or some combination of the above.
