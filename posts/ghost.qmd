@@ -1,0 +1,143 @@
+---
+title: "Ghost Listeners and the Shell"
+date: 2026-02-15
+description: |
+  The server lights are on, but nobody is home.
+image: assets/ghost/ghost.jpg
+categories:
+  - diy
+  - tech
+
+execute:
+    warning: false
+    message: false
+    echo: true
+    freeze: auto 
+---
+
+
+## The Problem
+
+For the last couple of years, I have run a small home server on [Unraid](https://unraid.net/) that hosts, among other things, an [SFTPGo](https://github.com/drakkan/sftpgo) container which synchronises [DEVONthink](https://www.devontechnologies.com/apps/devonthink) databases over WebDAV. DEVONThink is a neat little archival program with a very good web clipper, and keeping it synchronised across devices was a key goal, which SFTPGo performed admirably.
+
+Recently, however, my [Zotero](https://www.zotero.org/) library passed the 2 GB threshold[^1], and given I had several TB of empty hard drive space idling in the hallway cupboard, it seemed like a good time to move to self-hosting all my research documents, too. I was familiar with SFTPGo, Zotero supports synchronisation over WebDAV, all I need to do is give Zotero an SFTPGo account to connect to and we'd be sorted. Twenty minutes, tops. Nothing could possibly go wrong[^2].
+
+[^1]: Although I still pay them! It is a fantastic reference manager, and I am a strong believer in open-source science, and open-source tooling is a critical part of that.
+
+[^2]: Is there a lesson here? Yes. Will I learn it? Almost certainly not.
+
+See, SFTPGo worked perfectly as a standalone Docker container — right up until I needed HTTPS. Zotero for iOS (but **not** MacOS[^3]) requires a secure connection, and individual Docker containers can only be accessed by port number, and I have given that port to [Nextcloud](https://nextcloud.com/) - and *that* is both mission-critical for a lot of my work and *highly*temperamental, and so was going to be left alone.
+
+[^3]: This [seems to be](https://www.zotero.org/support/kb/webdav_and_https) an operating system limitation rather than a design decision.
+
+Since I already use [Tailscale](https://tailscale.com/) across all my devices, the best solution that I found was replacing the SFTPGo container with a Docker Compose stack pairing SFTPGo with a Tailscale sidecar. The sidecar joins the tailnet, gets a MagicDNS hostname with a Let's Encrypt certificate, and uses `tailscale serve` to reverse-proxy HTTPS traffic to SFTPGo's WebDAV port on `localhost`. This gives Zotero the SSL connection that it needs, and avoids exposing anything to the public internet[^4]. The problem: after two to three days of operation, both DEVONthink and Zotero would report sync failures with 502 errors. Restarting the Compose stack (`docker compose down && docker compose up -d`) would fix it, and everything would work for another few days before failing again. This was a huge pain - how long it would take between failures was variable, and I wouldn't necessarily notice until I went looking for a document that was supposed to have synced, but didn't. I found a few scattered forum posts complaining of similar issues, but no proffered solutions. 
+
+[^4]: Although this seems to be the most commonly recommended solution, I'm loathe to run a traditional reverse proxy like Nginx for this. I'm not a network engineer, and the idea exposing parts of my server to the public internet — even behind a proxy — is not something that appeals.
+
+
+## First Suspect: The Defender
+
+SFTPGo has a built-in brute-force protection system called the *defender*, which scores failed login attempts against connecting IP addresses and bans them once a threshold is exceeded. Because `tailscale serve` proxies all traffic through localhost, every connection — from every device, every application — appears to SFTPGo as originating from `127.0.0.1`. Basically, all failed authentication attempts will get scored against the sidecar IP.
+
+Grepping the logs confirmed the defender was scoring against localhost:
+
+```json
+{
+  "sender":"defender",
+  "client_ip":"127.0.0.1",
+  "protocol":"DAV",
+  "event":"LoginFailed",
+  "increase_score_by":1,
+  "score":3
+}
+```
+
+This looked... implausible? Maybe, over a few days, enough failed attempts (particularly with background retries) could push the score past the ban threshold of 15, at which point all traffic would be blocked. It felt unlikely, but worth fixing anyway. The fix was straightforward — create a safelist file to exempt localhost from the defender:
+
+```json
+{
+  "addresses": ["127.0.0.1", "::1"],
+  "networks": ["100.64.0.0/10"]
+}
+```
+
+
+## It Strikes Again
+
+A few days later, the service broke, and this time I remembered to run diagnostics from the Tailscale sidecar before rebooting it:
+
+```bash
+$ docker exec tailscale-sftpgo-sidecar wget -qO- http://127.0.0.1:10080/
+wget: can't connect to remote host (127.0.0.1): Connection refused
+```
+
+Connection *refused*. Not rejected, not timed out. Nothing was listening on port 10080. I checked what was actually bound in the shared network namespace:
+
+```bash
+$ docker exec tailscale-sftpgo-sidecar netstat -tulpn
+Proto  Local Address     State   PID/Program name
+tcp    127.0.0.11:34327  LISTEN  -
+tcp    0.0.0.0:65416     LISTEN  15/tailscaled
+```
+
+SFTPGo's ports — WebDAV (10080), HTTP admin (8080), SFTP (2022), FTP (2121) — were all gone. This wasn't just WebDAV - nothing was listening on any port! Yet the SFTPGo container was reporting as `Up`, and `docker logs` showed it happily churning through its event manager loop every ten minutes as though nothing was wrong. The process was alive; the listeners were dead.
+
+Looking at the startup logs from this boot cycle, SFTPGo had initialised all its bindings successfully:
+
+```
+server listener registered, address: [::]:10080 TLS enabled: false
+server listener registered, address: [::]:2022
+Listening... [::]:2121
+server listener registered, address: [::]:8080 TLS enabled: false
+```
+
+And it had been serving WebDAV requests normally — DEVONthink connections are clearly visible in the logs for hours after startup. At some point, all four listeners silently vanished while the main process continued running.
+
+## The Cause
+
+I have no idea.
+
+From my understanding, the SFTPGo container doesn't have its own network stack — it uses the Tailscale sidecar's. SFTPGo doesn't error, and has no reason to believe anything is wrong. It appears that after some amount of time it's listeners simply disappear from under it, leaving the application running but unable to accept connections. This points to a problem below the application layer, and given that SFTPGo was stable before the sidecar, I’d bet the root cause lies there.
+
+## The IT Crowd Solution
+
+Since the Tailscale sidecar remains healthy (the node stays on the tailnet and responds to pings even when SFTPGo's listeners are gone), only the SFTPGo container needs to be restarted. A health check alone isn't sufficient — Docker health checks mark a container as unhealthy but don't trigger a restart.
+
+The approach I settled on is to add a monitor container within the same Compose stack that periodically tests whether SFTPGo's WebDAV port is responding. It gives it one chance, then and restarts the container if it isn't:
+
+```yaml
+monitor:
+  image: docker:cli
+  container_name: sftpgo-monitor
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  entrypoint: /bin/sh
+  command: >
+    -c "
+    sleep 120;
+    while true; do
+      sleep 300;
+      if docker exec tailscale-sftpgo-sidecar wget -q -O /dev/null
+        -T 5 http://127.0.0.1:10080/ 2>&1 | grep -q 'refused'; then
+        sleep 30;
+        if docker exec tailscale-sftpgo-sidecar wget -q -O /dev/null
+          -T 5 http://127.0.0.1:10080/ 2>&1 | grep -q 'refused'; then
+          docker restart SFTPGo;
+          sleep 120;
+        fi;
+      fi;
+    done
+    "
+  restart: unless-stopped
+```
+
+The monitor uses `docker exec` to run `wget` from inside the Tailscale sidecar container (which, importantly, shares the network namespace and has `wget` available) against SFTPGo's WebDAV port. A 401 response means the service is alive; "connection refused" means the listeners have died. A 30-second recheck avoids restarting on transient glitches, and a two-minute cooldown after restart gives SFTPGo time to reinitialise.
+
+It's not elegant, but it works. It's also self-contained within the Compose stack, and the overhead of a `docker:cli` container polling every five minutes is negligible. This has now run for over a month, and I have had no further issues with synchronising either DEVONThink or Zotero.
+
+
+## Lessons
+
+The most interesting aspect of this problem was the mismatch between the container's reported state and its actual functionality. `docker ps` showed the container as running; the process was logging normally; no errors appeared anywhere. Failure was only visible when testing the port directly from within the shared network namespace.
+
+If you're running a similar sidecar architecture and experiencing intermittent 502 errors that resolve with restarts, check what's actually listening. The container being "up" doesn't mean the service is serving.
