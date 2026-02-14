@@ -657,12 +657,12 @@ Fluids:
     resuscitation: true
     perioperative: true
     analgesia: false
-  flip: true
+  flip: false
   colour:
     base: "#64b4dc"
     highlight: "#96d2eb"
   items:
-    Crystalloid Bolus:
+    Crystalloid (bolus):
       reference:
         unit: weight_kg
       doses:
@@ -731,7 +731,7 @@ Vasoactives:
       reference:
         unit: weight_kg
       doses:
-        - unit: "mcg/kg"
+        - unit: "mcg/kg/min"
           lower: 0.05
           upper: 0.5
     Noradrenaline:
@@ -744,7 +744,7 @@ Vasoactives:
         - unit: "mcg/kg/min"
           lower: 0.01
           upper: 1
-    Glyceryl Trinitrate:
+    GTN:
       standard_dilution:
         value: 600
         unit: "mcg/mL"
@@ -754,7 +754,7 @@ Vasoactives:
         - unit: "mcg/kg/min"
           lower: 0.2
           upper: 5
-    Sodium Nitroprusside:
+    SNP:
       standard_dilution:
         value: 500
         unit: "mcg/mL"
@@ -787,6 +787,9 @@ Analgesia:
     highlight: "#c8c8c8"
   items:
     Paracetamol:
+      standard_dilution:
+        value: 10
+        unit: "mg/mL"
       reference:
         unit: weight_kg
       doses:
@@ -823,6 +826,9 @@ Antiemetics:
     highlight: "#fccaaa"
   items:
     Ondansetron:
+      standard_dilution:
+        value: 2
+        unit: "mg/mL"
       reference:
         unit: weight_kg
       doses:
@@ -831,6 +837,9 @@ Antiemetics:
           upper: 0.1
           max: 8
     Metoclopramide:
+      standard_dilution:
+        value: 10
+        unit: "mg/mL"
       reference:
         unit: weight_kg
       doses:
@@ -839,6 +848,9 @@ Antiemetics:
           upper: 0.15
           max: 20
     Dexamethasone:
+      standard_dilution:
+        value: 8
+        unit: "mg/mL"
       reference:
         unit: weight_kg
       doses:
@@ -1055,6 +1067,14 @@ Emergency:
     base: "#e65100"
     highlight: "#ff8a50"
   items:
+    Synchronized Cardioversion:
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "J/kg"
+          lower: 1
+          upper: 2
+          max: 200
     Adrenaline (IM):
       standard_dilution:
         value: 1000
@@ -1098,7 +1118,29 @@ Emergency:
           unit: "mcg"
           lower: 500
           upper: 500
-    Hydrocortisone:
+    Intralipid 20% (bolus):
+      standard_dilution:
+        value: 0.2
+        unit: "g/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mL/kg"
+          lower: 1.5
+          upper: 1.5
+          max_per_kg: 12
+    Intralipid 20% (infusion):
+      standard_dilution:
+        value: 0.2
+        unit: "g/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mL/kg"
+          lower: 0.25
+          upper: 0.5
+          max_per_kg: 12
+    Dantrolene:
       standard_dilution:
         value: 50
         unit: "mg/mL"
@@ -1106,17 +1148,8 @@ Emergency:
         unit: weight_kg
       doses:
         - unit: "mg/kg"
-          lower: 4
-          upper: 4
-          max: 100
-    Synchronized Cardioversion:
-      reference:
-        unit: weight_kg
-      doses:
-        - unit: "J/kg"
-          lower: 1
-          upper: 2
-          max: 200
+          lower: 2.5
+          upper: 10   
     Atropine:
       standard_dilution:
         value: 100
@@ -1128,6 +1161,27 @@ Emergency:
           lower: 10
           upper: 20
           max: 600
+    Hydrocortisone:
+      standard_dilution:
+        value: 50
+        unit: "mg/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mg/kg"
+          lower: 4
+          upper: 4
+          max: 100
+    Salbutamol (IV):
+      standard_dilution:
+        value: 100
+        unit: "mcg/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mcg/kg/min"
+          lower: 1
+          upper: 5
     Adenosine:
       standard_dilution:
         value: 3
@@ -1139,13 +1193,6 @@ Emergency:
           lower: 0.1
           upper: 0.3
           max: 12
-    Calcium Chloride 10%:
-      reference:
-        unit: weight_kg
-      doses:
-        - unit: "mL/kg"
-          lower: 0.2
-          upper: 0.2
     Tranexamic Acid:
       standard_dilution:
         value: 100
@@ -1164,6 +1211,13 @@ Emergency:
         - unit: "mL/kg"
           lower: 2
           upper: 2
+    Calcium Chloride 10%:
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mL/kg"
+          lower: 0.2
+          upper: 0.2
     Magnesium Sulfate:
       standard_dilution:
         value: 0.2
@@ -1175,16 +1229,6 @@ Emergency:
           lower: 0.2
           upper: 0.2
           max: 10
-    Salbutamol (IV):
-      standard_dilution:
-        value: 100
-        unit: "mcg/mL"
-      reference:
-        unit: weight_kg
-      doses:
-        - unit: "mcg/kg/min"
-          lower: 1
-          upper: 5
 
 Neuro:
   type: drug
@@ -1237,4 +1281,3 @@ Neuro:
           lower: 1
           upper: 3
           max: 150
-
