@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.30">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../assets/favicon32x32.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e4b8024a137a066106f64e849fce2999.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-9e15f8fb9e1f2f288bfbe28f6ca11029.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-bdac2dc4ab577a9c65f6ab36912a56d0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-c43ee2b62abe52577305f7200a65d2bf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -120,7 +121,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">C. Jake Barlow</span>
@@ -277,30 +279,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="first-suspect-the-defender">First Suspect: The Defender</h2>
 <p>SFTPGo has a built-in brute-force protection system called the <em>defender</em>, which scores failed login attempts against connecting IP addresses and bans them once a threshold is exceeded. Because <code>tailscale serve</code> proxies all traffic through localhost, every connection — from every device, every application — appears to SFTPGo as originating from <code>127.0.0.1</code>. Basically, all failed authentication attempts will get scored against the sidecar IP.</p>
 <p>Grepping the logs confirmed the defender was scoring against localhost:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"sender"</span><span class="fu">:</span><span class="st">"defender"</span><span class="fu">,</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"client_ip"</span><span class="fu">:</span><span class="st">"127.0.0.1"</span><span class="fu">,</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"protocol"</span><span class="fu">:</span><span class="st">"DAV"</span><span class="fu">,</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"event"</span><span class="fu">:</span><span class="st">"LoginFailed"</span><span class="fu">,</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"increase_score_by"</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"score"</span><span class="fu">:</span><span class="dv">3</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This looked… implausible? Maybe, over a few days, enough failed attempts (particularly with background retries) could push the score past the ban threshold of 15, at which point all traffic would be blocked. It felt unlikely, but worth fixing anyway. The fix was straightforward — create a safelist file to exempt localhost from the defender:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"addresses"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"127.0.0.1"</span><span class="ot">,</span> <span class="st">"::1"</span><span class="ot">]</span><span class="fu">,</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"networks"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"100.64.0.0/10"</span><span class="ot">]</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="it-strikes-again" class="level2">
 <h2 class="anchored" data-anchor-id="it-strikes-again">It Strikes Again</h2>
 <p>A few days later, the service broke, and this time I remembered to run diagnostics from the Tailscale sidecar before rebooting it:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker exec tailscale-sftpgo-sidecar wget <span class="at">-qO-</span> http://127.0.0.1:10080/</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">wget:</span> can<span class="st">'t connect to remote host (127.0.0.1): Connection refused</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker exec tailscale-sftpgo-sidecar wget <span class="at">-qO-</span> http://127.0.0.1:10080/</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">wget:</span> can<span class="st">'t connect to remote host (127.0.0.1): Connection refused</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Connection <em>refused</em>. Not rejected, not timed out. Nothing was listening on port 10080. I checked what was actually bound in the shared network namespace:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker exec tailscale-sftpgo-sidecar netstat <span class="at">-tulpn</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker exec tailscale-sftpgo-sidecar netstat <span class="at">-tulpn</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Proto</span>  Local Address     State   PID/Program name</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tcp</span>    127.0.0.11:34327  LISTEN  <span class="at">-</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">tcp</span>    0.0.0.0:65416     LISTEN  15/tailscaled</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">tcp</span>    0.0.0.0:65416     LISTEN  15/tailscaled</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>SFTPGo’s ports — WebDAV (10080), HTTP admin (8080), SFTP (2022), FTP (2121) — were all gone. This wasn’t just WebDAV - nothing was listening on any port! Yet the SFTPGo container was reporting as <code>Up</code>, and <code>docker logs</code> showed it happily churning through its event manager loop every ten minutes as though nothing was wrong. The process was alive; the listeners were dead.</p>
 <p>Looking at the startup logs from this boot cycle, SFTPGo had initialised all its bindings successfully:</p>
 <pre><code>server listener registered, address: [::]:10080 TLS enabled: false
@@ -318,7 +320,7 @@ server listener registered, address: [::]:8080 TLS enabled: false</code></pre>
 <h2 class="anchored" data-anchor-id="the-it-crowd-solution">The IT Crowd Solution</h2>
 <p>Since the Tailscale sidecar remains healthy (the node stays on the tailnet and responds to pings even when SFTPGo’s listeners are gone), only the SFTPGo container needs to be restarted. A health check alone isn’t sufficient — Docker health checks mark a container as unhealthy but don’t trigger a restart.</p>
 <p>The approach I settled on is to add a monitor container within the same Compose stack that periodically tests whether SFTPGo’s WebDAV port is responding. It gives it one chance, then and restarts the container if it isn’t:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">monitor</span><span class="kw">:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">monitor</span><span class="kw">:</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> docker:cli</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> sftpgo-monitor</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">volumes</span><span class="kw">:</span></span>
@@ -340,7 +342,7 @@ server listener registered, address: [::]:8080 TLS enabled: false</code></pre>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>      fi;</span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    done</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    "</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> unless-stopped</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> unless-stopped</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The monitor uses <code>docker exec</code> to run <code>wget</code> from inside the Tailscale sidecar container (which, importantly, shares the network namespace and has <code>wget</code> available) against SFTPGo’s WebDAV port. A 401 response means the service is alive; “connection refused” means the listeners have died. A 30-second recheck avoids restarting on transient glitches, and a two-minute cooldown after restart gives SFTPGo time to reinitialise.</p>
 <p>It’s not elegant, but it works. It’s also self-contained within the Compose stack, and the overhead of a <code>docker:cli</code> container polling every five minutes is negligible. This has now run for over a month, and I have had no further issues with synchronising either DEVONThink or Zotero.</p>
 </section>
@@ -405,13 +407,14 @@ server listener registered, address: [::]:8080 TLS enabled: false</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
