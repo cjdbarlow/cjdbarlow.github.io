@@ -1198,6 +1198,7 @@ Emergency:
       doses:
         - unit: "mL/kg"
           lower: 2
+          upper: 2
     Calcium Chloride 10%:
       reference:
         unit: weight_kg
@@ -1205,7 +1206,6 @@ Emergency:
         - unit: "mL/kg"
           lower: 0.2
           upper: 0.2
-          upper: 2
     Magnesium Sulfate:
       standard_dilution:
         value: 0.2
