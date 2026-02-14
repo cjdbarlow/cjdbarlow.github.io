@@ -1,7 +1,7 @@
 # Drug and equipment reference data
 # Group name is the top-level key; items nested within each group
 
-Airway:
+Equipment:
   type: equipment
   category:
     resuscitation: false
