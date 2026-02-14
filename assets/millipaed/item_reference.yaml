@@ -657,7 +657,7 @@ Fluids:
     resuscitation: true
     perioperative: true
     analgesia: false
-  flip: true
+  flip: false
   colour:
     base: "#64b4dc"
     highlight: "#96d2eb"
@@ -731,7 +731,7 @@ Vasoactives:
       reference:
         unit: weight_kg
       doses:
-        - unit: "mcg/kg"
+        - unit: "mcg/kg/min"
           lower: 0.05
           upper: 0.5
     Noradrenaline:
@@ -744,7 +744,7 @@ Vasoactives:
         - unit: "mcg/kg/min"
           lower: 0.01
           upper: 1
-    Glyceryl Trinitrate:
+    GTN:
       standard_dilution:
         value: 600
         unit: "mcg/mL"
@@ -754,7 +754,7 @@ Vasoactives:
         - unit: "mcg/kg/min"
           lower: 0.2
           upper: 5
-    Sodium Nitroprusside:
+    SNP:
       standard_dilution:
         value: 500
         unit: "mcg/mL"
@@ -787,6 +787,9 @@ Analgesia:
     highlight: "#c8c8c8"
   items:
     Paracetamol:
+      standard_dilution:
+        value: 10
+        unit: "mg/mL"
       reference:
         unit: weight_kg
       doses:
@@ -823,6 +826,9 @@ Antiemetics:
     highlight: "#fccaaa"
   items:
     Ondansetron:
+      standard_dilution:
+        value: 2
+        unit: "mg/mL"
       reference:
         unit: weight_kg
       doses:
@@ -831,6 +837,9 @@ Antiemetics:
           upper: 0.1
           max: 8
     Metoclopramide:
+      standard_dilution:
+        value: 10
+        unit: "mg/mL"
       reference:
         unit: weight_kg
       doses:
@@ -839,6 +848,9 @@ Antiemetics:
           upper: 0.15
           max: 20
     Dexamethasone:
+      standard_dilution:
+        value: 8
+        unit: "mg/mL"
       reference:
         unit: weight_kg
       doses:
