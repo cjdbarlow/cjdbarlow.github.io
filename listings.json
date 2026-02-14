@@ -1,7 +1,8 @@
 [
   {
-    "listing": "/atom.html",
+    "listing": "/writing.html",
     "items": [
+      "/posts/ghost.html",
       "/posts/hdi.html",
       "/posts/shoe-rack.html",
       "/posts/exam-reflections.html",
@@ -12,8 +13,9 @@
     ]
   },
   {
-    "listing": "/writing.html",
+    "listing": "/atom.html",
     "items": [
+      "/posts/ghost.html",
       "/posts/hdi.html",
       "/posts/shoe-rack.html",
       "/posts/exam-reflections.html",
