@@ -411,6 +411,25 @@ Induction:
         - unit: "mg/kg"
           lower: 1
           upper: 2
+    Etomidate:
+      standard_dilution:
+        value: 2
+        unit: "mg/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - age_months:
+            lower: 0
+            upper: 120
+          unit: "mg/kg"
+          lower: 0
+          upper: 0
+        - age_months:
+            lower: 120
+            upper: 216
+          unit: "mg/kg"
+          lower: 0.2
+          upper: 0.6
     Fentanyl:
       standard_dilution:
         value: 10
@@ -421,6 +440,16 @@ Induction:
         - unit: "mcg/kg"
           lower: 1
           upper: 5
+    Alfentanil:
+      standard_dilution:
+        value: 500
+        unit: "mcg/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mcg/kg"
+          lower: 20
+          upper: 50
 
 Relaxants:
   type: drug
@@ -526,16 +555,6 @@ Opioids:
         - unit: "mcg/kg"
           lower: 1
           upper: 3
-    Alfentanil:
-      standard_dilution:
-        value: 500
-        unit: "mcg/mL"
-      reference:
-        unit: weight_kg
-      doses:
-        - unit: "mcg/kg"
-          lower: 20
-          upper: 50
     Remifentanil:
       standard_dilution:
         value: 100
