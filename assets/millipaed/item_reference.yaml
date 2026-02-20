@@ -15,6 +15,7 @@ Equipment:
     Macintosh:
       reference:
         unit: age
+      valid_values: [0, 1, 2, 3, 4, 5]
       doses:
         - age_months:
             lower: 0
@@ -68,6 +69,7 @@ Equipment:
     Miller:
       reference:
         unit: age
+      valid_values: [0, 1, 1.5, 2, 3, 4, 5]
       doses:
         - age_months:
             lower: 0
@@ -121,6 +123,7 @@ Equipment:
     ETT (Cuffed):
       reference:
         unit: age
+      valid_values: [2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9]
       doses:
       - age_months:
           lower: 0
@@ -199,6 +202,7 @@ Equipment:
     LMA:
       reference:
         unit: weight_range
+      valid_values: [1, 1.5, 2, 2.5, 3, 4, 5]
       doses:
         - weight_kg:
             lower: 0
@@ -246,6 +250,7 @@ Equipment:
     Suction Catheter:
       reference:
         unit: age
+      valid_values: [5, 6, 8, 10, 12, 14]
       doses:
       - age_months:
           lower: 0
@@ -256,6 +261,7 @@ Equipment:
     Nasogastric:
       reference:
         unit: age
+      valid_values: [6, 8, 10, 12, 14]
       doses:
       - age_months:
           lower: 0
@@ -291,6 +297,7 @@ Equipment:
     IDC:
       reference:
         unit: age
+      valid_values: [6, 8, 10, 12, 14, 16, 18]
       doses:
       - age_months:
           lower: 0
@@ -301,6 +308,7 @@ Equipment:
     ICC:
       reference:
         unit: age
+      valid_values: [8, 10, 12, 15, 18, 21, 24, 27, 30, 33, 36]
       doses:
       - age_months:
           lower: 0
