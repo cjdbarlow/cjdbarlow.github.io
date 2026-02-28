@@ -2,6 +2,7 @@
   {
     "listing": "/atom.html",
     "items": [
+      "/posts/forge.html",
       "/posts/ghost.html",
       "/posts/hdi.html",
       "/posts/shoe-rack.html",
@@ -15,6 +16,7 @@
   {
     "listing": "/writing.html",
     "items": [
+      "/posts/forge.html",
       "/posts/ghost.html",
       "/posts/hdi.html",
       "/posts/shoe-rack.html",
