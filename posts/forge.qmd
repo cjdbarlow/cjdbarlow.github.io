@@ -1,0 +1,229 @@
+---
+title: "Private Git, for the Paranoid Scientist"
+date: 2026-03-10
+description: |
+  Healthcare privacy compliant version control, with off-site backup.
+image: assets/forge/forge.jpg
+categories:
+  - diy
+  - tech
+  - research
+
+execute:
+    warning: false
+    message: false
+    echo: true
+    freeze: auto 
+---
+
+There is a principle in data protection called the 3-2-1 rule, which states that: you should have three copies of your data, on two different media forms (this part has evolved - but think local, cloud, DVD, magnetic tape, paper, stone tablets, etc), with one copy off-site. I usually deal with data that comes with a variety of riders on where it can be stored, how it can be transferred, and who can access it. I am naturally[^1] distrustful of the protean terms-of-service agreements of cloud providers, and so for the last couple of years have been slowly divorcing myself from all of them. I keep all of my work on a Nextcloud instance which runs on my home server, and keeps things synced between my laptop, desktop, and an off-site headless Ubuntu[^7] box.
+
+There is also a principle in software engineering that says you should version control everything. The idea is that if you track every change you make to your code, you can always go back to a version that worked. Whilst by no means new, it is a game changing technology, and although I have been using it for years in writing ([Part One](https://partone.litfl.com/) is up to [3,859 commits](https://github.com/cjdbarlow/Part-One) by this point) and software, I have been studiously ignoring it for my research work. The reason is I use Github, which is Microsoft-owned and lives... somewhere (Australia, maybe? Sometimes? Guaranteed? No.) in the cloud. This provides version control of a kind (it keeps old document versions), but it's clunky and reverting changes is tedious, and the whole thing feels a bit too unreliable. It's not useless - it has once or twice saved me several hours of work when I irredeemably broke something - but there must be A Better Way.
+
+I chose to revisit this yesterday as over the last year I have broken ground on a new research program. The data format is still in the process of being worked out, which means every data dump I get has *slightly* different formatting, which means the data cleaning scripts have required revision every 3 months. This has led to a mess forming in the project directory, and at some point the digital squalor reached the nauseating threshold where Something Must Be Done. For privacy reasons GitHub is off the cards, and syncing a git history over Nextcloud ~~feels like~~ is a recipe for data corruption. Running a home server over the last couple of years has given me much more comfort with the shell and ssh, and I have been blown away by the convenience of docker. There is also the certain quiet satisfaction that comes with running one's own infrastructure, tempered by the gnawing low-level fear of everything breaking at 1am on a Monday morning.[^2]
+
+
+## Platforms
+
+The self-hosted git space is crowded in the way that open-source software tends to be crowded: many options, several abandoned ones, and a couple of serious contenders:
+
+1. **GitLab** is the enterprise option. It is very powerful and requires, by some accounts, more RAM than a small hospital. For a single user backing up their R scripts, this is more than is required.
+2. **Gogs** is small and fast, and also had a critical vulnerability added to CISA's Known Exploited Vulnerabilities catalogue in January 2026. Moving on.
+3. **Gitea** and **Forgejo** are essentially the same software — Forgejo is a community fork created in 2022 when the Gitea was incorporated, raising concerns about the project's future governance, in the way that these things tend to go.[^3] Forgejo runs in Docker (tick), uses SQLite (tick) for a single user, consumes around 150MB of RAM (tick), name from Esperanto (cross), and provides a web interface that looks enough like GitHub that I felt at home (tick). I went with that.
+
+
+## Installation
+
+My home server runs Unraid, which is a neat Linux-based operating system for home servers, that can manage Docker containers through a clean web interface. Forgejo has a Community Applications template, which means installation is largely a matter of clicking things and making two decisions:
+
+1. **Port mapping.**\
+Forgejo wants port 22 for SSH, which Unraid is already using for itself. I mapped the container's SSH to port 222 instead. This will matter later.
+
+2. **Storage.**\
+I mapped the data directly to a new share at `/mnt/user/git/` straight to the array. I tend to commit chunks of work at a time, committing potentially breaking updates separately. You could also pass to cache directly if you are a frequent committer. 
+
+Remote access remains handled by Tailscale, which I already had running on the server. Tailscale creates a private encrypted network between devices, which means Forgejo is accessible from anywhere without being accessible to anyone. With Forgejo's `ROOT_URL` pointed at the Tailscale hostname, everything else works correctly.
+
+
+### Set up SSH
+
+SSH authentication requires that your public key be registered with the Forgejo server. This is not complicated, but as I have used GitHub GUI it has been quietly handled for years and I never learned it existed.[^4]
+
+```bash
+# Check if you already have a key
+cat ~/.ssh/id_ed25519.pub
+
+# If not, generate one
+ssh-keygen -t ed25519 -C "someString"
+```
+
+Copy the output of `cat`, go to Forgejo Settings → SSH/GPG Keys → Add Key, paste in the output. Done.
+
+
+## Connecting Positron
+
+Forgejo doesn't come with a GUI, so that part of my workflow needs to change. Conveniently, Positron, which has become my data science IDE of choice[^5], has the same built-in git integration as VS Code, which is to say it can talk to any standard git remote, including Forgejo.
+
+There is not, as far as I can see, a GUI workflow for pushing an existing local repository to Forgejo. This means setup is a bit more tedious than using the Github GUI, but basically involves:
+
+1. Create an empty repository in the Forgejo web interface, and copy the address (e.g. `ssh://git@your-server.ts.net:222/username/repo-name.git`). This has to be done for every project (this is the tedious part).[^6]
+2. Use the "New folder from Git..." option in Positron and paste the `ssh` or `http` link to the Forgejo remote.
+
+After this setup, Positron's Source Control panel handles subsequent commits and syncs through the GUI.
+
+
+## Setting up the Offsite Copy
+
+Having a private git server is good for providing version control and one backup. Naturally, the next step is to set up my headless Ubuntu machine to provide a third, offsite backup. The goal was to set this up to clone every repository from Forgejo automatically, including any repos created since the last run. This machine phones home daily using a [Dead Man's Snitch](https://deadmanssnitch.com) to say that all its scripts have fired, and ideally this is as much as I'll ever have to do with it.
+
+The approach uses Forgejo's API to enumerate all repositories, then mirrors each one:
+
+```bash
+#!/bin/bash
+FORGEJO_URL="http://server.tailnet.ts.net:3000"
+USERNAME="username"
+TOKEN="your-token"
+BACKUP_DIR="/home/username/git-backups"
+LOG_FILE="/home/username/scripts/logs/git-backup.log"
+
+mkdir -p "$BACKUP_DIR"
+echo "[$(date)] Starting git backup" >> "$LOG_FILE"
+
+page=1
+while true; do
+    repos=$(curl -s -H "Authorization: token $TOKEN" \
+        "$FORGEJO_URL/api/v1/repos/search?limit=50&page=$page" \
+        | grep -o '"ssh_url":"[^"]*"' | sed 's/"ssh_url":"//;s/"//')
+
+    [ -z "$repos" ] && break
+
+    while IFS= read -r ssh_url; do
+        [ -z "$ssh_url" ] && continue
+        repo_name=$(basename "$ssh_url" .git)
+        repo_path="$BACKUP_DIR/$repo_name"
+
+        if [ -d "$repo_path" ]; then
+            echo "[$(date)] Updating $repo_name" >> "$LOG_FILE"
+            git -C "$repo_path" fetch --all >> "$LOG_FILE" 2>&1 \
+                || echo "[$(date)] ERROR: failed to fetch $repo_name" >> "$LOG_FILE"
+        else
+            echo "[$(date)] Cloning $repo_name" >> "$LOG_FILE"
+            git clone "$ssh_url" "$repo_path" >> "$LOG_FILE" 2>&1 \
+                || echo "[$(date)] ERROR: failed to clone $repo_name" >> "$LOG_FILE"
+        fi
+    done <<< "$repos"
+
+    ((page++))
+done
+
+echo "[$(date)] Backup complete" >> "$LOG_FILE"
+```
+
+The script is scheduled to run every 4 hours via cron:
+
+```bash
+0 */4 * * * /home/user/scripts/git-backup.sh
+```
+
+## Setting up an Onsite Copy, Because Backups are Free and Storage is Cheap
+
+I have a Windows desktop, which stays at home and mostly gathers dust, living out the last years of Windows 10 security updates. Since it stays at home it doesn't add geographic redundancy, but does add device redundancy, and since it's already got git and Tailscale installed it seemed to easy not to bother. 
+
+### SSH Setup
+
+Similar to previously, we need to provision a new SSH key and pass it to Forgejo.
+
+From PowerShell:
+
+```
+ssh-keygen -t ed25519 -C "windows-desktop"
+```
+
+Then accept the default path, skip adding a passphrase, and get the key:
+
+```
+cat $env:USERPROFILE\.ssh\id_ed25519.pub
+```
+
+Copy that output to Forgejo (Settings → SSH/GPG Keys).
+
+Since Forgejo SSH is on a non-standard port, I also needed to modify the Windows ssh config in `C:\Users\me\.ssh\config\`:
+
+```
+Host server.tailnet.ts.net
+    Port 222
+    User git
+    StrictHostKeyChecking no
+```
+
+The `StrictHostKeyChecking no` line aims to skip the interactive host key confirmation prompt on first connection. I am not strictly sure if this is necessary, but I have left it in anyway. The issue, which took a little while to tease out, is that git for Windows ships with its own bundled SSH client, and by default that's what it uses for git clone. The bundled client handles interactive prompts differently from Windows' built-in OpenSSH — specifically, it presents a GUI dialog asking whether to cache the server's host key, which I couldn't seem to get past, and will nonetheless hang indefinitely when the script runs unattended. The fix is to force git to use Windows' OpenSSH instead (without StrictHostKeyChecking), and to set it to non-interactive mode:
+
+```
+$FORGEJO_URL = "http://server.tailnet.ts.net:3000"
+$TOKEN = "token"
+$BACKUP_DIR = "C:\Users\me\Documents\Forgejo\repos"
+
+# Force git to use Windows' OpenSSH rather than its bundled SSH client
+$env:GIT_SSH_COMMAND = "C:/Windows/System32/OpenSSH/ssh.exe -o StrictHostKeyChecking=no -o BatchMode=yes"
+
+# Make a backup directory if it doesn't exist
+if (-not (Test-Path $BACKUP_DIR)) {
+    New-Item -ItemType Directory -Path $BACKUP_DIR
+}
+
+# Iterate through each page of repos on the Forgejo server
+$page = 1
+while ($true) {
+    $response = Invoke-RestMethod `
+        -Uri "$FORGEJO_URL/api/v1/repos/search?limit=50&page=$page" `
+        -Headers @{Authorization = "token $TOKEN"}
+
+    if (-not $response.data -or $response.data.Count -eq 0) { break }
+
+    foreach ($repo in $response.data) {
+        $ssh_url  = $repo.ssh_url
+        $repo_name = $repo.name
+        $owner    = $repo.owner.login
+        $mirror_path = "$BACKUP_DIR\$owner-$repo_name.git"
+
+        if (Test-Path $mirror_path) {
+            Write-Output "Updating $repo_name..."
+            git -C $mirror_path remote update --prune
+        } else {
+            Write-Output "Cloning $repo_name..."
+            git clone --mirror $ssh_url $mirror_path
+        }
+    }
+    $page++
+}
+
+Write-Output "Forgejo backup finished."
+```
+
+I put that script in `Documents\Forgejo`[^8], and then updated PowerShell's execution policy:
+
+```
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+## In Review
+
+I would call this useful and successful, in that it sits there, works, and I don't have to think about it. I spent a few hours rebuilding my data cleaning scripts, working through the versions in time for a later data dump. Both the scripts and data directories are much more ordered and readable - this may be a property of spring cleaning, but I'll give credit to the new system. In terms of pain points, the only one is that as Positron (and VS Code) do not come with as polished a source control tool as the GitHub GUI, I have been relying more on the terminal for anything beyond basic commit-push workflow. The biggest thing I am missing is an idiot-proof way to squash and reorder commits, as this forms a pretty routine part of my workflow (I like a tidy tree), and it is pretty easy to muddle things with a bad squash. If it becomes a big enough issue, I'm sure I can find a solution.
+
+---
+
+[^1]: Justifiably.
+
+[^2]: One of the biggest surprises I have had is that it has actually required very little effort to maintain, and nothing has ever seriously broken. Setting it up took the better part of a weekend, I log in every couple of weeks to update the docker containers, and I've only had three container-breaking issues over the 2 years I have run it. Two of these have been after Nextcloud updates, which are fixed by logging on the Nextcloud web GUI. It has been a remarkably stable and incredibly useful investment.
+
+[^3]: The open-source software lifecycle: a project is created by volunteers, becomes popular, gets acquired, community forks it, the fork becomes popular, repeat. It is a kind of institutional metabolism.
+
+[^4]: GitHub Desktop, specifically, has a "Publish repository" button that creates the remote and pushes in a single step, handling authentication invisibly. This is very convenient right up until you're working with a different git host and discover you don't know how any of it works.
+
+[^5]: Positron is basically VS Code cosplaying as a modern version of RStudio. As I've spent the last few months doing more general coding and less statistics, I've spent more time with VS Code, and now that I am back in a research phase again I have found the move to Positron removing some of the pain points of RStudio.
+
+[^6]: The SSH URL contains one footgun: note the `:222` rather than the standard `:22`. This is the port remapping from the installation step, now coming back to require attention. Forgejo's web interface generates the correct clone URL automatically, provided you told it during setup that your SSH port is 222.
+
+[^7]: I chose Ubuntu because it provides [ZFS](https://en.wikipedia.org/wiki/ZFS) out-of-the-box, which provides strong native backup protection in case of drive failure.
+
+[^8]: If the script lives in actual backup folder, the folder is non-empty, and git won't clone into a non-empty directory. The script has to live in a different folder than`$BACKUP_DIR`.
