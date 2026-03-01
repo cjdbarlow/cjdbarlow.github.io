@@ -1,0 +1,69 @@
+---
+title: "Building an Email Classifier, Part 1: The Plan"
+date: 2026-03-01
+description: |
+  First part of a four-part series using classifer and local language models to sort 23 years of email.
+
+  In this part, we outline the problem and some of the tools used to solve it.
+image: assets/emaillm/e1.jpg
+categories:
+  - diy
+  - tech
+
+execute:
+    warning: false
+    message: false
+    echo: true
+    freeze: auto 
+---
+
+My traditional approach to email management has consisted of three elements:
+
+1. Reply to most things immediately
+2. Use unread emails as a to-do list
+3. Everything stays in the inbox
+
+This approach is fragile - it is easy to accidentally mark something as read and have it fall out of mind - but has generally worked for me in practice because clinical work is blissfully email-light, and I have generally only kept a few non-clinical plates spinning at any given time.
+
+This... system... does not scale well. My oldest active email account is from 2003, which means I've been not-sorting emails for roughly twenty-three years. I now do more research, more software development, and more non-clinical work - all of this means more email. The fragility of the "unread to-do list" has become apparent here. It's also become much harder to find anything as the Apple Mail search indexer chokes on inboxes with >50,000 messages.
+
+A reasonable approach is to manually sort everything from here on out, accepting the chaos of that came before as a winsome folly of youth, or to archive the lot, declaring inbox zero and starting afresh. What I did instead was write a hybrid machine learning and LLM classifier, classify the majority of messages on text embeddings, have a local language model handle the ambiguous cases, and then sit through a day-long batch job while it processed my inbox.
+
+I justified this as an excuse to learn python[^1], get more familiar with AppleScript, understand text embeddings (which may be useful for qualitative research in the future), and try and understand more about how LLMs work, and how to run for local language models. It is also, objectively, too much effort. It did mostly-work though, I learnt a lot, and I am satisfied with the outcome.
+
+This is the first in a series of four posts describing how it was put together, what worked, what didn't, and what the classifier's behaviour reveals that's more interesting than the classifier itself. There are more than the usual number of sidenotes here, because I have used this write up as a chance to explain these concepts to myself.
+
+
+## Background
+
+I came across [Winthrop Gillis's excellent post on email categorization](https://wingillis.github.io/posts/2025-02-17-email-categorization/) early this year, which served as immediate inspiration for this project. He'd done something similar on his Gmail accounts: trying (with poor results) with an unsupervised classifier, then building a labeled dataset and evaluated forty-odd local language models on classifying the email into one of those groups. To avoid the overhead of running a local language model in production, Winthrop then used the set of labelled emails to train a more traditional classifier[^2], which is much more lightweight.
+
+My desired end-state is somewhat different. The inbox will remain as a to-do list, and ongoing filing is manual. My goal is to then sort the last 23 years of neglect. One limitation of this is speed - for privacy reasons I want this classification to happen locally, and at a couple seconds per message on a local model this stretches to days of compute time using a sole LLM approach.
+
+The goal was to build something that handled easy cases cheaply, deferred hard cases to something else, and didn't touch an external API. I also wanted to assess how well this system worked - so I wanted to include some process of manual review.
+
+## Overview
+
+The three following posts cover:
+
+1. **Data extraction and embeddings**\
+Getting email out of Apple Mail, generating text embeddings, and exploring what the data looks like before any classification happens.
+2. **Classification, Part 1**\
+Training the SVC, the threshold calibration approach, and why more than half the emails ended up going to the language model anyway.
+3. **Classification, Part 2**\
+Using the first-pass training data to bootstrap a second classifier, and how this made things worse.Why using the first pass as training data made things worse.
+Using the first-pass training data to bootstrap a second classifier, and how this made things worse.
+
+---
+
+[^1]: I have been meaning to do this for some time, as python appears to be the best tool for most of my projects - I have just often ended up defaulting to a language I know better out of expediency, and so never got around to it. Amusingly, I ended up discovering Claude Code at about the same time, and so still don't really know much python.
+
+[^2]: Traditional classifier models find boundaries between categories. In this case, emails were converted using the `nomic-embed-text` model into a text embedding, which transforms the message into 768-dimension numeric vector. This vector is a numeric representation of semantic similarity - two items 'close' to each other in this 768-dimensional space should be similar in content and tone.These items can be compared by a variety of techniques, including standard logistic regression or k-nearest-neighbors, for example.
+
+    <br>
+
+    In Winthrop's case, he found SVC (Support Vector Classification) performed best, which finds the optimal boundary between categories in this space. If we have a bunch of messages (say, 'shipping notifications' and 'weather reports'), it is probable that the embeddings in each category will be clustered close to each other and away from the other category. SVC models work by drawing a line through this high-dimensional space that separates these two concepts with the maximum possible margin. When new messages arrive, their their embeddings are computed and the message classified by the SVC model. Where this fails is if the categories are semantically similar such that there is little margin between categories, or if a particular message crosses semantic boundaries ('Your shipment has been delayed due to inclement weather.').
+
+    <br>
+
+    (It is also arguable about how much the second one is a failure mode of the tool; an inevitable consequence of categorisation is that it fails cases at the margins.)
