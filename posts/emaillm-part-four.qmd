@@ -1,0 +1,98 @@
+---
+title: "Building an Email Classifier, Part 4: Classification II"
+date: 2026-03-04
+description: |
+  Final part of a four-part series using local language models to classify 23 years of email.
+
+  In this part, we use the first-pass results as additional training data, and discover that doesn't help.
+image: assets/emaillm/e4.jpg
+categories:
+  - diy
+  - tech
+
+execute:
+    warning: false
+    message: false
+    echo: true
+    freeze: auto
+---
+
+The first pass had a training set of ~6,000 emails. Now I had ~22,000, and went out to see whether a bigger training set with better coverage of the hard categories could produce a better classifier.
+
+## The Second Pass
+
+I hoped that this approach would ameliorate the time-based selection bias that hobbled the first classifier, as the training set for this pass drew on fifteen years of sorted email. That changed the composition noticeably. Historical email skews heavily towards Academic and away from Technology and Projects.
+
+Work and Education together made up around 5% of the training set, better coverage than before, at least in absolute terms.
+
+:::column-margin
+: Second Pass Training Set
+
+| Category             |  Count |    % |
+| -------------------- | -----: | ---: |
+| Archive              | 11,600 | 34.2 |
+| Receipts             |  9,933 | 29.3 |
+| Newsletters          |  4,150 | 12.2 |
+| Personal             |  2,296 |  6.8 |
+| Technology           |  2,278 |  6.7 |
+| Projects             |  1,293 |  3.8 |
+| Finances and Affairs |  1,106 |  3.3 |
+| Work                 |    748 |  2.2 |
+| Education            |    409 |  1.2 |
+| Academic             |     81 |  0.2 |
+:::
+
+## Results
+
+Validation accuracy: **93.46%**. Down slightly from 94.67% in the first pass.
+
+: Per-Category Metrics, Second Pass
+
+| Category             | Precision | Recall |    F1 |
+| -------------------- | --------: | -----: | ----: |
+| Technology           |     0.988 |  0.977 | 0.982 |
+| Newsletters          |     0.941 |  0.944 | 0.942 |
+| Receipts             |     0.953 |  0.979 | 0.966 |
+| Finances and Affairs |     0.913 |  0.778 | 0.840 |
+| Personal             |     0.865 |  0.885 | 0.875 |
+| Work                 |     0.814 |  0.857 | 0.835 |
+| Education            |     0.850 |  0.557 | 0.673 |
+| Projects             |     0.908 |  0.880 | 0.894 |
+
+There were global drops in precision and recall across almost all categories. However, these were all small in absolute terms. The largest drops occurred in Education, which I attributed to the introduction of the Projects category. Projects shares a lot of semantic similarity with Education (and to a lesser extent, Work), and the addition of a similar category would lower predictive power across all of them.
+
+I am not sure I could have expected a different outcome. The SVC was already working *remarkably* well on the training set, and where it falls down relates more to fundamental properties of text embedding rather than inadequate sample size.
+
+## Classification
+
+The classification of the 15,509 unclassified emails followed the same pattern as the first pass. 
+
+
+| Category             |   SVC |   LLM | Total |
+| -------------------- | ----: | ----: | ----: |
+| Receipts             | 2,821 |    14 | 2,835 |
+| Newsletters          | 2,575 |    49 | 2,624 |
+| Personal             |   773 |   552 | 1,325 |
+| Technology           |   369 |    29 |   398 |
+| Finances and Affairs |   809 |    57 |   866 |
+| Work                 |    19 | 3,012 | 3,031 |
+| Education            |    11 | 2,562 | 2,573 |
+| Projects             |   217 |   106 |   323 |
+| Academic             |     0 |   730 |   730 |
+| Archive              |     0 | 1,362 | 1,362 |
+
+Work and Education again accounted for 65% of the LLM load, and the LLM remained a poor discriminator between the two. This is also not surprising, as increasing the sample size will not improve model performance.
+
+## Reflection
+
+I ended up sorting out the work-education-project split manually. This was a tedious couple of hours, but two decades of accumulated correspondence is now at least roughly where it should be.
+
+Both the successes and failures were informative. I think text embeddings are incredibly interesting technology, and I was very impressed with how the SVC effortlessly handled structured textual information efficiently at scale. I would definitely use these again for this sort of task.
+
+Conversely, the LLM performed less well than I would have hoped, getting only about half of the hard cases right. One thing that would have been interesting to explore is whether changing the prompt could have improved the LLM success, but I am skeptical. The LLM performance is determined by the properties of the model and the nature of the classification task, and won't be improved by increasing sample size. `Gemma-3-12B`is a capable local model, but these distinctions may be genuinely too subtle. The Work-Education-Project split is also potentially tricky because in addition to genuine content overlap, some lines may be drawn more on personal context rather than message content, which is unknown to the model. 
+
+I remain hopeful for the future of local language models — most of my work has huge data privacy and confidentiality concerns, and I would love to be able to use this technology in more of my work, but will not feel comfortable unless they are run in a local and contained environment. This project has not convinced me that local models are quite there yet, although given the pace that the technology is evolving I suspect it will be soon[^1].
+
+---
+
+[^1]: [OpenClaw?](https://openclaw.ai)
