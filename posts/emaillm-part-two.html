@@ -321,51 +321,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For the supervised learning approach, I ended up deciding on the following categories:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 11%">
+<col style="width: 10%">
 <col style="width: 88%">
+<col style="width: 1%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Category</th>
 <th>Description</th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><strong>Archive</strong></td>
 <td>Emails from any category (except receipts) that are “complete” — restaurant bookings, shipping notifications, automated messages, anything that’s been dealt with and kept, but not important enough to go elsewhere.</td>
+<td></td>
 </tr>
 <tr class="even">
 <td><strong>Receipts</strong></td>
 <td>Purchase confirmations, payment records, delivery notifications. Very easy to classify; more on this later.</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td><strong>Newsletters</strong></td>
 <td>Publications, digests, industry updates. Includes medical journals, financial commentary, Kickstarter campaigns.</td>
+<td></td>
 </tr>
 <tr class="even">
 <td><strong>Personal</strong></td>
 <td>Correspondence with actual people in a personal context. Family, friends, colleagues writing informally.</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td><strong>Technology</strong></td>
 <td>Emails related to software and application development.</td>
+<td></td>
 </tr>
 <tr class="even">
 <td><strong>Finances and Affairs</strong></td>
 <td>Personal financial correspondence — tax, property, investments, legal.</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td><strong>Work</strong></td>
 <td>Clinical employment. Rostering, credentialing, job applications, administrative emails from hospitals.</td>
+<td></td>
 </tr>
 <tr class="even">
 <td><strong>Education</strong></td>
 <td>Postgraduate training and assessment through medical colleges, course attendance.</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td><strong>Academic</strong></td>
 <td>Graduate coursework correspondence. Tiny category (81 emails); handled differently from the rest.</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -474,9 +485,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>The truncations are real. “Miscellaneous” appears three times across the three models, which is not a useful category. “Alfred Health communications” appears in both cluster 2 (nomic) and cluster 5 (snowflake) — the model has found two genuinely different kinds of Alfred Health email and separated them, where both a subsets of a more meaningful (work) category.</p>
-<p>This isn’t (at least, as far as I understand) a problem with the embedding model. Clustering finds statistical regularities in the data, and the regularities it finds are real — these emails do occupy distinct regions of the embedding space. But those regions don’t necessarily correspond to the sort of categories I am after. “Alfred Health communications” appears in two clusters because there are two kinds: rostering messages, and clinical messages. The clustering algorithm correctly identified this distinction, it’s just not one that is meaningful to me as both belong in Work.</p>
+<p>The truncations are real. “Miscellaneous” appears three times across the three models, which is not a useful category. “Alfred Health communications” appears in both cluster 2 (nomic) and cluster 5 (snowflake) — the model has found two genuinely different kinds of Alfred Health email and separated them, where both a subsets of a more meaningful (work) category<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn9"><p><sup>9</sup>&nbsp;On writing this up, I realise the non-conformity of model outputs to the specification could have been enforced using <code>pydantic</code>, which forces the model to conform to a structured output by limiting the tokens it can generate in a response.</p></div></div><p>This isn’t (at least, as far as I understand) a problem with the embedding model. Clustering finds statistical regularities in the data, and the regularities it finds are real — these emails do occupy distinct regions of the embedding space. But those regions don’t necessarily correspond to the sort of categories I am after. “Alfred Health communications” appears in two clusters because there are two kinds: rostering messages, and clinical messages. The clustering algorithm correctly identified this distinction, it’s just not one that is meaningful to me as both belong in Work.</p>
 <p>It’s likely that some improvements could have been made to the unsupervised learning approach, but I didn’t pursue these further because it didn’t feel like a fruitful avenue, and went with the supervised approach, described above.</p>
+<hr>
 
 
 </section>
