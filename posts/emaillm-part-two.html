@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jake Barlow">
+<meta name="dcterms.date" content="2026-03-02">
+<meta name="description" content="Second part of a four-part series using local language models to classify 23 years of email.In this part, we extract data, generate text embeddings, and flirt briefly with unsupervised learning.">
+
+<title>Building an Email Classifier, Part 2: Data Extraction and Embeddings | C. Jake Barlow – C. Jake Barlow</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/favicon32x32.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-9e15f8fb9e1f2f288bfbe28f6ca11029.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c43ee2b62abe52577305f7200a65d2bf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="floating nav-fixed slimcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">C. Jake Barlow</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-medicine" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Medicine</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-medicine">    
+        <li>
+    <a class="dropdown-item" href="../pages/part_one.html">
+ <span class="dropdown-text">Part One</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/bn.html">
+ <span class="dropdown-text">Bedside Notebook</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/paed_ref.html">
+ <span class="dropdown-text">Paediatric Dose Reference</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Statistics</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
+        <li>
+    <a class="dropdown-item" href="../pages/bf.html">
+ <span class="dropdown-text">Bayesian Hypothesis Testing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/interval.html">
+ <span class="dropdown-text">Bayesian Intervals</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../writing.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:hello@cjdbarlow.au"> 
+<span class="menu-text"><i class="fa-regular fa-envelope" aria-label="envelope"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://orcid.org/0000-0003-3713-8292" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-orcid" aria-label="orcid"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/chrisjake" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-github" aria-label="github"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/cjdbarlow"> 
+<span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../atom.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Building an Email Classifier, Part 2: Data Extraction and Embeddings</h1>
+                  <div>
+        <div class="description">
+          <p>Second part of a four-part series using local language models to classify 23 years of email.</p>
+          <p>In this part, we extract data, generate text embeddings, and flirt briefly with unsupervised learning.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">diy</div>
+                <div class="quarto-category">tech</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 2, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#generating-embeddings" id="toc-generating-embeddings" class="nav-link active" data-scroll-target="#generating-embeddings">Generating Embeddings</a>
+  <ul class="collapse">
+  <li><a href="#what-does-embedding-look-like" id="toc-what-does-embedding-look-like" class="nav-link" data-scroll-target="#what-does-embedding-look-like">What Does Embedding Look Like?</a></li>
+  </ul></li>
+  <li><a href="#a-brief-word-on-unsupervised-learning" id="toc-a-brief-word-on-unsupervised-learning" class="nav-link" data-scroll-target="#a-brief-word-on-unsupervised-learning">A Brief Word on Unsupervised Learning</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+
+<p>The step to classify anything is clean data in a usable form.</p>
+<p>I first tried extracting emails from Apple Mail using a small AppleScript bridge<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. This would connect to Mail, iterate over each account’s mailboxes, pull subject, sender, body (capped at 6,000 characters), date received, and attachment flags, then store everything in a SQLite database — one row per email, with columns for metadata, raw text, the category label where known, and later the embedding and classification result.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;This attempt used Python’s <code>ScriptingBridge</code> bindings, which expose the macOS scripting interface to Apple Mail. It’s functional. The <code>mail_extractor.py</code> script handles deduplication via a unique mail ID, progress tracking, error logging, and checkpoint resumption.</p></div></div><p>It immediately became apparent that pulling emails one-at-a-time was a poor approach for extracting 50,000 emails. The better option is to pull from the Apple mail disk store directly with Python’s <code>email</code> library. This process took a few minutes to pull the entire corpus into a single SQLite database.</p>
+<section id="generating-embeddings" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="generating-embeddings">Generating Embeddings</h2>
+<p>The next step was to turn the email corpus into something that the models could do meaningful work on.</p>
+<p>An embedding model<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> takes a piece of text and produces a fixed-length numeric vector — a point in a high-dimensional space. Similar pieces of text should produce vectors that are closer together. “Your Uber receipt” and “eBay: Order confirmed” will land close together. “Your Uber receipt” and “Dear Jake, about that patient you saw last week…” will be further apart.</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;I found <a href="https://stackoverflow.blog/2023/11/09/an-intuitive-introduction-to-text-embeddings/">this StackOverflow blog</a> piece very helpful for understanding text embeddings.</p></div><div id="fn3"><p><sup>3</sup>&nbsp;The <code>nomic-embed-text</code> model has an input token limit of 8192. <a href="https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them">One paragraph is loosely 100 tokens</a>, which means long emails (particularly threaded emails) overran the buffer. I ignored the few hundred emails in this category and classified them manually at the end.</p></div></div><p>The model used here is <code>nomic-embed-text</code>, running locally via Ollama. The model ran blisteringly fast on my laptop, and generated embeddings for almost all<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> emails in the corpus in a few minutes.</p>
+<p>Before embedding, each email is preprocessed into a single text string:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ss">f"</span><span class="sc">{</span>subject<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>subject<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>subject<span class="sc">}</span><span class="ss"> From: </span><span class="sc">{</span>sender_domain<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>sender_domain<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>sender_domain<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>body<span class="sc">}</span><span class="ss">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>One of the things I realised early on is that the email subject and sender domain will be hugely predictive of the final category, compared to the body of the email. This is a true property of the problem, but won’t be picked up by the embedding. The simple approach here was to repeat subject and sender in order to bias the embedding model towards those properties<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;I did not test different subject weights and pick the one that produces the best downstream classification performance, though I could see that being worthwhile on a more important problem.</p></div><div class="">
+<p>Sender domain is a strong signal on its own:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Domain</th>
+<th>Category</th>
+<th>Match %</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>criticalcarereviews.com</td>
+<td>Newsletters</td>
+<td>99.6%</td>
+</tr>
+<tr class="even">
+<td>paypal.com.au</td>
+<td>Receipts</td>
+<td>99.7%</td>
+</tr>
+<tr class="odd">
+<td>uber.com</td>
+<td>Receipts</td>
+<td>99.8%</td>
+</tr>
+<tr class="even">
+<td>news.bloomberg.com</td>
+<td>Newsletters</td>
+<td>100.0%</td>
+</tr>
+<tr class="odd">
+<td>ebay.com.au</td>
+<td>Receipts</td>
+<td>98.2%</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<p>For the supervised learning approach, I ended up deciding on the following categories:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 88%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Archive</strong></td>
+<td>Emails from any category (except receipts) that are “complete” — restaurant bookings, shipping notifications, automated messages, anything that’s been dealt with and kept, but not important enough to go elsewhere.</td>
+</tr>
+<tr class="even">
+<td><strong>Receipts</strong></td>
+<td>Purchase confirmations, payment records, delivery notifications. Very easy to classify; more on this later.</td>
+</tr>
+<tr class="odd">
+<td><strong>Newsletters</strong></td>
+<td>Publications, digests, industry updates. Includes medical journals, financial commentary, Kickstarter campaigns.</td>
+</tr>
+<tr class="even">
+<td><strong>Personal</strong></td>
+<td>Correspondence with actual people in a personal context. Family, friends, colleagues writing informally.</td>
+</tr>
+<tr class="odd">
+<td><strong>Technology</strong></td>
+<td>Emails related to software and application development.</td>
+</tr>
+<tr class="even">
+<td><strong>Finances and Affairs</strong></td>
+<td>Personal financial correspondence — tax, property, investments, legal.</td>
+</tr>
+<tr class="odd">
+<td><strong>Work</strong></td>
+<td>Clinical employment. Rostering, credentialing, job applications, administrative emails from hospitals.</td>
+</tr>
+<tr class="even">
+<td><strong>Education</strong></td>
+<td>Postgraduate training and assessment through medical colleges, course attendance.</td>
+</tr>
+<tr class="odd">
+<td><strong>Academic</strong></td>
+<td>Graduate coursework correspondence. Tiny category (81 emails); handled differently from the rest.</td>
+</tr>
+</tbody>
+</table>
+<section id="what-does-embedding-look-like" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="what-does-embedding-look-like">What Does Embedding Look Like?</h3>
+<p>The embedding space has 768 dimensions, which isn’t directly visualisable. t-distributed stochastic neighbor embedding (t-SNE) is a technique to faithfully represent the <em>local</em> higher dimensional relationships in a two-dimensional plane. This is a non-linear transformation and so different regions of the figure may be transformed differently, clusters that appear far apart may not be, and different hyperparameters can drastically change the appearance (and interpretation) of the figure<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. A faceted plot shows this neatly.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;I found <a href="https://distill.pub/2016/misread-tsne/">this article</a> from the Google Brain team to be useful to understand some of the footguns associated with t-SNE.</p></div></div><div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="assets/emaillm/embedding_clusters_grid.png" class="img-fluid figure-img column-body-outset"></p>
+<figcaption class="margin-caption">Embedding clusters by category</figcaption>
+</figure>
+</div>
+<p>The takeaways from this to me are:</p>
+<ul>
+<li><strong>Receipts</strong> is robust to changes in perplexity across converged plots, which makes sense to me as these emails tend to have very consistent, formulaic structures.</li>
+<li><strong>Newsletters</strong> are semantically distinct and consist of several subregions, which also fits! Money Stuff will cluster together, and away from Critical Care Reviews.</li>
+<li><strong>Archive</strong> is scattered all over the place, which reflects its function — it’s more of a temporal category than a semantic one. Poor category separation is not surprising to me — an email from a hospital that’s been read and filed might be Work, Education, Projects, or Archive depending on its content and context — and that distinction requires reading it.</li>
+<li><strong>Work</strong> does not cluster well, which makes sense to me as well, work emails feel like they will fall semantically adjacent to Education and Academic; and over-weighting sender domains and subject may not help resolve this.</li>
+</ul>
+<p>Whilst the text classification works in many cases, it won’t work in all - I need something that is more content and context sensitive. Which brings us to part 3, the classifier.</p>
+<hr>
+</section>
+</section>
+<section id="a-brief-word-on-unsupervised-learning" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="a-brief-word-on-unsupervised-learning">A Brief Word on Unsupervised Learning</h2>
+<p>The siren song to avoid any manual training effort and have the classifier identify categories was strong, and was my first approach. This involved generating text embeddings for all of the emails (as described above), use a clustering algorithm to find the natural groupings, and use those groupings as email categories. If the emails cluster meaningfully without supervision, you get the structure for free.</p>
+<p>The downside risk of this approach is that the clusters may not be <em>meaningful</em>. Even if messages are separated into neat groups but if they aren’t intuitive <em>to me</em> then the utility of this approach is questionable<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;This parallels what I think is the main advantage the hybrid clinician-scientist brings to research in general - an understanding of what the data is actually representing, and how results can be applied meaningfully in practice.</p></div><div id="fn7"><p><sup>7</sup>&nbsp;These models were chosen because <a href="https://wingillis.github.io/posts/2025-02-17-email-categorization/">Winthrop Gillis</a> had demonstrated success with these in an identical task, and they dominated the <a href="https://huggingface.co/spaces/mteb/leaderboard">Huggingface leaderboard</a> at the time.</p></div><div id="fn8"><p><sup>8</sup>&nbsp;The prompt given was:</p>
+<p>“Below are {len(email_samples)} emails from a cluster:<br> {emails_text}<br> What 1-3 word label should be used to group these emails? Reply with ONLY the label, no explanation. It is VERY IMPORTANT that the label is ONLY 1-3 words in length.”</p></div></div><p>I tried three different embedding models — <code>nomic-embed</code>, <code>qwen-embed</code>, and <code>snowflake-embed</code> — across a range of cluster counts from k=2 to k=30<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. To evaluate results, a local language model (<code>granite-3.2</code>) was asked to label each cluster based on the embeddings<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>:</p>
+<table class="caption-top table">
+<caption>Labels generated by granite-3.2, for cluster k=10</caption>
+<colgroup>
+<col style="width: 6%">
+<col style="width: 35%">
+<col style="width: 34%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cluster</th>
+<th>nomic-embed</th>
+<th>qwen-embed</th>
+<th>snowflake-embed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>Medical</td>
+<td>Financial transactions and statements</td>
+<td>Professional communication</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Uber orders and other</td>
+<td>Professional development and networking</td>
+<td>Miscellaneous Emails</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Alfred Health communications</td>
+<td>Multi source feedback</td>
+<td>Miscellaneous” (Rev</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Student communications</td>
+<td>Medical &amp; Admin</td>
+<td>Order/Shipment</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Australia…</td>
+<td>Miscellaneous</td>
+<td>Travel &amp; Admin</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Personal &amp; Transaction</td>
+<td>Account Security</td>
+<td>Alfred Health communications</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Personal and professional correspondence</td>
+<td>Tech Support</td>
+<td>Medical meetings and updates</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>Work &amp; Finance</td>
+<td>Promotional offers” -</td>
+<td>Defence Health Updates</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Online shopping &amp; receipts</td>
+<td>Medical research &amp; communication</td>
+<td>Financial and Business</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Miscellaneous</td>
+<td>Order Confirmation/Tracking</td>
+<td>Professional communication</td>
+</tr>
+</tbody>
+</table>
+<p>The truncations are real. “Miscellaneous” appears three times across the three models, which is not a useful category. “Alfred Health communications” appears in both cluster 2 (nomic) and cluster 5 (snowflake) — the model has found two genuinely different kinds of Alfred Health email and separated them, where both a subsets of a more meaningful (work) category.</p>
+<p>This isn’t (at least, as far as I understand) a problem with the embedding model. Clustering finds statistical regularities in the data, and the regularities it finds are real — these emails do occupy distinct regions of the embedding space. But those regions don’t necessarily correspond to the sort of categories I am after. “Alfred Health communications” appears in two clusters because there are two kinds: rostering messages, and clinical messages. The clustering algorithm correctly identified this distinction, it’s just not one that is meaningful to me as both belong in Work.</p>
+<p>It’s likely that some improvements could have been made to the unsupervised learning approach, but I didn’t pursue these further because it didn’t feel like a fruitful avenue, and went with the supervised approach, described above.</p>
+
+
+</section>
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cjdbarlow\.au");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2020–2025 C. Jake Barlow</span><br> <span class="faux-block">Licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><span class="faux-block"><i class="fa-solid fa-key" aria-label="key"></i> <a href="../public.pgp.txt">PGP public key</a> <br><br> <i class="fa-solid fa-fingerprint" aria-label="fingerprint"></i> Fingerprint:<br><span class="fingerprint">EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A</span></span></p>
+</div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Built with <i class="fa-brands fa-r-project" aria-label="r-project"></i> and <a href="https://quarto.org/">Quarto</a></span></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

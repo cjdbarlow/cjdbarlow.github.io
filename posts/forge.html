@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jake Barlow">
-<meta name="dcterms.date" content="2026-02-28">
-<meta name="description" content="Data-compliant version control, with off-site backup.">
+<meta name="dcterms.date" content="2026-03-10">
+<meta name="description" content="Healthcare privacy compliant version control, with off-site backup.">
 
 <title>Private Git Servers, for the Paranoid Scientist | C. Jake Barlow – C. Jake Barlow</title>
 <style>
@@ -216,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">Private Git Servers, for the Paranoid Scientist</h1>
                   <div>
         <div class="description">
-          <p>Data-compliant version control, with off-site backup.</p>
+          <p>Healthcare privacy compliant version control, with off-site backup.</p>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -234,7 +234,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 28, 2026</p>
+        <p class="date">March 10, 2026</p>
       </div>
     </div>
     
@@ -249,13 +249,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#the-platform-decision" id="toc-the-platform-decision" class="nav-link active" data-scroll-target="#the-platform-decision">The Platform Decision</a></li>
+  <li><a href="#platforms" id="toc-platforms" class="nav-link active" data-scroll-target="#platforms">Platforms</a></li>
   <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a>
   <ul class="collapse">
-  <li><a href="#set-up-ssh-authentication" id="toc-set-up-ssh-authentication" class="nav-link" data-scroll-target="#set-up-ssh-authentication">Set up SSH Authentication</a></li>
+  <li><a href="#set-up-ssh" id="toc-set-up-ssh" class="nav-link" data-scroll-target="#set-up-ssh">Set up SSH</a></li>
   </ul></li>
   <li><a href="#connecting-positron" id="toc-connecting-positron" class="nav-link" data-scroll-target="#connecting-positron">Connecting Positron</a></li>
-  <li><a href="#an-offsite-copy-because-paranoia-is-justified" id="toc-an-offsite-copy-because-paranoia-is-justified" class="nav-link" data-scroll-target="#an-offsite-copy-because-paranoia-is-justified">An Offsite Copy, Because Paranoia Is Justified</a></li>
+  <li><a href="#an-offsite-copy-because-paranoia" id="toc-an-offsite-copy-because-paranoia" class="nav-link" data-scroll-target="#an-offsite-copy-because-paranoia">An Offsite Copy, Because Paranoia</a></li>
   </ul>
 </nav>
 </nav>
@@ -274,8 +274,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The reason is I use Github, which is Microsoft-owned, and I usually deal with data that comes with a variety of riders on where it can be stored, how it can be transferred, and who can access it. I am naturally distrustful<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> of the protean terms-of-service agreements of cloud providers, and have for the last couple of years kept all of my research work confined to a Nextcloud instance which runs on my home server. This provides version-control of a kind (it keeps old document versions), but it’s clunky, reverting changes is clunky and unreliable and only to be used in cases of extreme duress, and an imperfect solution.</p>
 <div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Justifiably.</p></div></div><p>I chose to revisit this yesterday as over the last year I have commenced a project with some novel data. The data format is still in the process of being worked out, which means every data dump I get has <em>slightly</em> different formatting, which means the data cleaning scripts have required revision every 3 months. This has led to a mess forming in the project directory, and at some point the digital squalor becomes too much to be easily swept under the bed. I am too paranoid about inadvertently uploading data to GitHub for it to be used for this work, and syncing a git history over Nextcloud feels like a recipe for data corruption.</p>
 <p>Over the last couple of years running a home server I have gotten much more comfortable with the shell, ssh, and blown away by the convenience of docker containers, and there is a certain pleasure in running your own infrastructure. Pleasure, and the constant low-level fear of a mission-critical bug at 11pm on a Sunday.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;One of the biggest surprises I have had is that it has actually required very little effort to maintain, and nothing has ever seriously broken. Setting it up took the better part of a weekend, I log in every couple of weeks to update the docker containers, and I’ve only had three container-breaking issues over the 2 years I have run it. Two of these have been after Nextcloud updates, which are fixed by logging on the Web GUI. It has been a remarkably stable and incredibly useful investment.</p></div></div><section id="the-platform-decision" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="the-platform-decision">The Platform Decision</h2>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;One of the biggest surprises I have had is that it has actually required very little effort to maintain, and nothing has ever seriously broken. Setting it up took the better part of a weekend, I log in every couple of weeks to update the docker containers, and I’ve only had three container-breaking issues over the 2 years I have run it. Two of these have been after Nextcloud updates, which are fixed by logging on the Web GUI. It has been a remarkably stable and incredibly useful investment.</p></div></div><section id="platforms" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="platforms">Platforms</h2>
 <p>The self-hosted git space is crowded in the way that open-source software tends to be crowded: many options, with one obviously correct answer that you’ll identify after reading a half-dozen Reddit threads:</p>
 <ol type="1">
 <li><strong>GitLab</strong> is the enterprise option. It is very powerful and requires, by some accounts, more RAM than a small hospital. For a single user backing up their R scripts, this is more than is required.</li>
@@ -285,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;The open-source software lifecycle: a project is created by volunteers, becomes popular, gets acquired, community forks it, the fork becomes popular, repeat. It is a kind of institutional metabolism.</p></div></div></section>
 <section id="installation" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>My home server runs Unraid, which manages Docker containers through a reasonably civilised web interface. Forgejo has a Community Applications template, which means installation is largely a matter of clicking things and making two decisions:</p>
+<p>My home server runs Unraid, which is a neat Linux-based operating system for home servers, that can manage Docker containers through a neat web interface. Forgejo has a Community Applications template, which means installation is largely a matter of clicking things and making two decisions:</p>
 <ol type="1">
 <li><p><strong>Port mapping.</strong><br>
 Forgejo wants port 22 for SSH, which Unraid is already using for itself. Map the container’s SSH to port 222 instead. This will matter later.</p></li>
@@ -293,8 +293,8 @@ Forgejo wants port 22 for SSH, which Unraid is already using for itself. Map the
 I mapped the data directly to a new share at <code>/mnt/user/git/</code>. I tend to commit chunks of work at a time (a new script), and potentially breaking updates separately. You could also pass to cache directly if you are a frequent committer.</p></li>
 </ol>
 <p>Remote access remains handled by Tailscale, which I already had running on the server. Tailscale creates a private encrypted network between your devices, which means Forgejo is accessible from anywhere without being accessible to anyone. Point your Forgejo <code>ROOT_URL</code> at the Tailscale hostname and the web interface, clone URLs, and everything else works correctly.</p>
-<section id="set-up-ssh-authentication" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="set-up-ssh-authentication">Set up SSH Authentication</h3>
+<section id="set-up-ssh" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="set-up-ssh">Set up SSH</h3>
 <p>SSH authentication requires that your public key be registered with the Forgejo server. This is not complicated, but it is a step that Git clients running on top of GitHub have quietly handled for years, and so it is easy to forget it exists.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;GitHub Desktop, specifically, has a “Publish repository” button that creates the remote and pushes in a single step, handling authentication invisibly. This is very convenient right up until you’re working with a different git host and discover you don’t know how any of it works.</p></div></div><p>The sequence is:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if you already have a key</span></span>
@@ -315,8 +315,8 @@ I mapped the data directly to a new share at <code>/mnt/user/git/</code>. I tend
 </ol>
 <div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;The SSH URL contains one footgun: note the <code>:222</code> rather than the standard <code>:22</code>. This is the port remapping from the installation step, now coming back to require attention. Forgejo’s web interface generates the correct clone URL automatically, provided you told it during setup that your SSH port is 222.</p></div></div><p>After this setup, Positron’s Source Control panel handles subsequent commits and syncs through the GUI.</p>
 </section>
-<section id="an-offsite-copy-because-paranoia-is-justified" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="an-offsite-copy-because-paranoia-is-justified">An Offsite Copy, Because Paranoia Is Justified</h2>
+<section id="an-offsite-copy-because-paranoia" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="an-offsite-copy-because-paranoia">An Offsite Copy, Because Paranoia</h2>
 <p>Having a private git server is good. Having a backup on a machine in a different building is better. Git repositories are small, disk space is cheap, and the cost of being wrong about “unlikely” is losing years of work.</p>
 <p>Accordingly, I have a headless Ubuntu<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> machine living elsewhere, that keeps a separate backup of my Nextcloud. I now wanted to set this up to clone every repository from Forgejo automatically, including any repos created since the last run. This machine phones home daily using a <a href="https://deadmanssnitch.com">Dead Man’s Snitch</a>, and ideally this is as much as I’ll ever have to do with it.</p>
 <div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;I chose Ubuntu because it provides <a href="https://en.wikipedia.org/wiki/ZFS">ZFS</a> out-of-the-box, which provides strong native backup protection in case of drive failure.</p></div></div><p>The approach uses Forgejo’s API to enumerate all repositories, then mirrors each one:</p>
