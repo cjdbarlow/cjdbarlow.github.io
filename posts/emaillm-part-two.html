@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../assets/favicon32x32.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-9e15f8fb9e1f2f288bfbe28f6ca11029.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e4b8024a137a066106f64e849fce2999.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-c43ee2b62abe52577305f7200a65d2bf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-bdac2dc4ab577a9c65f6ab36912a56d0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -121,8 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo light-content">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo dark-content">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">C. Jake Barlow</span>
@@ -277,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>An embedding model<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> takes a piece of text and produces a fixed-length numeric vector — a point in a high-dimensional space. Similar pieces of text should produce vectors that are closer together. “Your Uber receipt” and “eBay: Order confirmed” will land close together. “Your Uber receipt” and “Dear Jake, about that patient you saw last week…” will be further apart.</p>
 <div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;I found <a href="https://stackoverflow.blog/2023/11/09/an-intuitive-introduction-to-text-embeddings/">this StackOverflow blog</a> piece very helpful for understanding text embeddings.</p></div><div id="fn3"><p><sup>3</sup>&nbsp;The <code>nomic-embed-text</code> model has an input token limit of 8192. <a href="https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them">One paragraph is loosely 100 tokens</a>, which means long emails (particularly threaded emails) overran the buffer. I ignored the few hundred emails in this category and classified them manually at the end.</p></div></div><p>The model used here is <code>nomic-embed-text</code>, running locally via Ollama. The model ran blisteringly fast on my laptop, and generated embeddings for almost all<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> emails in the corpus in a few minutes.</p>
 <p>Before embedding, each email is preprocessed into a single text string:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ss">f"</span><span class="sc">{</span>subject<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>subject<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>subject<span class="sc">}</span><span class="ss"> From: </span><span class="sc">{</span>sender_domain<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>sender_domain<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>sender_domain<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>body<span class="sc">}</span><span class="ss">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ss">f"</span><span class="sc">{</span>subject<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>subject<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>subject<span class="sc">}</span><span class="ss"> From: </span><span class="sc">{</span>sender_domain<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>sender_domain<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>sender_domain<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>body<span class="sc">}</span><span class="ss">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>One of the things I realised early on is that the email subject and sender domain will be hugely predictive of the final category, compared to the body of the email. This is a true property of the problem, but won’t be picked up by the embedding. The simple approach here was to repeat subject and sender in order to bias the embedding model towards those properties<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
 <div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;I did not test different subject weights and pick the one that produces the best downstream classification performance, though I could see that being worthwhile on a more important problem.</p></div><div class="">
 <p>Sender domain is a strong signal on its own:</p>
@@ -546,14 +544,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

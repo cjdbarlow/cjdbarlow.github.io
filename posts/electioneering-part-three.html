@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../assets/favicon32x32.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-9e15f8fb9e1f2f288bfbe28f6ca11029.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e4b8024a137a066106f64e849fce2999.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-c43ee2b62abe52577305f7200a65d2bf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-bdac2dc4ab577a9c65f6ab36912a56d0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -129,8 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo light-content">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo dark-content">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">C. Jake Barlow</span>
@@ -291,7 +289,7 @@ Refine the analysis, and offer some interpetation.</li>
 <h2 class="anchored" data-anchor-id="composition-by-party">Composition by Party</h2>
 <p>First, we’ll pull all our results for each electorate system into a single table. We’ll also calculate the percentage difference in party vote and received seats as a marker of how well each system reflects the preferences of the electorate.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>compare.parliament <span class="ot">=</span> votes <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>compare.parliament <span class="ot">=</span> votes <span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PartyAb) <span class="sc">%&gt;%</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CountNumber <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">partyVoteN =</span> <span class="fu">sum</span>(prefCount)) <span class="sc">%&gt;%</span></span>
@@ -322,7 +320,7 @@ Refine the analysis, and offer some interpetation.</li>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>           <span class="fu">multiply_by</span>(<span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>           <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Difference from party vote</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">ends_with</span>(<span class="st">"SeatsPC"</span>), <span class="sc">~</span> . <span class="sc">-</span> partyVotePC, <span class="at">.names =</span> <span class="st">"{.col}_diff"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">ends_with</span>(<span class="st">"SeatsPC"</span>), <span class="sc">~</span> . <span class="sc">-</span> partyVotePC, <span class="at">.names =</span> <span class="st">"{.col}_diff"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-screen">
@@ -767,7 +765,7 @@ Refine the analysis, and offer some interpetation.</li>
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 7%">
 <col style="width: 7%">
@@ -785,10 +783,10 @@ Refine the analysis, and offer some interpetation.</li>
 </colgroup>
 <thead>
 <tr class="gt_heading header">
-<td colspan="13" class="gt_heading gt_title gt_font_normal">Comparison of Parliament Under Three Voting Systems</td>
+<th colspan="13" class="gt_heading gt_title gt_font_normal">Comparison of Parliament Under Three Voting Systems</th>
 </tr>
 <tr class="gt_heading even">
-<td colspan="13" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Australian Federal Election 2022</td>
+<th colspan="13" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Australian Federal Election 2022</th>
 </tr>
 <tr class="gt_col_headings gt_spanner_row header">
 <th rowspan="2" id="Party" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Party</th>
@@ -1064,7 +1062,7 @@ Refine the analysis, and offer some interpetation.</li>
 <h2 class="anchored" data-anchor-id="composition-by-electorates">Composition by Electorates</h2>
 <p>Now we will compare the outcomes of electorates under STV and FPTP, highlighting electorates where the outcome was different. As MMP uses FPTP to determine the winner of electorates, there is no additional value for including MMP in this comparison.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>compare.seat <span class="ot">=</span> <span class="fu">full_join</span>(</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>compare.seat <span class="ot">=</span> <span class="fu">full_join</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  stv <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">paste</span>(GivenNm, Surname)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(StateAb, DivisionNm,</span>
@@ -1075,7 +1073,7 @@ Refine the analysis, and offer some interpetation.</li>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">fptpID =</span> CandidateID, <span class="at">fptpName =</span> name, <span class="at">fptpParty =</span> PartyAb, <span class="at">fptpCount =</span> prefCount, <span class="at">fptpMargin =</span> margin),</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"StateAb"</span>, <span class="st">"DivisionNm"</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">identical =</span> <span class="fu">ifelse</span>(stvID <span class="sc">==</span> fptpID, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(stvID, fptpID))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(stvID, fptpID))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-screen">
@@ -1520,13 +1518,13 @@ Refine the analysis, and offer some interpetation.</li>
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading header">
-<td colspan="10" class="gt_heading gt_title gt_font_normal">Comparison of Electorates with Differing Outcomes Under STV and FPTP</td>
+<th colspan="10" class="gt_heading gt_title gt_font_normal">Comparison of Electorates with Differing Outcomes Under STV and FPTP</th>
 </tr>
 <tr class="gt_heading even">
-<td colspan="10" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Australian Federal Election 2022</td>
+<th colspan="10" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Australian Federal Election 2022</th>
 </tr>
 <tr class="gt_col_headings gt_spanner_row header">
 <th rowspan="2" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
@@ -1547,7 +1545,7 @@ Refine the analysis, and offer some interpetation.</li>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<th id="stub_1_1" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Bennelong</th>
+<td id="stub_1_1" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Bennelong</td>
 <td class="gt_row gt_center" headers="stub_1_1 StateAb">NSW</td>
 <td class="gt_row gt_left" headers="stub_1_1 stvName" style="background-color: #F00011; color: #FFFFFF">Jerome LAXALE</td>
 <td class="gt_row gt_left" headers="stub_1_1 stvParty" style="background-color: #F00011; color: #FFFFFF">ALP</td>
@@ -1559,7 +1557,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_1 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">3,610.00</td>
 </tr>
 <tr class="even">
-<th id="stub_1_2" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Boothby</th>
+<td id="stub_1_2" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Boothby</td>
 <td class="gt_row gt_center" headers="stub_1_2 StateAb">SA</td>
 <td class="gt_row gt_left" headers="stub_1_2 stvName" style="background-color: #F00011; color: #FFFFFF">Louise MILLER-FROST</td>
 <td class="gt_row gt_left" headers="stub_1_2 stvParty" style="background-color: #F00011; color: #FFFFFF">ALP</td>
@@ -1571,7 +1569,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_2 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">6,450.00</td>
 </tr>
 <tr class="odd">
-<th id="stub_1_3" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Brisbane</th>
+<td id="stub_1_3" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Brisbane</td>
 <td class="gt_row gt_center" headers="stub_1_3 StateAb">QLD</td>
 <td class="gt_row gt_left" headers="stub_1_3 stvName" style="background-color: #10C25B; color: #FFFFFF">Stephen BATES</td>
 <td class="gt_row gt_left" headers="stub_1_3 stvParty" style="background-color: #10C25B; color: #FFFFFF">GRN</td>
@@ -1583,7 +1581,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_3 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">11,380.00</td>
 </tr>
 <tr class="even">
-<th id="stub_1_4" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Curtin</th>
+<td id="stub_1_4" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Curtin</td>
 <td class="gt_row gt_center" headers="stub_1_4 StateAb">WA</td>
 <td class="gt_row gt_left" headers="stub_1_4 stvName" style="background-color: #888888; color: #FFFFFF">Kate CHANEY</td>
 <td class="gt_row gt_left" headers="stub_1_4 stvParty" style="background-color: #888888; color: #FFFFFF">IND</td>
@@ -1595,7 +1593,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_4 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">12,466.00</td>
 </tr>
 <tr class="odd">
-<th id="stub_1_5" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Fowler</th>
+<td id="stub_1_5" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Fowler</td>
 <td class="gt_row gt_center" headers="stub_1_5 StateAb">NSW</td>
 <td class="gt_row gt_left" headers="stub_1_5 stvName" style="background-color: #888888; color: #FFFFFF">Dai LE</td>
 <td class="gt_row gt_left" headers="stub_1_5 stvParty" style="background-color: #888888; color: #FFFFFF">IND</td>
@@ -1607,7 +1605,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_5 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">5,627.00</td>
 </tr>
 <tr class="even">
-<th id="stub_1_6" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Gilmore</th>
+<td id="stub_1_6" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Gilmore</td>
 <td class="gt_row gt_center" headers="stub_1_6 StateAb">NSW</td>
 <td class="gt_row gt_left" headers="stub_1_6 stvName" style="background-color: #F00011; color: #FFFFFF">Fiona PHILLIPS</td>
 <td class="gt_row gt_left" headers="stub_1_6 stvParty" style="background-color: #F00011; color: #FFFFFF">ALP</td>
@@ -1619,7 +1617,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_6 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">6,766.00</td>
 </tr>
 <tr class="odd">
-<th id="stub_1_7" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Goldstein</th>
+<td id="stub_1_7" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Goldstein</td>
 <td class="gt_row gt_center" headers="stub_1_7 StateAb">VIC</td>
 <td class="gt_row gt_left" headers="stub_1_7 stvName" style="background-color: #888888; color: #FFFFFF">Zoe DANIEL</td>
 <td class="gt_row gt_left" headers="stub_1_7 stvParty" style="background-color: #888888; color: #FFFFFF">IND</td>
@@ -1631,7 +1629,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_7 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">5,792.00</td>
 </tr>
 <tr class="even">
-<th id="stub_1_8" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Higgins</th>
+<td id="stub_1_8" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Higgins</td>
 <td class="gt_row gt_center" headers="stub_1_8 StateAb">VIC</td>
 <td class="gt_row gt_left" headers="stub_1_8 stvName" style="background-color: #F00011; color: #FFFFFF">Michelle ANANDA-RAJAH</td>
 <td class="gt_row gt_left" headers="stub_1_8 stvParty" style="background-color: #F00011; color: #FFFFFF">ALP</td>
@@ -1643,7 +1641,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_8 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">11,672.00</td>
 </tr>
 <tr class="odd">
-<th id="stub_1_9" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Kooyong</th>
+<td id="stub_1_9" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Kooyong</td>
 <td class="gt_row gt_center" headers="stub_1_9 StateAb">VIC</td>
 <td class="gt_row gt_left" headers="stub_1_9 stvName" style="background-color: #888888; color: #FFFFFF">Monique RYAN</td>
 <td class="gt_row gt_left" headers="stub_1_9 stvParty" style="background-color: #888888; color: #FFFFFF">IND</td>
@@ -1655,7 +1653,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_9 fptpMargin" style="background-color: #F58231; color: #FFFFFF">2,433.00</td>
 </tr>
 <tr class="even">
-<th id="stub_1_10" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Lyons</th>
+<td id="stub_1_10" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Lyons</td>
 <td class="gt_row gt_center" headers="stub_1_10 StateAb">TAS</td>
 <td class="gt_row gt_left" headers="stub_1_10 stvName" style="background-color: #F00011; color: #FFFFFF">Brian MITCHELL</td>
 <td class="gt_row gt_left" headers="stub_1_10 stvParty" style="background-color: #F00011; color: #FFFFFF">ALP</td>
@@ -1667,7 +1665,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_10 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">6,001.00</td>
 </tr>
 <tr class="odd">
-<th id="stub_1_11" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Mackellar</th>
+<td id="stub_1_11" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Mackellar</td>
 <td class="gt_row gt_center" headers="stub_1_11 StateAb">NSW</td>
 <td class="gt_row gt_left" headers="stub_1_11 stvName" style="background-color: #888888; color: #FFFFFF">Sophie SCAMPS</td>
 <td class="gt_row gt_left" headers="stub_1_11 stvParty" style="background-color: #888888; color: #FFFFFF">IND</td>
@@ -1679,7 +1677,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_11 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">3,269.00</td>
 </tr>
 <tr class="even">
-<th id="stub_1_12" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">North Sydney</th>
+<td id="stub_1_12" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">North Sydney</td>
 <td class="gt_row gt_center" headers="stub_1_12 StateAb">NSW</td>
 <td class="gt_row gt_left" headers="stub_1_12 stvName" style="background-color: #888888; color: #FFFFFF">Kylea Jane TINK</td>
 <td class="gt_row gt_left" headers="stub_1_12 stvParty" style="background-color: #888888; color: #FFFFFF">IND</td>
@@ -1691,7 +1689,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_12 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">12,479.00</td>
 </tr>
 <tr class="odd">
-<th id="stub_1_13" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Robertson</th>
+<td id="stub_1_13" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Robertson</td>
 <td class="gt_row gt_center" headers="stub_1_13 StateAb">NSW</td>
 <td class="gt_row gt_left" headers="stub_1_13 stvName" style="background-color: #F00011; color: #FFFFFF">Gordon REID</td>
 <td class="gt_row gt_left" headers="stub_1_13 stvParty" style="background-color: #F00011; color: #FFFFFF">ALP</td>
@@ -1703,7 +1701,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_13 fptpMargin" style="background-color: #F58231; color: #FFFFFF">2,217.00</td>
 </tr>
 <tr class="even">
-<th id="stub_1_14" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Ryan</th>
+<td id="stub_1_14" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Ryan</td>
 <td class="gt_row gt_center" headers="stub_1_14 StateAb">QLD</td>
 <td class="gt_row gt_left" headers="stub_1_14 stvName" style="background-color: #10C25B; color: #FFFFFF">Elizabeth WATSON-BROWN</td>
 <td class="gt_row gt_left" headers="stub_1_14 stvParty" style="background-color: #10C25B; color: #FFFFFF">GRN</td>
@@ -1715,7 +1713,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_14 fptpMargin" style="background-color: #1A9641; color: #FFFFFF">8,236.00</td>
 </tr>
 <tr class="odd">
-<th id="stub_1_15" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Tangney</th>
+<td id="stub_1_15" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Tangney</td>
 <td class="gt_row gt_center" headers="stub_1_15 StateAb">WA</td>
 <td class="gt_row gt_left" headers="stub_1_15 stvName" style="background-color: #F00011; color: #FFFFFF">Sam LIM</td>
 <td class="gt_row gt_left" headers="stub_1_15 stvParty" style="background-color: #F00011; color: #FFFFFF">ALP</td>
@@ -1727,7 +1725,7 @@ Refine the analysis, and offer some interpetation.</li>
 <td class="gt_row gt_right" headers="stub_1_15 fptpMargin" style="background-color: #F58231; color: #FFFFFF">2,068.00</td>
 </tr>
 <tr class="even">
-<th id="stub_1_16" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Wentworth</th>
+<td id="stub_1_16" class="gt_row gt_center gt_stub" data-quarto-table-cell-role="th" scope="row">Wentworth</td>
 <td class="gt_row gt_center" headers="stub_1_16 StateAb">NSW</td>
 <td class="gt_row gt_left" headers="stub_1_16 stvName" style="background-color: #888888; color: #FFFFFF">Allegra SPENDER</td>
 <td class="gt_row gt_left" headers="stub_1_16 stvParty" style="background-color: #888888; color: #FFFFFF">IND</td>
@@ -1750,7 +1748,7 @@ Refine the analysis, and offer some interpetation.</li>
 <h3 class="anchored" data-anchor-id="electoral-maps">Electoral Maps</h3>
 <p>The below maps are very similar, reflecting that ~90% of the parliament remains unchanged in each system<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. The fact that the changed electorates were in dense urban areas further adds to the unimpressiveness.</p>
 <div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;This is still significant though!</p></div></div><div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">First Past the Post</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Single Transferable Vote</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">First Past the Post</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Single Transferable Vote</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
@@ -1832,14 +1830,13 @@ Refine the analysis, and offer some interpetation.</li>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

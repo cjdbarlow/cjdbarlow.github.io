@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../assets/favicon32x32.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-9e15f8fb9e1f2f288bfbe28f6ca11029.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e4b8024a137a066106f64e849fce2999.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-c43ee2b62abe52577305f7200a65d2bf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-bdac2dc4ab577a9c65f6ab36912a56d0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -121,8 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo light-content">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo dark-content">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">C. Jake Barlow</span>
@@ -255,7 +253,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#set-up-ssh" id="toc-set-up-ssh" class="nav-link" data-scroll-target="#set-up-ssh">Set up SSH</a></li>
   </ul></li>
   <li><a href="#connecting-positron" id="toc-connecting-positron" class="nav-link" data-scroll-target="#connecting-positron">Connecting Positron</a></li>
-  <li><a href="#an-offsite-copy-because-paranoia" id="toc-an-offsite-copy-because-paranoia" class="nav-link" data-scroll-target="#an-offsite-copy-because-paranoia">An Offsite Copy, Because Paranoia</a></li>
+  <li><a href="#setting-up-the-offsite-copy" id="toc-setting-up-the-offsite-copy" class="nav-link" data-scroll-target="#setting-up-the-offsite-copy">Setting up the Offsite Copy</a></li>
+  <li><a href="#setting-up-an-onsite-copy-because-backups-are-free-and-storage-is-cheap" id="toc-setting-up-an-onsite-copy-because-backups-are-free-and-storage-is-cheap" class="nav-link" data-scroll-target="#setting-up-an-onsite-copy-because-backups-are-free-and-storage-is-cheap">Setting up an Onsite Copy, Because Backups are Free and Storage is Cheap</a>
+  <ul class="collapse">
+  <li><a href="#ssh-setup" id="toc-ssh-setup" class="nav-link" data-scroll-target="#ssh-setup">SSH Setup</a></li>
+  </ul></li>
+  <li><a href="#in-review" id="toc-in-review" class="nav-link" data-scroll-target="#in-review">In Review</a></li>
   </ul>
 </nav>
 </nav>
@@ -270,56 +273,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>There is a principle in software engineering that says you should version control everything. The idea is that if you track every change you make to your code, you can always go back to a version that worked. This is obviously correct, and although I have been using it for years in writing (<a href="https://partone.litfl.com/">Part One</a> is up to <a href="https://github.com/cjdbarlow/Part-One">3,859 commits</a> right now) and software, I have been studiously ignoring it for my statistics work.</p>
-<p>The reason is I use Github, which is Microsoft-owned and lives… somewhere (Australia, maybe? Am I sure, no?) in the cloud. I usually deal with data that comes with a variety of riders on where it can be stored, how it can be transferred, and who can access it. I am naturally distrustful<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> of the protean terms-of-service agreements of cloud providers, and have for the last couple of years slowly been divorcing myself from all of them. Currently, I keep all of my research work confined to a Nextcloud instance which runs on my home server. This provides version-control of a kind (it keeps old document versions), but it’s clunky and reverting changes is tedious, and the whole thing feels a bit too unreliable. It’s not useless - it has once or twice saved me several hours of work when I irredeemably broke something - but there must be A Better Way.</p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Justifiably.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;One of the biggest surprises I have had is that it has actually required very little effort to maintain, and nothing has ever seriously broken. Setting it up took the better part of a weekend, I log in every couple of weeks to update the docker containers, and I’ve only had three container-breaking issues over the 2 years I have run it. Two of these have been after Nextcloud updates, which are fixed by logging on the Nextcloud web GUI. It has been a remarkably stable and incredibly useful investment.</p></div></div><p>I chose to revisit this yesterday as over the last year I have commenced a project with some novel data. The data format is still in the process of being worked out, which means every data dump I get has <em>slightly</em> different formatting, which means the data cleaning scripts have required revision every 3 months. This has led to a mess forming in the project directory, and at some point the digital squalor reached a nauseating threshold. GitHub is off the cards, and syncing a git history over Nextcloud ~feels like~ is a recipe for data corruption. Running a home server over the last couple of years has given me much more comfort with the shell and ssh, and I have been blown away by the convenience of docker. There is also a certain satisfaction in running ones own infrastructure. Satisfaction, and the constant low-level fear of everything breaking at 11pm on a Sunday.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<section id="platforms" class="level2 page-columns page-full">
+<p>There is a principle in data protection called the 3-2-1 rule, which states that: you should have three copies of your data, on two different media forms (this part has evolved - but think local, cloud, DVD, magnetic tape, paper, stone tablets, etc), with one copy off-site. I usually deal with data that comes with a variety of riders on where it can be stored, how it can be transferred, and who can access it. I am naturally<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> distrustful of the protean terms-of-service agreements of cloud providers, and so for the last couple of years have been slowly divorcing myself from all of them. I keep all of my work on a Nextcloud instance which runs on my home server, and keeps things synced between my laptop, desktop, and an off-site headless Ubuntu<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> box.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Justifiably.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;I chose Ubuntu because it provides <a href="https://en.wikipedia.org/wiki/ZFS">ZFS</a> out-of-the-box, which provides strong native backup protection in case of drive failure.</p></div></div><p>There is also a principle in software engineering that says you should version control everything. The idea is that if you track every change you make to your code, you can always go back to a version that worked. Whilst by no means new, it is a game changing technology, and although I have been using it for years in writing (<a href="https://partone.litfl.com/">Part One</a> is up to <a href="https://github.com/cjdbarlow/Part-One">3,859 commits</a> by this point) and software, I have been studiously ignoring it for my research work. The reason is I use Github, which is Microsoft-owned and lives… somewhere (Australia, maybe? Sometimes? Guaranteed? No.) in the cloud. This provides version control of a kind (it keeps old document versions), but it’s clunky and reverting changes is tedious, and the whole thing feels a bit too unreliable. It’s not useless - it has once or twice saved me several hours of work when I irredeemably broke something - but there must be A Better Way.</p>
+<p>I chose to revisit this yesterday as over the last year I have broken ground on a new research program. The data format is still in the process of being worked out, which means every data dump I get has <em>slightly</em> different formatting, which means the data cleaning scripts have required revision every 3 months. This has led to a mess forming in the project directory, and at some point the digital squalor reached the nauseating threshold where Something Must Be Done. For privacy reasons GitHub is off the cards, and syncing a git history over Nextcloud <del>feels like</del> is a recipe for data corruption. Running a home server over the last couple of years has given me much more comfort with the shell and ssh, and I have been blown away by the convenience of docker. There is also the certain quiet satisfaction that comes with running one’s own infrastructure, tempered by the gnawing low-level fear of everything breaking at 1am on a Monday morning.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;One of the biggest surprises I have had is that it has actually required very little effort to maintain, and nothing has ever seriously broken. Setting it up took the better part of a weekend, I log in every couple of weeks to update the docker containers, and I’ve only had three container-breaking issues over the 2 years I have run it. Two of these have been after Nextcloud updates, which are fixed by logging on the Nextcloud web GUI. It has been a remarkably stable and incredibly useful investment.</p></div></div><section id="platforms" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="platforms">Platforms</h2>
-<p>The self-hosted git space is crowded in the way that open-source software tends to be crowded: many options, several abandoned ones, and a couple of contenders that you’ll identify after reading a half-dozen Reddit threads:</p>
+<p>The self-hosted git space is crowded in the way that open-source software tends to be crowded: many options, several abandoned ones, and a couple of serious contenders:</p>
 <ol type="1">
 <li><strong>GitLab</strong> is the enterprise option. It is very powerful and requires, by some accounts, more RAM than a small hospital. For a single user backing up their R scripts, this is more than is required.</li>
 <li><strong>Gogs</strong> is small and fast, and also had a critical vulnerability added to CISA’s Known Exploited Vulnerabilities catalogue in January 2026. Moving on.</li>
-<li><strong>Gitea</strong> and <strong>Forgejo</strong> are essentially the same software — Forgejo is a community fork created when Gitea was acquired by a for-profit company in 2022, in the way that these things tend to go.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Forgejo runs in Docker (tick), uses SQLite (tick) for a single user, consumes around 150MB of RAM (tick), name from Esperanto (cross), and provides a web interface that looks enough like GitHub that I felt at home (tick). I went with that.</li>
+<li><strong>Gitea</strong> and <strong>Forgejo</strong> are essentially the same software — Forgejo is a community fork created in 2022 when the Gitea was incorporated, raising concerns about the project’s future governance, in the way that these things tend to go.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Forgejo runs in Docker (tick), uses SQLite (tick) for a single user, consumes around 150MB of RAM (tick), name from Esperanto (cross), and provides a web interface that looks enough like GitHub that I felt at home (tick). I went with that.</li>
 </ol>
-<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;The open-source software lifecycle: a project is created by volunteers, becomes popular, gets acquired, community forks it, the fork becomes popular, repeat. It is a kind of institutional metabolism.</p></div></div></section>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;The open-source software lifecycle: a project is created by volunteers, becomes popular, gets acquired, community forks it, the fork becomes popular, repeat. It is a kind of institutional metabolism.</p></div></div></section>
 <section id="installation" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>My home server runs Unraid, which is a neat Linux-based operating system for home servers, that can manage Docker containers through a neat web interface. Forgejo has a Community Applications template, which means installation is largely a matter of clicking things and making two decisions:</p>
+<p>My home server runs Unraid, which is a neat Linux-based operating system for home servers, that can manage Docker containers through a clean web interface. Forgejo has a Community Applications template, which means installation is largely a matter of clicking things and making two decisions:</p>
 <ol type="1">
 <li><p><strong>Port mapping.</strong><br>
 Forgejo wants port 22 for SSH, which Unraid is already using for itself. I mapped the container’s SSH to port 222 instead. This will matter later.</p></li>
 <li><p><strong>Storage.</strong><br>
-I mapped the data directly to a new share at <code>/mnt/user/git/</code> straight to the array. I tend to commit chunks of work at a time (a new script), and potentially breaking updates separately. You could also pass to cache directly if you are a frequent committer.</p></li>
+I mapped the data directly to a new share at <code>/mnt/user/git/</code> straight to the array. I tend to commit chunks of work at a time, committing potentially breaking updates separately. You could also pass to cache directly if you are a frequent committer.</p></li>
 </ol>
-<p>Remote access remains handled by Tailscale, which I already had running on the server. Tailscale creates a private encrypted network between your devices, which means Forgejo is accessible from anywhere without being accessible to anyone. Point your Forgejo <code>ROOT_URL</code> at the Tailscale hostname and the web interface, clone URLs, and everything else works correctly.</p>
+<p>Remote access remains handled by Tailscale, which I already had running on the server. Tailscale creates a private encrypted network between devices, which means Forgejo is accessible from anywhere without being accessible to anyone. With Forgejo’s <code>ROOT_URL</code> pointed at the Tailscale hostname, everything else works correctly.</p>
 <section id="set-up-ssh" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="set-up-ssh">Set up SSH</h3>
-<p>SSH authentication requires that your public key be registered with the Forgejo server. This is not complicated, but as I have used GitHub GUI it has been quietly handled for years and I forgot that it existed.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;GitHub Desktop, specifically, has a “Publish repository” button that creates the remote and pushes in a single step, handling authentication invisibly. This is very convenient right up until you’re working with a different git host and discover you don’t know how any of it works.</p></div></div><p>The sequence is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if you already have a key</span></span>
+<p>SSH authentication requires that your public key be registered with the Forgejo server. This is not complicated, but as I have used GitHub GUI it has been quietly handled for years and I never learned it existed.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;GitHub Desktop, specifically, has a “Publish repository” button that creates the remote and pushes in a single step, handling authentication invisibly. This is very convenient right up until you’re working with a different git host and discover you don’t know how any of it works.</p></div></div><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if you already have a key</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/id_ed25519.pub</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If not, generate one</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"someString"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Copy the output of <code>cat</code>, go to Forgejo Settings → SSH/GPG Keys → Add Key, paste it in. Done.</p>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"someString"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Copy the output of <code>cat</code>, go to Forgejo Settings → SSH/GPG Keys → Add Key, paste in the output. Done.</p>
 </section>
 </section>
 <section id="connecting-positron" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="connecting-positron">Connecting Positron</h2>
-<p>Forgejo doesn’t come with a GUI, so that part of my workflow needs to change. Conveniently, Positron, which has become my data science IDE of choice<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, has the same built-in git integration as VS Code, which is to say it can talk to any standard git remote, including Forgejo.</p>
-<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;Positron is basically VS Code cosplaying as a modern version of RStudio. As I’ve spent the last few months doing more general coding and less statistics, I’ve spent more time with VS Code, and now that I am back in a research phase again I have found the move to Positron removing some of the pain points of RStudio.</p></div></div><p>There is not, as far as I can see, a workflow for pushing an existing local repository to Forgejo. This means setup is a bit more tedious than using the Github GUI, but basically involves:</p>
+<p>Forgejo doesn’t come with a GUI, so that part of my workflow needs to change. Conveniently, Positron, which has become my data science IDE of choice<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, has the same built-in git integration as VS Code, which is to say it can talk to any standard git remote, including Forgejo.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;Positron is basically VS Code cosplaying as a modern version of RStudio. As I’ve spent the last few months doing more general coding and less statistics, I’ve spent more time with VS Code, and now that I am back in a research phase again I have found the move to Positron removing some of the pain points of RStudio.</p></div></div><p>There is not, as far as I can see, a GUI workflow for pushing an existing local repository to Forgejo. This means setup is a bit more tedious than using the Github GUI, but basically involves:</p>
 <ol type="1">
-<li>Create an empty repository in the Forgejo web interface, and copy the address (e.g.&nbsp;<code>ssh://git@your-server.ts.net:222/username/repo-name.git</code>). This has to be done for every project (this is the tedious part).<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></li>
-<li>Use the “New folder from Git…” option in Positron and place the <code>ssh</code> or <code>http</code> link to the Forgejo remote.</li>
+<li>Create an empty repository in the Forgejo web interface, and copy the address (e.g.&nbsp;<code>ssh://git@your-server.ts.net:222/username/repo-name.git</code>). This has to be done for every project (this is the tedious part).<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></li>
+<li>Use the “New folder from Git…” option in Positron and paste the <code>ssh</code> or <code>http</code> link to the Forgejo remote.</li>
 </ol>
-<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;The SSH URL contains one footgun: note the <code>:222</code> rather than the standard <code>:22</code>. This is the port remapping from the installation step, now coming back to require attention. Forgejo’s web interface generates the correct clone URL automatically, provided you told it during setup that your SSH port is 222.</p></div></div><p>After this setup, Positron’s Source Control panel handles subsequent commits and syncs through the GUI.</p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;The SSH URL contains one footgun: note the <code>:222</code> rather than the standard <code>:22</code>. This is the port remapping from the installation step, now coming back to require attention. Forgejo’s web interface generates the correct clone URL automatically, provided you told it during setup that your SSH port is 222.</p></div></div><p>After this setup, Positron’s Source Control panel handles subsequent commits and syncs through the GUI.</p>
 </section>
-<section id="an-offsite-copy-because-paranoia" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="an-offsite-copy-because-paranoia">An Offsite Copy, Because Paranoia</h2>
-<p>Having a private git server is good for providing version control and at least one backup. Having a second backup on a machine in a different building is better.</p>
-<p>Accordingly, I have a headless Ubuntu<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> machine living elsewhere, that keeps a separate backup of my Nextcloud. I now wanted to set this up to clone every repository from Forgejo automatically, including any repos created since the last run. This machine phones home daily using a <a href="https://deadmanssnitch.com">Dead Man’s Snitch</a> to say that all its scripts have fired, and ideally this is as much as I’ll ever have to do with it.</p>
-<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;I chose Ubuntu because it provides <a href="https://en.wikipedia.org/wiki/ZFS">ZFS</a> out-of-the-box, which provides strong native backup protection in case of drive failure.</p></div></div><p>The approach uses Forgejo’s API to enumerate all repositories, then mirrors each one:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<section id="setting-up-the-offsite-copy" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-the-offsite-copy">Setting up the Offsite Copy</h2>
+<p>Having a private git server is good for providing version control and one backup. Naturally, the next step is to set up my headless Ubuntu machine to provide a third, offsite backup. The goal was to set this up to clone every repository from Forgejo automatically, including any repos created since the last run. This machine phones home daily using a <a href="https://deadmanssnitch.com">Dead Man’s Snitch</a> to say that all its scripts have fired, and ideally this is as much as I’ll ever have to do with it.</p>
+<p>The approach uses Forgejo’s API to enumerate all repositories, then mirrors each one:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">FORGEJO_URL</span><span class="op">=</span><span class="st">"http://server.tailnet.ts.net:3000"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">USERNAME</span><span class="op">=</span><span class="st">"username"</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">TOKEN</span><span class="op">=</span><span class="st">"your-token"</span></span>
@@ -356,10 +357,73 @@ I mapped the data directly to a new share at <code>/mnt/user/git/</code> straigh
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">((</span><span class="va">page</span><span class="op">++</span><span class="kw">))</span></span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"[</span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">] Backup complete"</span> <span class="op">&gt;&gt;</span> <span class="st">"</span><span class="va">$LOG_FILE</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"[</span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">] Backup complete"</span> <span class="op">&gt;&gt;</span> <span class="st">"</span><span class="va">$LOG_FILE</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The script is scheduled to run every 4 hours via cron:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span> <span class="pp">*</span>/4 <span class="pp">*</span> <span class="pp">*</span> <span class="pp">*</span> /home/user/scripts/git-backup.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This whole setup was surprisingly simple, and took less than an hour.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span> <span class="pp">*</span>/4 <span class="pp">*</span> <span class="pp">*</span> <span class="pp">*</span> /home/user/scripts/git-backup.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="setting-up-an-onsite-copy-because-backups-are-free-and-storage-is-cheap" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="setting-up-an-onsite-copy-because-backups-are-free-and-storage-is-cheap">Setting up an Onsite Copy, Because Backups are Free and Storage is Cheap</h2>
+<p>I have a Windows desktop, which stays at home and mostly gathers dust, living out the last years of Windows 10 security updates. Since it stays at home it doesn’t add geographic redundancy, but does add device redundancy, and since it’s already got git and Tailscale installed it seemed to easy not to bother.</p>
+<section id="ssh-setup" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="ssh-setup">SSH Setup</h3>
+<p>Similar to previously, we need to provision a new SSH key and pass it to Forgejo.</p>
+<p>From PowerShell:</p>
+<pre><code>ssh-keygen -t ed25519 -C "windows-desktop"</code></pre>
+<p>Then accept the default path, skip adding a passphrase, and get the key:</p>
+<pre><code>cat $env:USERPROFILE\.ssh\id_ed25519.pub</code></pre>
+<p>Copy that output to Forgejo (Settings → SSH/GPG Keys).</p>
+<p>Since Forgejo SSH is on a non-standard port, I also needed to modify the Windows ssh config in <code>C:\Users\me\.ssh\config\</code>:</p>
+<pre><code>Host server.tailnet.ts.net
+    Port 222
+    User git
+    StrictHostKeyChecking no</code></pre>
+<p>The <code>StrictHostKeyChecking no</code> line aims to skip the interactive host key confirmation prompt on first connection. I am not strictly sure if this is necessary, but I have left it in anyway. The issue, which took a little while to tease out, is that git for Windows ships with its own bundled SSH client, and by default that’s what it uses for git clone. The bundled client handles interactive prompts differently from Windows’ built-in OpenSSH — specifically, it presents a GUI dialog asking whether to cache the server’s host key, which I couldn’t seem to get past, and will nonetheless hang indefinitely when the script runs unattended. The fix is to force git to use Windows’ OpenSSH instead (without StrictHostKeyChecking), and to set it to non-interactive mode:</p>
+<pre><code>$FORGEJO_URL = "http://server.tailnet.ts.net:3000"
+$TOKEN = "token"
+$BACKUP_DIR = "C:\Users\me\Documents\Forgejo\repos"
+
+# Force git to use Windows' OpenSSH rather than its bundled SSH client
+$env:GIT_SSH_COMMAND = "C:/Windows/System32/OpenSSH/ssh.exe -o StrictHostKeyChecking=no -o BatchMode=yes"
+
+# Make a backup directory if it doesn't exist
+if (-not (Test-Path $BACKUP_DIR)) {
+    New-Item -ItemType Directory -Path $BACKUP_DIR
+}
+
+# Iterate through each page of repos on the Forgejo server
+$page = 1
+while ($true) {
+    $response = Invoke-RestMethod `
+        -Uri "$FORGEJO_URL/api/v1/repos/search?limit=50&amp;page=$page" `
+        -Headers @{Authorization = "token $TOKEN"}
+
+    if (-not $response.data -or $response.data.Count -eq 0) { break }
+
+    foreach ($repo in $response.data) {
+        $ssh_url  = $repo.ssh_url
+        $repo_name = $repo.name
+        $owner    = $repo.owner.login
+        $mirror_path = "$BACKUP_DIR\$owner-$repo_name.git"
+
+        if (Test-Path $mirror_path) {
+            Write-Output "Updating $repo_name..."
+            git -C $mirror_path remote update --prune
+        } else {
+            Write-Output "Cloning $repo_name..."
+            git clone --mirror $ssh_url $mirror_path
+        }
+    }
+    $page++
+}
+
+Write-Output "Forgejo backup finished."</code></pre>
+<p>I put that script in <code>Documents\Forgejo</code><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, and then updated PowerShell’s execution policy:</p>
+<div class="no-row-height column-margin column-container"><div id="fn8"><p><sup>8</sup>&nbsp;If the script lives in actual backup folder, the folder is non-empty, and git won’t clone into a non-empty directory. The script has to live in a different folder than<code>$BACKUP_DIR</code>.</p></div></div><pre><code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre>
+</section>
+</section>
+<section id="in-review" class="level2">
+<h2 class="anchored" data-anchor-id="in-review">In Review</h2>
+<p>I would call this useful and successful, in that it sits there, works, and I don’t have to think about it. I spent a few hours rebuilding my data cleaning scripts, working through the versions in time for a later data dump. Both the scripts and data directories are much more ordered and readable - this may be a property of spring cleaning, but I’ll give credit to the new system. In terms of pain points, the only one is that as Positron (and VS Code) do not come with as polished a source control tool as the GitHub GUI, I have been relying more on the terminal for anything beyond basic commit-push workflow. The biggest thing I am missing is an idiot-proof way to squash and reorder commits, as this forms a pretty routine part of my workflow (I like a tidy tree), and it is pretty easy to muddle things with a bad squash. If it becomes a big enough issue, I’m sure I can find a solution.</p>
 <hr>
 
 
@@ -418,14 +482,13 @@ I mapped the data directly to a new share at <code>/mnt/user/git/</code> straigh
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

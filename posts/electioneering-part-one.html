@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../assets/favicon32x32.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-9e15f8fb9e1f2f288bfbe28f6ca11029.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e4b8024a137a066106f64e849fce2999.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-c43ee2b62abe52577305f7200a65d2bf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-bdac2dc4ab577a9c65f6ab36912a56d0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -121,8 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo light-content">
-    <img src="../assets/larynx-small.png" alt="" class="navbar-logo dark-content">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">C. Jake Barlow</span>
@@ -327,19 +325,19 @@ We’ll make this up.</li>
 <h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
 <p>First, we’ll do the usual environment set up:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Libraries</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(tidyverse)    <span class="co"># For data wrangling</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(magrittr)     <span class="co"># For piping arithmetic (actually)</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(sf)           <span class="co"># For producing maps</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggiraph)      <span class="co"># For producing interactive maps without D3</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)    <span class="co"># For combining maps</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)    <span class="co"># For combining maps</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="voting-data" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="voting-data">Voting Data</h3>
 <p>We’ve loaded up the voting data behind the scenes, and are going to tidy up the data types. I’m not sure if we’ll need all of these columns yet, but since there aren’t that many of them it’s convenient to just transform them all now.</p>
 <p>We make the binary <code>Elected</code> variables into logical, and identify the key factor variables. We of course don’t need to touch the character or numeric variables as R has classified these already<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p>
 <div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;We also do a cheeky find-and-replace on the <code>DivisionNm</code> variable (which identifies the electorates), as special characters can play havoc when it comes time to plot maps. Replacing hyphens with an en dash insures us against typographic shenanigans. I’ve got my eye on you, Eden-Monaro.</p></div></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data cleaning</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data cleaning</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>votes <span class="ot">=</span> votes <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DivisionNm =</span> <span class="fu">gsub</span>(<span class="st">"-"</span>, <span class="st">"–"</span>, DivisionNm),</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">ends_with</span>(<span class="st">"Elected"</span>), <span class="sc">~</span> <span class="fu">ifelse</span>(. <span class="sc">==</span> <span class="st">"N"</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)),</span>
@@ -358,7 +356,7 @@ We’ll make this up.</li>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PartyAb, PartyNm) <span class="sc">%&gt;%</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>()</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(parties)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(parties)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -400,7 +398,7 @@ We’ll make this up.</li>
 </div>
 <p>The other thing that needs correcting are the party names and abbreviations as there are some clear duplicates. There’s a couple of judgement calls here, but we follow established conventions and I think the ambiguity reduction is beneficial.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>votes <span class="ot">=</span> votes <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>votes <span class="ot">=</span> votes <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PartyAb =</span> PartyAb <span class="sc">%&gt;%</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(<span class="st">"GRN"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"GVIC"</span>),</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"IND"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">""</span>)),</span>
@@ -413,14 +411,14 @@ We’ll make this up.</li>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Liberal Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Liberal National Party of Queensland"</span>),</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"The Nationals"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"National Party"</span>),</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"The New Liberals"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"TNL"</span>),</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Western Australia Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"WESTERN AUSTRALIA PARTY"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Western Australia Party"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"WESTERN AUSTRALIA PARTY"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="geometric-data" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="geometric-data">Geometric Data</h3>
 <p>With the voting data cleaned, we can turn our attention to the geometric data. The first order of business is to check that the names of the electorates in our shapefile (<code>ced</code>) line up with the names in the voting data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ced <span class="ot">=</span> ced <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ced <span class="ot">=</span> ced <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CED_NAME21 =</span> <span class="fu">gsub</span>(<span class="st">"-"</span>, <span class="st">"–"</span>, CED_NAME21))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> ced<span class="sc">$</span>CED_NAME2</span>
@@ -428,11 +426,11 @@ We’ll make this up.</li>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(x, y)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(y, x)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>All names align except the “no usual address” geoms, which we will strip out. We’ll also transform our geographic data to use the EPSG:4326/WGS84 coordinate system. Coordinate systems are complex and interesting, it is enough for our purposes to say that this datum lets us plot latitudes and longitudes from a map without having to think too hard about it.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ced <span class="ot">=</span> ced <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ced <span class="ot">=</span> ced <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">### Drop the unnecessary data and restrict our map geoms to the electorates</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(CED_CODE21, STE_CODE21, AUS_CODE21, AUS_NAME21, LOCI_URI21)) <span class="sc">%&gt;%</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CED_NAME21 <span class="sc">%in%</span> votes<span class="sc">$</span>DivisionNm) <span class="sc">%&gt;%</span></span>
@@ -441,18 +439,18 @@ We’ll make this up.</li>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reduce the window to cover continental Australia</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crop</span>(<span class="at">xmin =</span> <span class="dv">110</span>, <span class="at">xmax =</span> <span class="dv">160</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">ymin =</span> <span class="sc">-</span><span class="dv">45</span>, <span class="at">ymax =</span> <span class="sc">-</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">ymin =</span> <span class="sc">-</span><span class="dv">45</span>, <span class="at">ymax =</span> <span class="sc">-</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We should also put together a list of the state capitals. Electorates are drawn with the aim of having a similar number of enrolled voters in each<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, and so tend to cluster around major cities. We’ll put some insets into our graphs so changes won’t be overshadowed by the large electorates that dominate much of the landmass.</p>
 <div class="no-row-height column-margin column-container"><div id="fn8"><p><sup>8</sup>&nbsp;Although the actual number can vary quite a bit.</p></div></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set geography for insets</span></span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set geography for insets</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A list of cities, their latitude and longitude, and the radius around them that we'll capture the electorates from</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>loc <span class="ot">=</span> <span class="fu">tribble</span>(<span class="sc">~</span> city, <span class="sc">~</span> lat      , <span class="sc">~</span> long     , <span class="sc">~</span> rad,</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"mel"</span> , <span class="sc">-</span><span class="fl">37.8142354</span>, <span class="fl">144.9668884</span>, <span class="dv">45000</span>,</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">"syd"</span> , <span class="sc">-</span><span class="fl">33.8386302</span>, <span class="fl">151.0310312</span>, <span class="dv">40000</span>,</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">"bri"</span> , <span class="sc">-</span><span class="fl">27.4671551</span>, <span class="fl">153.0169995</span>, <span class="dv">15000</span>,</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>              <span class="st">"ade"</span> , <span class="sc">-</span><span class="fl">34.7894706</span>, <span class="fl">138.5687859</span>, <span class="dv">15000</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>              <span class="st">"per"</span> , <span class="sc">-</span><span class="fl">32.0212408</span>, <span class="fl">115.8735055</span>, <span class="dv">15000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>              <span class="st">"per"</span> , <span class="sc">-</span><span class="fl">32.0212408</span>, <span class="fl">115.8735055</span>, <span class="dv">15000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The last thing we need to do for the setup is define some cosmetic options, so that each party is drawn in an appropriate colour. To spare the tedium, we’ll do this off screen. If you want to follow along, the files (and the source data) are in the <a href="https://www.github.com/cjdbarlow/cjdbarlow.github.io">Github repository</a>.</p>
 <p>Next time - some actual analysis!</p>
@@ -514,14 +512,13 @@ We’ll make this up.</li>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
