@@ -335,7 +335,7 @@ Premedication:
         unit: weight_kg
       doses:
         - unit: "mg/kg"
-          lower: 0.5
+          lower: 0.3
           upper: 0.5
           max: 20
     Clonidine (PO):
@@ -357,6 +357,16 @@ Premedication:
       doses:
         - unit: "mcg/kg"
           lower: 2
+          upper: 3
+    Dexmedetomidine (IN):
+      standard_dilution:
+        value: 100
+        unit: "mcg/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mcg/kg"
+          lower: 0.5
           upper: 2
     Ketamine (PO):
       standard_dilution:
@@ -401,7 +411,7 @@ Induction:
             lower: 0
             upper: 144
           unit: "mg/kg"
-          lower: 2
+          lower: 1
           upper: 5
         - age_months:
             lower: 144
@@ -419,6 +429,17 @@ Induction:
         - unit: "mg/kg"
           lower: 1
           upper: 2
+    Midazolam:
+      standard_dilution:
+        value: 1
+        unit: "mg/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mg/kg"
+          lower: 0.1
+          upper: 0.1
+          max: 5
     Etomidate:
       standard_dilution:
         value: 2
@@ -717,6 +738,13 @@ Fluids:
         - unit: "mL/kg"
           lower: 10
           upper: 10
+    Cryoprecipitate:
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mL/kg"
+          lower: 5
+          upper: 5
 
 Vasoactives:
   type: drug
@@ -751,6 +779,36 @@ Vasoactives:
           lower: 10
           upper: 10
           max: 500
+    Adrenaline (Infusion):
+      standard_dilution:
+        value: 60
+        unit: "mcg/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mcg/kg/min"
+          lower: 0.01
+          upper: 0.25
+    Noradrenaline:
+      standard_dilution:
+        value: 60
+        unit: "mcg/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mcg/kg/min"
+          lower: 0.01
+          upper: 0.5
+    Dobutamine:
+      standard_dilution:
+        value: 4500
+        unit: "mcg/mL"
+      reference:
+        unit: weight_kg
+      doses:
+        - unit: "mcg/kg/min"
+          lower: 5
+          upper: 15
     Metaraminol (Infusion):
       standard_dilution:
         value: 500
@@ -761,16 +819,6 @@ Vasoactives:
         - unit: "mcg/kg/min"
           lower: 0.05
           upper: 0.5
-    Noradrenaline:
-      standard_dilution:
-        value: 60
-        unit: "mcg/mL"
-      reference:
-        unit: weight_kg
-      doses:
-        - unit: "mcg/kg/min"
-          lower: 0.01
-          upper: 1
     GTN:
       standard_dilution:
         value: 600
@@ -977,7 +1025,7 @@ Reversal:
         unit: weight_kg
       doses:
         - unit: "mcg/kg"
-          lower: 10
+          lower: 2
           upper: 10
           max: 400
     Flumazenil:
