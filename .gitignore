@@ -1,3 +1,4 @@
+_freeze/
 .Rproj.user
 .Rhistory
 .RData
@@ -9,3 +10,5 @@ _posts
 /.quarto/
 
 /.luarc.json
+
+**/*.quarto_ipynb
