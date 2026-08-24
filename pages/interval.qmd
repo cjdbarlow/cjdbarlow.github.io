@@ -11,10 +11,6 @@ author:
     affiliation: Consultant, CVICU, Auckland City Hospital
     affiliation_url: https://www.cvicu.co.nz/
 date: 3-24-2024
-engine: knitr
-freeze: false
-filters:
-  - shinylive
 ---
 
 ## How to Use
@@ -30,33 +26,15 @@ The sliders will set 95% of the probability mass between each extreme, with the 
 ## Risk Calculator
 
 :::{.column-page}
-```{r}
-#| echo: false
-#| output: asis
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js"></script>
 
-# Fetch the app source from GitHub and emit it as a shinylive block, so the...
-# ...deployed app always matches the current main branch of the repo
-repo = "cjdbarlow/shiny-HDI"
-appFiles = c("ui.R", "server.R", "bayes.css")
+<iframe frameborder="no" scrolling="no" class="shinyFrame"
+src="https://chrisjake.shinyapps.io/shiny-hdi/">
+</iframe>
 
-fetchFile = function(file) {
-    url = paste0("https://raw.githubusercontent.com/", repo, "/main/", file)
-    c(
-        paste0("## file: ", file),
-        readLines(url, warn = FALSE),
-        ""
-    )
-}
-
-block = c(
-    "```{shinylive-r}",
-    "#| standalone: true",
-    "#| viewerHeight: 1000",
-    "",
-    unlist(lapply(appFiles, fetchFile)),
-    "```"
-)
-
-cat(block, sep = "\n")
-```
+<script>
+  iFrameResize({
+    heightCalculationMethod: 'taggedElement'
+  });
+</script>
 :::

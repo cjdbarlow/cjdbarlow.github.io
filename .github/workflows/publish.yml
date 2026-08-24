@@ -25,7 +25,6 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages: |
-            any::shinylive
             any::rmarkdown
             any::tidyverse
             any::LearnBayes

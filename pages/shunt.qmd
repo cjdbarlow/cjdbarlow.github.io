@@ -3,10 +3,6 @@ title: "Shunt Physiology"
 description: |
   An interactive model of how pulmonary shunt, tissue oxygen extraction and haemoglobin affinity shape arterial oxygenation and blood oxygen content.
 date: 8-23-2026
-engine: knitr
-freeze: false
-filters:
-  - shinylive
 ---
 
 ## How to Use
@@ -40,42 +36,15 @@ i.e. pH is independent of CO₂
 ## Model
 
 :::{.column-page}
-```{r}
-#| echo: false
-#| output: asis
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js"></script>
 
-# Fetch the app source from GitHub and emit it as a shinylive block, so the
-# deployed app always matches the current master branch of the repo
-repo = "cjdbarlow/shiny-oxygen"
-appFiles = c(
-    "app.R",
-    "global.R",
-    "functions.R",
-    "physiome.R",
-    "ui.R",
-    "server.R",
-    "oxygen.css",
-    "www/shunt-diagram.js"
-)
+<iframe frameborder="no" scrolling="no" class="shinyFrame"
+src="https://chrisjake.shinyapps.io/shiny-oxygen/">
+</iframe>
 
-fetchFile = function(file) {
-    url = paste0("https://raw.githubusercontent.com/", repo, "/master/", file)
-    c(
-        paste0("## file: ", file),
-        readLines(url, warn = FALSE),
-        ""
-    )
-}
-
-block = c(
-    "```{shinylive-r}",
-    "#| standalone: true",
-    "#| viewerHeight: 1300",
-    "",
-    unlist(lapply(appFiles, fetchFile)),
-    "```"
-)
-
-cat(block, sep = "\n")
-```
+<script>
+  iFrameResize({
+    heightCalculationMethod: 'taggedElement'
+  });
+</script>
 :::
