@@ -1,0 +1,81 @@
+---
+title: "Shunt Physiology"
+description: |
+  An interactive model of how pulmonary shunt, tissue oxygen extraction and haemoglobin affinity shape arterial oxygenation and blood oxygen content.
+date: 8-23-2026
+engine: knitr
+freeze: false
+filters:
+  - shinylive
+---
+
+## How to Use
+
+1. **Set** the **alveolar oxygen tension** (PAO₂).\
+Blood leaving ventilated alveoli is assumed to equilibrate completely, so end-capillary PO₂ equals PAO₂.
+2. **Adjust** the **cardiovascular parameters**:
+    * **Cardiac output** determines total oxygen delivery. With consumption unchanged, a lower cardiac output forces the tissues to extract more oxygen.
+    * **Shunt fraction** is the proportion of cardiac output that reaches the systemic circulation without taking part in gas exchange, and so retains mixed-venous oxygen content. Increasing the shunt fraction will lower arterial oxygen content.
+3. **Set** the **metabolic demand** with the oxygen consumption (VO₂) slider.\
+4. **Change** the **haemoglobin concentration** to alter oxygen content without changing the saturation associated with a given PO₂.
+5. If desired, **adjust** the factors that alter the p50 of the **oxyhaemoglobin dissociation curve**.
+
+:::column-margin
+Maximum VO~2~ varies depending on the DO~2~.
+:::
+
+## Limitations
+
+This model makes several assumptions:
+
+* Oxygen transport is at steady state  
+i.e. whole-body oxygen uptake equals whole-body oxygen consumption.
+* The Riley 3-compartment model of the lung is used
+* Haemoglobin concentration, cardiac output, oxygen consumption, and shunt fraction are constant across the model
+* PCO₂, plasma pH, 2,3-DPG, and temperature are adjustable but remain constant within each modelled state  
+i.e. pH is independent of CO₂
+* Haemoglobinopathies are not modelled
+
+
+## Model
+
+:::{.column-page}
+```{r}
+#| echo: false
+#| output: asis
+
+# Fetch the app source from GitHub and emit it as a shinylive block, so the
+# deployed app always matches the current master branch of the repo
+repo = "cjdbarlow/shiny-oxygen"
+appFiles = c(
+    "app.R",
+    "global.R",
+    "functions.R",
+    "physiome.R",
+    "ui.R",
+    "server.R",
+    "oxygen.css",
+    "www/shunt-diagram.js"
+)
+
+fetchFile = function(file) {
+    url = paste0("https://raw.githubusercontent.com/", repo, "/master/", file)
+    c(
+        paste0("## file: ", file),
+        readLines(url, warn = FALSE),
+        ""
+    )
+}
+
+block = c(
+    "```{shinylive-r}",
+    "#| standalone: true",
+    "#| viewerHeight: 1300",
+    "",
+    unlist(lapply(appFiles, fetchFile)),
+    "```"
+)
+
+cat(block, sep = "\n")
+```
+:::

@@ -19,6 +19,7 @@ website:
           - pages/part_one.qmd
           - pages/bn.qmd
           - pages/paed_ref.qmd
+          - pages/shunt.qmd
       - text: "Statistics"
         menu:
         - text: "Bayesian Hypothesis Testing"
