@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -15,10 +15,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -42,10 +45,15 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ff73747157bea4a22cb1ab1a769f836e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c4e1171eb4281116019c604a711c5128.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5a833411f24edc236592bf4ddbd2c17d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9d69017c06447531fa4515b372fe0d07.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -121,6 +129,10 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="../pages/paed_ref.html">
  <span class="dropdown-text">Paediatric Dose Reference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/shunt.html">
+ <span class="dropdown-text">Shunt Physiology</span></a>
   </li>  
     </ul>
   </li>
@@ -265,14 +277,572 @@ The sliders will set 95% of the probability mass between each extreme, with the 
 <section id="risk-calculator" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="risk-calculator">Risk Calculator</h2>
 <div class="column-page">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js"></script>
-<iframe frameborder="no" scrolling="no" class="shinyFrame" src="https://chrisjake.shinyapps.io/shiny-hdi/">
-</iframe>
-<script>
-  iFrameResize({
-    heightCalculationMethod: 'taggedElement'
-  });
-</script>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 1000
+
+## file: ui.R
+library(shiny)
+
+# Define UI for application that draws a histogram
+fluidPage(
+  # Load iframe resizer app
+  tags$head(
+    tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js",
+                type="text/javascript")
+  ),
+  
+  
+  # Load custom CSS
+  includeCSS("bayes.css"),
+  
+  hr(),
+  
+  sidebarLayout(
+    
+    # Inputs
+    sidebarPanel(
+      width = 4,  
+      
+      fluidPage(
+        
+        fluidRow(strong("Contingency Table")),
+        fluidRow(helpText("Fill in the cells of the table with the results the trial under evaluation.")),
+        
+        fluidRow(column(width = 3),
+                 column(h5("Event Occurred"), width = 3),
+                 column(h5("No Event Occurred"), width = 3),
+                 column(h5("Total"), width = 3)),
+        
+        fluidRow(column(h5("Intervention"), width = 3),
+                 column(numericInput(inputId = "int_pos",
+                                     label = NULL, 
+                                     value = 134,
+                                     min = 0),
+                        width = 3),
+                 column(numericInput(inputId = "int_neg",
+                                     label = NULL, 
+                                     value = 232,
+                                     min = 0),
+                        width = 3),
+                 column(verbatimTextOutput("int_tot"),
+                        width = 3)),
+        
+        fluidRow(column(h5("Control"), width = 3),
+                 column(numericInput(inputId = "con_pos",
+                                     label = NULL, 
+                                     value = 158,
+                                     min = 0),
+                        width = 3),
+                 column(numericInput(inputId = "con_neg",
+                                     label = NULL, 
+                                     value = 206,
+                                     min = 0),
+                        width = 3),
+                 column(verbatimTextOutput("con_tot"),
+                        width = 3)),
+        
+        fluidRow(column(h5("Total"), width = 3),
+                 column(verbatimTextOutput("tot_pos"), width = 3),
+                 column(verbatimTextOutput("tot_neg"), width = 3),
+                 column(verbatimTextOutput("tot_tot"), width = 3))
+      ),
+      
+      hr(),
+      
+      fluidPage(
+        fluidRow(strong("Prior")),
+        fluidRow(helpText("Use the slider to select the 95% centiles for the event rate for both the control and intervention groups")),
+        fluidRow(column(h5("Control Group"),
+                        width = 3),
+                 column(sliderInput(inputId = "priorCon",
+                                    label = "",
+                                    min = 1,
+                                    max = 99,
+                                    value = c(40, 60),
+                                    dragRange = TRUE),
+                        width = 8),
+        ),
+        fluidRow(column(h5("Intervention Group"),
+                        width = 3),
+                 column(sliderInput(inputId = "priorInt",
+                                    label = "",
+                                    min = 1,
+                                    max = 99,
+                                    value = c(28, 48),
+                                    dragRange = TRUE),
+                        width = 8),
+        ),
+      ),
+      
+      hr(),
+      
+      fluidPage(
+        fluidRow(strong("Plot Settings")),
+        fluidRow(column(h5("Highest Density Interval (%)"),
+                        helpText("Select the width for the HDI."),
+                        width = 6),
+                 column(numericInput(inputId = "hdi",
+                                     label = NULL, 
+                                     value = 95,
+                                     min = 1,
+                                     max = 99),
+                        width = 3),
+        ),
+        fluidRow(column(h5("Region of Practical Equivalence (%)"),
+                        helpText("Select the range above and below 0 which indicates the ROPE."),
+                        width = 6),
+                 column(numericInput(inputId = "rope",
+                                     label = NULL, 
+                                     value = 5,
+                                     min = 1,
+                                     max = 99),
+                        width = 3),
+        )
+      ),
+      
+      hr(),
+      
+      fluidPage(
+        fluidRow(actionButton(inputId = "plotButton",
+                              label = "Plot!"))
+      )
+    ),
+    
+    mainPanel(
+      width = 8,
+      fluidPage(
+        fluidRow(
+          column(h5("Posterior Distribution"),
+                 width = 12,
+                 height = 12,
+                 plotOutput("plotPost")
+          )
+        ),
+        
+        hr(),
+        
+        fluidRow(
+          column(h5("Prior Distribution"),
+                 width = 6,
+                 height = 6,
+                 plotOutput("plotPrior")
+          ),
+          column(h5("Description"),
+                 width = 6,
+                 height = 6,
+                 style = "border-left: 1px solid`",
+                 htmlOutput("plotDesc")
+          )
+        ),
+      )
+    ),
+  ),
+  
+  hr(),
+  
+  helpText(HTML("Example data from: Pearse RM, Harrison DA, MacDonald N, Gillies MA, Blunt M, Ackland G, et al. &lt;em&gt;Effect of a Perioperative, Cardiac Output–Guided Hemodynamic Therapy Algorithm on Outcomes Following Major Gastrointestinal Surgery: A Randomized Clinical Trial and Systematic Review&lt;/em&gt;. JAMA. 2014 Jun 4;311(21):2181. 
+&lt;a href=\"https://jamanetwork.com/journals/jama/fullarticle/1873985\"&gt;https://doi.org/10.1001/jama.2014.5305&lt;/a&gt;.
+")),
+
+  HTML('&lt;div data-iframe-height&gt;&lt;/div&gt;')
+)
+
+## file: server.R
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(LearnBayes)
+library(HDInterval)
+library(spatstat.utils)
+
+# Set conditions
+nSim = 10^5
+
+# Non-reactive Functions
+## Calculate the shape value
+fn.shape = function(slider, nGroup = 0, events = 0) {
+  # Find the initial value based on the slider
+  rawVal = LearnBayes::beta.select(list(x = slider[1]/100, p = 0.025),
+                                   list(x = slider[2]/100, p = 0.975))
+  
+  # Calculate shape values (relevant for posterior)
+  shape = c(rawVal[1] + events,
+            rawVal[2] + nGroup - events)
+  
+  # Return
+  shape
+}
+
+fn.plotPost = function(priorCon, priorInt, con1, con0, int1, int0, setHDI, setROPE) {
+  #browser()
+  # Tease these out
+  conEvent = con1
+  conN = con1 + con0
+  intEvent = int1
+  intN = int1 + int0
+  
+  # Calculate shape values
+  shapePostCon = fn.shape(slider = priorCon,
+                          nGroup = conN,
+                          events = conEvent)
+  shapePostInt = fn.shape(slider = priorInt,
+                          nGroup = intN,
+                          events = intEvent)
+  
+  # Simulate data
+  data = data.frame(
+    postCon = rbeta(n = nSim,
+                    shape1 = shapePostCon[1],
+                    shape2 = shapePostCon[2]),
+    postInt = rbeta(n = nSim,
+                    shape1 = shapePostInt[1],
+                    shape2 = shapePostInt[2])
+  ) |&gt;
+    mutate(postDiff = postInt - postCon)
+  
+  
+  # Calculate function of the difference in the posterior distribution using approxfun()
+  postDiffFun = data |&gt;
+    pull(postDiff) |&gt;
+    density() |&gt;
+    approxfun()
+  
+  
+  # Calculate the highest density interval from the raw data
+  hdi = data |&gt;
+    select(postDiff) |&gt;
+    HDInterval::hdi(credMass = setHDI/100) |&gt;
+    unname() |&gt;
+    round(digits = 2)
+  
+  # Calculate the range of the actual density distribution, to ensure we specify the ROPE limits correctly
+  postDens = data |&gt;
+    pull(postDiff) |&gt;
+    density() |&gt;
+    getElement("x")
+  
+  # Work out the ROPE limits
+  rangeROPE = vector(mode = "numeric",
+                     length = 2L)
+  
+  rangeROPE[1] = max(min(postDens), -setROPE/100)
+  rangeROPE[2] = min(max(postDens), setROPE/100)
+  
+  # Calculate area of the ROPE
+  areaROPE = integrate(postDiffFun,
+                       lower = rangeROPE[1],
+                       upper = rangeROPE[2]) |&gt;
+    getElement("value")
+  
+  # Calculate area of overlap
+  overlapDist = spatstat.utils::intersect.ranges(hdi, rangeROPE,
+                                                 fatal = FALSE)
+  
+  overlapArea = ifelse(overlapDist[1] == overlapDist[2],
+                       FALSE,
+                       integrate(postDiffFun,
+                                 lower = overlapDist[1],
+                                 upper = overlapDist[2]) |&gt;
+                         getElement("value")
+                       )
+    
+  # Generate Plot
+  plot = ggplot(data = data.frame(x = c(-1, 1)),
+                aes(x)) +
+    # Vertical line at 0
+    geom_vline(data = NULL,
+               xintercept = 0,
+               colour = "black",
+               alpha = 0.3) +
+    # Curve
+    stat_function(fun = postDiffFun,
+                  geom = "line",
+                  colour = "#F8766D") +
+    # HDI
+    stat_function(fun = postDiffFun,
+                  aes(fill = "95% HDI",
+                      colour = "95% HDI"),
+                  geom = "area",
+                  xlim = c(hdi[1], hdi[2]),
+                  alpha = 0.5) +
+    # ROPE
+    stat_function(fun = postDiffFun,
+                  aes(fill = "ROPE",
+                      colour = "ROPE"),
+                  geom = "area",
+                  xlim = c(-rangeROPE, rangeROPE),
+                  alpha = 0.5) +
+    # Cosmetics
+    scale_x_continuous(expand = c(0, 0),
+                       limits = c(min(postDens) * 1.1, max(postDens) * 1.1),
+                       labels = scales::label_number(accuracy = 0.01),
+                       breaks = c(hdi,
+                                  rangeROPE,
+                                  0),
+                       guide = guide_axis(n.dodge = 2)) +
+    scale_y_continuous(limits=c(0, NA),
+                       expand=expansion(mult=c(0, 0.05))) +
+    theme_light() +
+    theme(axis.text.y = element_blank()) +
+    labs(x = expression(theta[1] - theta[2]),
+         fill = NULL,
+         colour = NULL,
+         linetype = NULL,
+         y = NULL)
+  
+  # List outputs
+  out = list("plot" = plot,
+             "hdi" = hdi,
+             "ropeRange" = rangeROPE,
+             "ropeArea" = areaROPE,
+             "overDist" = overlapDist,
+             "overArea" = overlapArea)
+  out
+}
+
+fn.plotPrior = function(priorCon, priorInt) {
+  # Calculate shape values
+  shapePriorCon = fn.shape(slider = priorCon)
+  shapePriorInt = fn.shape(slider = priorInt)
+  
+  # Simulate data
+  data = data.frame(
+    priorCon = rbeta(n = nSim,
+                     shape1 = shapePriorCon[1],
+                     shape2 = shapePriorCon[2]),
+    priorInt = rbeta(n = nSim,
+                     shape1 = shapePriorInt[1],
+                     shape2 = shapePriorInt[2])
+  ) |&gt;
+    mutate(priorDiff = priorInt - priorCon)
+  
+  
+  # Calculate function for diff in posterior dist
+  priorDiffFun = data |&gt;
+    pull(priorDiff) |&gt;
+    density() |&gt;
+    approxfun()
+  
+  # Get the density ranges
+  priorDens = data |&gt;
+    pull(priorDiff) |&gt;
+    density() |&gt;
+    getElement("x")
+  
+  # Generate Plot
+  ggplot(data = data.frame(x = c(-1, 1)),
+         aes(x)) +
+    # Vertical line at 0
+    geom_vline(data = NULL,
+               xintercept = 0,
+               colour = "black",
+               alpha = 0.3) +
+    # Curve
+    stat_function(fun = priorDiffFun,
+                  geom = "area",
+                  alpha = 0.3,
+                  colour = "darkgreen",
+                  fill = "darkgreen") +
+    # Cosmetics
+    scale_x_continuous(expand = c(0, 0),
+                       limits = c(min(priorDens) * 1.1, max(priorDens) * 1.1),
+                       labels = scales::label_number(accuracy = 0.01)) +
+    scale_y_continuous(limits=c(0, NA),
+                       expand=expansion(mult=c(0, 0.05))) +
+    theme_light() +
+    theme(axis.text.y = element_blank()) +
+    labs(x = expression(theta[1] - theta[2]),
+         fill = NULL,
+         colour = NULL,
+         linetype = NULL,
+         y = NULL)
+}
+
+# Define Server Logic
+server = function(input, output, session) {
+  
+  #Row and column totals
+  output$int_tot = renderText({
+    input$int_neg + input$int_pos
+  })
+  
+  output$con_tot = renderText({
+    input$con_neg + input$con_pos
+  })
+  
+  output$tot_pos = renderText({
+    input$int_pos + input$con_pos
+  })
+  
+  output$tot_neg= renderText({
+    input$int_neg + input$con_neg
+  })
+  
+  output$tot_tot = renderText({
+    input$int_neg + input$con_neg + input$int_pos + input$con_pos
+  })
+  
+  # Plots
+  ## Plot Placeholder
+  plotHold = reactiveValues(plotPost = NULL,
+                            plotPrior = NULL,
+                            hdi = NULL,
+                            ropeRange = NULL,
+                            ropeArea = NULL,
+                            overlap = NULL)
+  
+  ## Button Observer
+  observeEvent(input$plotButton, {
+    posterior = fn.plotPost(priorCon = input$priorCon,
+                            priorInt = input$priorInt,
+                            con1 = input$con_pos,
+                            con0 = input$con_neg,
+                            int1 = input$int_pos,
+                            int0 = input$int_neg,
+                            setHDI = input$hdi,
+                            setROPE = input$rope)
+    
+    plotHold$plotPost = posterior[["plot"]]
+    plotHold$hdi = posterior[["hdi"]]
+    plotHold$ropeRange = posterior[["ropeRange"]]
+    plotHold$ropeArea = posterior[["ropeArea"]]
+    plotHold$overDist = posterior[["overDist"]]
+    plotHold$overArea = posterior[["overArea"]]
+    
+    
+    plotHold$plotPrior = fn.plotPrior(priorCon = input$priorCon,
+                                      priorInt = input$priorInt)
+  })
+  
+  ## Actual Plots
+  output$plotPost = renderPlot(plotHold$plotPost,
+                               res = 96)
+  
+  output$plotPrior = renderPlot(plotHold$plotPrior,
+                                res = 96)
+  
+  output$plotDesc = renderText({
+    #browser()
+    if(is.null(plotHold$overArea)){
+      paste0("")
+    } else if (plotHold$overArea == 0) {
+      paste0("The ", input$hdi, "% HDI encompasses ", plotHold$hdi[1], " to ", plotHold$hdi[2],
+             ". The ROPE covers ", round(plotHold$ropeRange[1], 2), " to ", round(plotHold$ropeRange[2], 2), ", and includes ",
+             round(plotHold$ropeArea * 100, digits = 1), "% of the area under the curve.
+             
+             The HDI and ROPE do not overlap, suggesting a clinically significant result.")      
+    } else {
+      paste0("The ", input$hdi, "% HDI encompasses ", plotHold$hdi[1], " to ", plotHold$hdi[2],
+             ". The ROPE covers ", round(plotHold$ropeRange[1], 2), " to ", round(plotHold$ropeRange[2], 2), ", and includes ",
+             round(plotHold$ropeArea * 100, digits = 1), "% of the area under the curve. &lt;br&gt; &lt;br&gt;
+             
+             The HDI and ROPE overlap between ", plotHold$overDist[1], " and ", plotHold$overDist[2],
+             ". This overlap covers ", round(plotHold$overArea * 100, 2), "% of the area under the curve, suggesting a clinically insignificant result.")
+    }
+  })
+}
+
+## file: bayes.css
+.col-sm-3 {
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+}
+
+div.row &gt; div.col-sm-3 {
+    float: left !important;
+    position: relative;
+    width: 25%;
+}
+
+div[role=main] {
+    padding-left: 5%;
+}
+
+.form-group, .shiny-input-container {
+    margin-bottom: 0px;
+}
+
+.form-control, pre.shiny-text-output {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    margin: 0 0 0px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 0px solid #ccc;
+    border-radius: 0px;
+}
+
+pre.shiny-text-output {
+    background-color: #FAF9F6;
+    font-family: inherit;
+}
+
+#int_pos, #tot_tot, #int_tot, #tot_pos {
+    border: 1px solid #dbd7d2;
+
+}
+
+#con_pos, #con_tot {
+    border-left: 1px solid #dbd7d2;
+    border-right: 1px solid #dbd7d2;
+}
+
+#int_neg, #tot_neg {
+    border-top: 1px solid #dbd7d2;
+    border-bottom: 1px solid #dbd7d2;
+}
+
+
+h5 {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+span.nil {
+    color: #f50000;
+}
+
+span.anec {
+    color: #ed8d00;
+}
+
+span.mod {
+    color: #d8da39;
+}
+
+span.str {
+    color: #9abc20;
+}
+
+span.vstr {
+    color: #5c9d0a;
+}
+
+span.extr {
+    color: #037e00;
+}
+
+span.low {
+    color: #006400;
+}
+
+span.med {
+    color: #FF8C00;
+}
+
+span.high {
+    color: #DC143C;
+}
+</code></pre>
 </div>
 
 
