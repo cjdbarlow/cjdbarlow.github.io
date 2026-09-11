@@ -9,7 +9,7 @@ execute:
 This page contains a series of formulas and references for paediatric vital signs, drug doses, and equipment sizing.
 
 :::column-margin
-![](/assets/millipede_smol.jpg){fig-alt="Millipaed app logo" fig-align="center"}
+![](/assets/millipaed.jpg){fig-alt="Millipaed app logo" fig-align="center"}
 :::
 
 With the exception of formulas, the source data for these tables is the source data for the Millipaed app — what you see here is exactly what the app uses. This makes it easy to spot any errors in the underlying values, as well as doubling as a standalone reference. Consequently, the tables are auto-generated and a bit rough around the edges — apologies for the formatting.

@@ -14,6 +14,7 @@ website:
     left:
       - text: "About"
         href: index.qmd
+      - publications.qmd
       - text: "Medicine"
         menu:
           - pages/part_one.qmd
@@ -26,7 +27,7 @@ website:
           href: pages/bf.qmd
         - text: "Bayesian Intervals"
           href: pages/interval.qmd
-      - publications.qmd
+      - software.qmd
       - writing.qmd
           
     right:

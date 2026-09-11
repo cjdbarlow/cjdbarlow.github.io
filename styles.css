@@ -41,3 +41,18 @@
   width: 1px;
   min-width: 100%;
 }
+
+/* Software listing: every app icon in the same square box whatever its source size, and hide the empty metadata column so the text fills the row */
+#listing-software .quarto-post .thumbnail {
+  flex-basis: auto;
+  width: 10pc;
+}
+
+#listing-software .quarto-post .thumbnail img {
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+#listing-software .quarto-post .metadata {
+  display: none;
+}

@@ -1,0 +1,27 @@
+---
+title: "Software"
+toc: false
+page-layout: full
+listing:
+    id: software
+    type: default
+    sort: false
+    fields: [image, title, description]
+    image-align: left
+    contents:
+      - title: "Millipaed"
+        path: pages/paed_ref.qmd
+        image: assets/millipaed_smol.jpg
+        description: |
+          A universal dose-finding app for paediatric anaesthesia, covering drug doses, equipment sizes and vital signs. The source data are published on this site as a standalone [Paediatric Dose Reference](pages/paed_ref.qmd); the app itself is currently private due to app store restrictions for drug dose calculators.
+      - title: "SquareTable"
+        path: https://github.com/cjdbarlow/squaretable-vs
+        image: assets/software/squaretable.svg
+        description: |
+          An editor extension for painless writing Markdown (and Pandoc Markdown! Grid tables!). It aligns columns as you type, allows easy removal or reordering of rows/columns/cells/lines, and generally makes writing Part One and Bedside Notebook much, much easier. Available for [VS Code](https://github.com/cjdbarlow/squaretable-vs) and [Sublime Text](https://github.com/cjdbarlow/squaretable-st).
+      - title: "Part One (The App)"
+        path: https://github.com/cjdbarlow/Part-One-app
+        image: assets/software/part-one.svg
+        description: |
+          A Flutter app for reading [Part One](https://partone.litfl.com/) offline on iPhone, iPad and Android. Designed to be easily forked for other Quarto projects. [Source on GitHub](https://github.com/cjdbarlow/Part-One-app).
+---
