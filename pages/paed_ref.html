@@ -46,7 +46,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-c4e1171eb4281116019c604a711c5128.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-ef343b59335fb7dd371733b06f9e4f9f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-1dfc08fcef81a11ad67b2b411eb3bd8d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -135,6 +135,10 @@ window.Quarto = {
     <a class="nav-link" href="../index.html"> 
 <span class="menu-text">About</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-medicine" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Medicine</span>
@@ -174,8 +178,8 @@ window.Quarto = {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../publications.html"> 
-<span class="menu-text">Publications</span></a>
+    <a class="nav-link" href="../software.html"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../writing.html"> 
@@ -260,7 +264,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#equipment" id="toc-equipment" class="nav-link" data-scroll-target="#equipment">Equipment</a>
   <ul class="collapse">
-  <li><a href="#airway" id="toc-airway" class="nav-link" data-scroll-target="#airway">Airway</a></li>
+  <li><a href="#equipment-1" id="toc-equipment-1" class="nav-link" data-scroll-target="#equipment-1">Equipment</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -282,7 +286,7 @@ window.Quarto = {
 <div class="no-row-height column-margin column-container"><div class="">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../assets/millipede_smol.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Millipaed app logo"></p>
+<p><img src="../assets/millipaed.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Millipaed app logo"></p>
 </figure>
 </div>
 </div></div><p>With the exception of formulas, the source data for these tables is the source data for the Millipaed app — what you see here is exactly what the app uses. This makes it easy to spot any errors in the underlying values, as well as doubling as a standalone reference. Consequently, the tables are auto-generated and a bit rough around the edges — apologies for the formatting.</p>
@@ -642,6 +646,13 @@ Rounded up.</li>
 <section id="premedication" class="level3">
 <h3 class="anchored" data-anchor-id="premedication">Premedication</h3>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 24%">
+<col style="width: 12%">
+<col style="width: 21%">
+<col style="width: 12%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Item</th>
@@ -656,7 +667,7 @@ Rounded up.</li>
 <td style="text-align: left;">Midazolam (PO)</td>
 <td style="text-align: right;">5 mg/mL</td>
 <td style="text-align: right;">All ages</td>
-<td style="text-align: right;">0.5 mg/kg</td>
+<td style="text-align: right;">0.3 - 0.5 mg/kg</td>
 <td style="text-align: right;">20 mg</td>
 </tr>
 <tr class="even">
@@ -670,17 +681,24 @@ Rounded up.</li>
 <td style="text-align: left;">Clonidine (IN)</td>
 <td style="text-align: right;">150 mcg/mL</td>
 <td style="text-align: right;">All ages</td>
-<td style="text-align: right;">2 mcg/kg</td>
+<td style="text-align: right;">2 - 3 mcg/kg</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">Dexmedetomidine (IN)</td>
+<td style="text-align: right;">100 mcg/mL</td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">0.5 - 2 mcg/kg</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">Ketamine (PO)</td>
 <td style="text-align: right;">100 mg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">5 - 10 mg/kg</td>
 <td style="text-align: right;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Ketamine (IM)</td>
 <td style="text-align: right;">100 mg/mL</td>
 <td style="text-align: right;">All ages</td>
@@ -693,6 +711,13 @@ Rounded up.</li>
 <section id="induction" class="level3">
 <h3 class="anchored" data-anchor-id="induction">Induction</h3>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 26%">
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 13%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Item</th>
@@ -707,7 +732,7 @@ Rounded up.</li>
 <td style="text-align: left;">Propofol</td>
 <td style="text-align: right;">10 mg/mL</td>
 <td style="text-align: right;">Birth - 12 yr</td>
-<td style="text-align: right;">2 - 5 mg/kg</td>
+<td style="text-align: right;">1 - 5 mg/kg</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
@@ -725,10 +750,38 @@ Rounded up.</li>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">Midazolam</td>
+<td style="text-align: right;">1 mg/mL</td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">0.1 mg/kg</td>
+<td style="text-align: right;">5 mg</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Etomidate</td>
+<td style="text-align: right;">2 mg/mL</td>
+<td style="text-align: right;">Birth - 10 yr</td>
+<td style="text-align: right;">0 mg/kg</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Etomidate</td>
+<td style="text-align: right;">2 mg/mL</td>
+<td style="text-align: right;">10 yr - 18 yr</td>
+<td style="text-align: right;">0.2 - 0.6 mg/kg</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">Fentanyl</td>
 <td style="text-align: right;">10 mcg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">1 - 5 mcg/kg</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alfentanil</td>
+<td style="text-align: right;">500 mcg/mL</td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">20 - 50 mcg/kg</td>
 <td style="text-align: right;"></td>
 </tr>
 </tbody>
@@ -834,27 +887,20 @@ Rounded up.</li>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Alfentanil</td>
-<td style="text-align: right;">500 mcg/mL</td>
-<td style="text-align: right;">All ages</td>
-<td style="text-align: right;">20 - 50 mcg/kg</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">Remifentanil</td>
 <td style="text-align: right;">100 mcg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">0.1 - 1 mcg/kg/min</td>
 <td style="text-align: right;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Morphine (IV)</td>
 <td style="text-align: right;">1 mg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">0.05 - 0.2 mg/kg</td>
 <td style="text-align: right;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Oxycodone (IV)</td>
 <td style="text-align: right;">1 mg/mL</td>
 <td style="text-align: right;">All ages</td>
@@ -940,11 +986,11 @@ Rounded up.</li>
 <h3 class="anchored" data-anchor-id="fluids">Fluids</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 26%">
-<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 25%">
+<col style="width: 12%">
 <col style="width: 20%">
-<col style="width: 13%">
+<col style="width: 12%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -957,7 +1003,7 @@ Rounded up.</li>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Crystalloid Bolus</td>
+<td style="text-align: left;">Crystalloid (bolus)</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">10 - 20 mL/kg</td>
@@ -982,6 +1028,13 @@ Rounded up.</li>
 <td style="text-align: right;"></td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">10 mL/kg</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cryoprecipitate</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">5 mL/kg</td>
 <td style="text-align: right;"></td>
 </tr>
 </tbody>
@@ -1022,28 +1075,42 @@ Rounded up.</li>
 <td style="text-align: right;">500 mcg</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Metaraminol (Infusion)</td>
-<td style="text-align: right;">500 mcg/mL</td>
+<td style="text-align: left;">Adrenaline (Infusion)</td>
+<td style="text-align: right;">60 mcg/mL</td>
 <td style="text-align: right;">All ages</td>
-<td style="text-align: right;">0.05 - 0.5 mcg/kg</td>
+<td style="text-align: right;">0.01 - 0.25 mcg/kg/min</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Noradrenaline</td>
 <td style="text-align: right;">60 mcg/mL</td>
 <td style="text-align: right;">All ages</td>
-<td style="text-align: right;">0.01 - 1 mcg/kg/min</td>
+<td style="text-align: right;">0.01 - 0.5 mcg/kg/min</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Glyceryl Trinitrate</td>
+<td style="text-align: left;">Dobutamine</td>
+<td style="text-align: right;">4500 mcg/mL</td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">5 - 15 mcg/kg/min</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Metaraminol (Infusion)</td>
+<td style="text-align: right;">500 mcg/mL</td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">0.05 - 0.5 mcg/kg/min</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GTN</td>
 <td style="text-align: right;">600 mcg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">0.2 - 5 mcg/kg/min</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Sodium Nitroprusside</td>
+<td style="text-align: left;">SNP</td>
 <td style="text-align: right;">500 mcg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">0.25 - 6 mcg/kg/min</td>
@@ -1074,7 +1141,7 @@ Rounded up.</li>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Paracetamol</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">10 mg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">15 mg/kg</td>
 <td style="text-align: right;">1000 mg</td>
@@ -1118,21 +1185,21 @@ Rounded up.</li>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Ondansetron</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">2 mg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">0.1 mg/kg</td>
 <td style="text-align: right;">8 mg</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Metoclopramide</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">10 mg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">0.15 mg/kg</td>
 <td style="text-align: right;">20 mg</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Dexamethasone</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">8 mg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">0.15 - 0.6 mg/kg</td>
 <td style="text-align: right;">12 mg</td>
@@ -1229,7 +1296,7 @@ Rounded up.</li>
 <td style="text-align: left;">Naloxone</td>
 <td style="text-align: right;">400 mcg/mL</td>
 <td style="text-align: right;">All ages</td>
-<td style="text-align: right;">10 mcg/kg</td>
+<td style="text-align: right;">2 - 10 mcg/kg</td>
 <td style="text-align: right;">400 mcg</td>
 </tr>
 <tr class="odd">
@@ -1325,11 +1392,11 @@ Rounded up.</li>
 <h3 class="anchored" data-anchor-id="emergency">Emergency</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 31%">
-<col style="width: 21%">
-<col style="width: 16%">
-<col style="width: 20%">
-<col style="width: 10%">
+<col style="width: 29%">
+<col style="width: 19%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1342,60 +1409,74 @@ Rounded up.</li>
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">Synchronized Cardioversion</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">1 - 2 J/kg</td>
+<td style="text-align: right;">200 J</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Adrenaline (IM)</td>
 <td style="text-align: right;">1000 mcg/mL</td>
 <td style="text-align: right;">Birth - 2 yr</td>
 <td style="text-align: right;">100 mcg</td>
 <td style="text-align: right;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Adrenaline (IM)</td>
 <td style="text-align: right;">1000 mcg/mL</td>
 <td style="text-align: right;">2 yr - 4 yr</td>
 <td style="text-align: right;">150 mcg</td>
 <td style="text-align: right;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Adrenaline (IM)</td>
 <td style="text-align: right;">1000 mcg/mL</td>
 <td style="text-align: right;">4 yr - 7 yr</td>
 <td style="text-align: right;">200 mcg</td>
 <td style="text-align: right;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Adrenaline (IM)</td>
 <td style="text-align: right;">1000 mcg/mL</td>
 <td style="text-align: right;">7 yr - 11 yr</td>
 <td style="text-align: right;">300 mcg</td>
 <td style="text-align: right;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Adrenaline (IM)</td>
 <td style="text-align: right;">1000 mcg/mL</td>
 <td style="text-align: right;">11 yr - 13 yr</td>
 <td style="text-align: right;">400 mcg</td>
 <td style="text-align: right;"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Adrenaline (IM)</td>
 <td style="text-align: right;">1000 mcg/mL</td>
 <td style="text-align: right;">13 yr - 18 yr</td>
 <td style="text-align: right;">500 mcg</td>
 <td style="text-align: right;"></td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">Hydrocortisone</td>
-<td style="text-align: right;">50 mg/mL</td>
+<tr class="even">
+<td style="text-align: left;">Intralipid 20% (bolus)</td>
+<td style="text-align: right;">0.2 g/mL</td>
 <td style="text-align: right;">All ages</td>
-<td style="text-align: right;">4 mg/kg</td>
-<td style="text-align: right;">100 mg</td>
+<td style="text-align: right;">1.5 mL/kg</td>
+<td style="text-align: right;">12 mL; 12 mL/kg</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Intralipid 20% (infusion)</td>
+<td style="text-align: right;">0.2 g/mL</td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">0.25 - 0.5 mL/kg</td>
+<td style="text-align: right;">12 mL; 12 mL/kg</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Synchronized Cardioversion</td>
-<td style="text-align: right;"></td>
+<td style="text-align: left;">Dantrolene</td>
+<td style="text-align: right;">50 mg/mL</td>
 <td style="text-align: right;">All ages</td>
-<td style="text-align: right;">1 - 2 J/kg</td>
-<td style="text-align: right;">200 J</td>
+<td style="text-align: right;">2.5 - 10 mg/kg</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Atropine</td>
@@ -1405,11 +1486,39 @@ Rounded up.</li>
 <td style="text-align: right;">600 mcg</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">Hydrocortisone</td>
+<td style="text-align: right;">50 mg/mL</td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">4 mg/kg</td>
+<td style="text-align: right;">100 mg</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Salbutamol (IV)</td>
+<td style="text-align: right;">100 mcg/mL</td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">1 - 5 mcg/kg/min</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Adenosine</td>
 <td style="text-align: right;">3 mg/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">0.1 - 0.3 mg/kg</td>
 <td style="text-align: right;">12 mg</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tranexamic Acid</td>
+<td style="text-align: right;">100 mg/mL</td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">15 mg/kg</td>
+<td style="text-align: right;">1000 mg</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Glucose 10%</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">All ages</td>
+<td style="text-align: right;">2 mL/kg</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Calcium Chloride 10%</td>
@@ -1419,32 +1528,11 @@ Rounded up.</li>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Tranexamic Acid</td>
-<td style="text-align: right;">100 mg/mL</td>
-<td style="text-align: right;">All ages</td>
-<td style="text-align: right;">15 mg/kg</td>
-<td style="text-align: right;">1000 mg</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Glucose 10%</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">All ages</td>
-<td style="text-align: right;">2 mL/kg</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Magnesium Sulfate</td>
 <td style="text-align: right;">0.2 mmol/mL</td>
 <td style="text-align: right;">All ages</td>
 <td style="text-align: right;">0.2 mmol/kg</td>
 <td style="text-align: right;">10 mmol</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Salbutamol (IV)</td>
-<td style="text-align: right;">100 mcg/mL</td>
-<td style="text-align: right;">All ages</td>
-<td style="text-align: right;">1 - 5 mcg/kg/min</td>
-<td style="text-align: right;"></td>
 </tr>
 </tbody>
 </table>
@@ -1503,8 +1591,8 @@ Rounded up.</li>
 </section>
 <section id="equipment" class="level2">
 <h2 class="anchored" data-anchor-id="equipment">Equipment</h2>
-<section id="airway" class="level3">
-<h3 class="anchored" data-anchor-id="airway">Airway</h3>
+<section id="equipment-1" class="level3">
+<h3 class="anchored" data-anchor-id="equipment-1">Equipment</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 24%">
