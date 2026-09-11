@@ -1,6 +1,6 @@
 [
   {
-    "listing": "/atom.html",
+    "listing": "/writing.html",
     "items": [
       "/posts/forge.html",
       "/posts/emaillm-part-four.html",
@@ -24,7 +24,7 @@
     ]
   },
   {
-    "listing": "/writing.html",
+    "listing": "/atom.html",
     "items": [
       "/posts/forge.html",
       "/posts/emaillm-part-four.html",
