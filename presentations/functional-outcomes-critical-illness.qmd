@@ -1,0 +1,21 @@
+---
+title: "Functional outcomes following critical illness"
+subtitle: "International Forum for Quality in Surgery and Healthcare"
+year: 2025
+image: assets/functional-outcomes-critical-illness/functional-outcomes-critical-illness.png
+image-alt: "Functional outcomes following critical illness poster."
+categories: [Poster, Intensive care, Patient outcomes, Quality improvement]
+description: |
+  Using a patient-reported outcomes and experience measures registry
+  to inform values-based healthcare after critical illness.
+resources:
+  - assets/functional-outcomes-critical-illness/functional-outcomes-critical-illness.pdf
+---
+
+::: {.presentation-precis}
+{{< meta description >}}
+:::
+
+::: {.pdf-viewer data-pdf="assets/functional-outcomes-critical-illness/functional-outcomes-critical-illness.pdf" data-mode="poster" aria-label="Functional outcomes following critical illness poster"}
+Enable JavaScript to view the poster here.
+:::

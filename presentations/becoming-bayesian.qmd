@@ -1,0 +1,22 @@
+---
+title: "Becoming Bayesian"
+subtitle: "A maths-free introduction to Bayesian inference"
+year: 2024
+image: assets/becoming-bayesian/becoming-bayesian.png
+image-alt: "Title slide of Bayesian inference: a maths-free introduction."
+categories: [Presentation, Statistics, Research]
+description: |
+  An introduction to Bayesian reasoning for the ICU registrar, contrasting Bayesian and frequentist
+  interpretations of probability and evidence, and exploring Bayesian models,
+  credible intervals and regions of practical equivalence.
+resources:
+  - assets/becoming-bayesian/becoming-bayesian.pdf
+---
+
+::: {.presentation-precis}
+{{< meta description >}}
+:::
+
+::: {.pdf-viewer data-pdf="assets/becoming-bayesian/becoming-bayesian.pdf" data-mode="slides" aria-label="Becoming Bayesian slideshow"}
+Enable JavaScript to view the slides here.
+:::

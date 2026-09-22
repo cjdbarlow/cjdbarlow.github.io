@@ -1,0 +1,22 @@
+---
+title: "Ethics of research in the critically ill"
+subtitle: "Consent, vulnerability and trial design"
+year: 2025
+image: assets/ethics-of-icu-research/ethics-of-icu-research.png
+image-alt: "Title slide of Ethics of research in the critically ill."
+categories: [Presentation, Intensive care, Research, Ethics]
+description: |
+  A primer on the ethical challenges of research involving critically ill patients:
+  informed and surrogate consent, deferred consent, waivers and trial design,
+  illustrated with examples from intensive care and emergency research.
+resources:
+  - assets/ethics-of-icu-research/ethics-of-icu-research.pdf
+---
+
+::: {.presentation-precis}
+{{< meta description >}}
+:::
+
+::: {.pdf-viewer data-pdf="assets/ethics-of-icu-research/ethics-of-icu-research.pdf" data-mode="slides" aria-label="Ethics of research in the critically ill slideshow"}
+Enable JavaScript to view the slides here.
+:::

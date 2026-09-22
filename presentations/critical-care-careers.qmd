@@ -1,0 +1,21 @@
+---
+title: "Careers in critical care"
+subtitle: "PRINT conference"
+year: 2018
+image: assets/critical-care-careers/critical-care-careers.png
+image-alt: "Title slide of the PRINT critical care careers talk."
+categories: [Presentation, Careers, Anaesthesia, Intensive care, Emergency medicine]
+description: |
+  A talk for medical students on pathways into critical care, with reflections on
+  training applications, clinical experience and extracurricular interests.
+resources:
+  - assets/critical-care-careers/critical-care-careers.pdf
+---
+
+::: {.presentation-precis}
+{{< meta description >}}
+:::
+
+::: {.pdf-viewer data-pdf="assets/critical-care-careers/critical-care-careers.pdf" data-mode="slides" aria-label="Careers in critical care slideshow"}
+Enable JavaScript to view the slides here.
+:::

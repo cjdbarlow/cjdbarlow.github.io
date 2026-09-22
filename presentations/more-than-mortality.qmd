@@ -1,0 +1,21 @@
+---
+title: "More than mortality"
+subtitle: "Australian and New Zealand Intensive Care Society Annual Scientific Meeting"
+year: 2025
+image: assets/more-than-mortality/more-than-mortality.png
+image-alt: "Title slide of More than mortality."
+categories: [Presentation, Intensive care, Patient outcomes]
+description: |
+  Early functional outcomes from the ANZICS PROEMS pilot: using a registry
+  to collect patient-reported outcomes and experiences after intensive care.
+resources:
+  - assets/more-than-mortality/more-than-mortality.pdf
+---
+
+::: {.presentation-precis}
+{{< meta description >}}
+:::
+
+::: {.pdf-viewer data-pdf="assets/more-than-mortality/more-than-mortality.pdf" data-mode="slides" aria-label="More than mortality slideshow"}
+Enable JavaScript to view the slides here.
+:::

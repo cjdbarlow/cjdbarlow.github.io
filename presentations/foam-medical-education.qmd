@@ -1,0 +1,22 @@
+---
+title: "FOAM: the future of medical education?"
+subtitle: "ANZCA Annual Scientific Meeting"
+year: 2014
+image: assets/foam-medical-education/foam-medical-education.png
+image-alt: "FOAM: the future of medical education? poster."
+categories: [Poster, Anaesthesia, Intensive care, Medical education]
+description: |
+  Free Open Access Medical education and the role of blogs, podcasts, wikis
+  and social media in sharing knowledge, with a call for greater participation
+  from the anaesthesia community.
+resources:
+  - assets/foam-medical-education/foam-medical-education.pdf
+---
+
+::: {.presentation-precis}
+{{< meta description >}}
+:::
+
+::: {.pdf-viewer data-pdf="assets/foam-medical-education/foam-medical-education.pdf" data-mode="poster" aria-label="FOAM: the future of medical education? poster"}
+Enable JavaScript to view the poster here.
+:::

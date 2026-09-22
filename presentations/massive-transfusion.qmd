@@ -1,0 +1,22 @@
+---
+title: "Massive transfusion"
+subtitle: "ICU regional teaching"
+year: 2023
+image: assets/massive-transfusion/massive-transfusion.png
+image-alt: "Title slide of Massive transfusion with frequent digressions."
+categories: [Presentation, Intensive care, Anaesthesia, Transfusion]
+description: |
+  A review of transfusion medicine and the management of major haemorrhage,
+  covering blood products, transfusion reactions, haemostatic resuscitation
+  and the practicalities of massive transfusion.
+resources:
+  - assets/massive-transfusion/massive-transfusion.pdf
+---
+
+::: {.presentation-precis}
+{{< meta description >}}
+:::
+
+::: {.pdf-viewer data-pdf="assets/massive-transfusion/massive-transfusion.pdf" data-mode="slides" aria-label="Massive transfusion slideshow"}
+Enable JavaScript to view the slides here.
+:::

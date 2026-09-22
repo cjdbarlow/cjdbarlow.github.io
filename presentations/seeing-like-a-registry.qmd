@@ -1,0 +1,22 @@
+---
+title: "Seeing like a registry"
+subtitle: "What patients want and what we measure"
+year: 2026
+image: assets/seeing-like-a-registry/seeing-like-a-registry.png
+image-alt: "Title slide of Seeing like a registry."
+categories: [Presentation, Intensive care, Patient outcomes, Research]
+description: |
+  What registries can tell us about recovery, and what they can't.
+  Early (cautious) findings from the ANZICS PROEMs pilot on patient outcomes, family experiences
+  and the response bias behind the results.
+resources:
+  - assets/seeing-like-a-registry/seeing-like-a-registry.pdf
+---
+
+::: {.presentation-precis}
+{{< meta description >}}
+:::
+
+::: {.pdf-viewer data-pdf="assets/seeing-like-a-registry/seeing-like-a-registry.pdf" data-mode="slides" aria-label="Seeing like a registry slideshow"}
+Enable JavaScript to view the slides here.
+:::

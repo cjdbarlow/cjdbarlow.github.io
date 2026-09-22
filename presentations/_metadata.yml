@@ -1,0 +1,8 @@
+description-meta: "Talks and posters on intensive care, patient outcomes and healthcare quality."
+toc: false
+page-layout: full
+css: presentations.css
+code-tools: false
+include-after-body: _pdf-viewer.html
+resources:
+  - pdf-viewer.js

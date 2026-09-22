@@ -1,0 +1,16 @@
+---
+title: "Presentations"
+subtitle: "Conference talks and poster presentations."
+css: presentations/presentations.css
+listing:
+  id: presentations
+  contents: "presentations/*.qmd"
+  template: presentations/_listing.ejs.md
+  sort: [year desc, title]
+  field-types:
+    year: number
+  categories: true
+  fields: [image, title, subtitle, categories, description]
+  max-description-length: 400
+  sort-ui: false
+---
