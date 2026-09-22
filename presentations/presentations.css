@@ -1,0 +1,82 @@
+.quarto-listing .thumbnail img {
+  /* Keep both portrait posters and landscape slides visible in full. */
+  object-fit: contain !important;
+  background: white;
+}
+
+.presentation-precis {
+  max-width: 52rem;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pdf-viewer {
+  width: 100%;
+  max-width: 900px;
+  border: 1px solid #d8dee3;
+  background: #f5f6f7;
+}
+
+.pdf-viewer:focus-visible,
+.pdf-viewer-viewport:focus-visible {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 3px;
+}
+
+.pdf-viewer[data-mode="poster"] {
+  max-width: 960px;
+}
+
+.pdf-viewer-viewport {
+  display: grid;
+  place-items: start center;
+  aspect-ratio: 16 / 9;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.pdf-viewer[data-mode="poster"] .pdf-viewer-viewport {
+  height: min(75vh, 900px);
+  min-height: 360px;
+  aspect-ratio: auto;
+  /* Left alignment keeps the whole canvas reachable when zoomed. */
+  display: block;
+}
+
+.pdf-viewer canvas {
+  display: block;
+  max-width: none;
+  margin-inline: auto;
+  background: white;
+}
+
+.pdf-viewer-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-top: 1px solid #d8dee3;
+  background: white;
+}
+
+.pdf-viewer-controls button {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.pdf-viewer-position {
+  min-width: 5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.pdf-viewer-status {
+  padding: 0 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.pdf-viewer-status:empty {
+  display: none;
+}
