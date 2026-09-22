@@ -1,20 +1,20 @@
 ---
-title: "Paediatric Dose Reference"
+title: "Paediatric Reference Ranges"
+description: |
+  Formulas and reference ranges for paediatric vital signs, drug doses, and equipment.
 execute:
   echo: false
   warning: false
   message: false
 ---
 
-This page contains a series of formulas and references for paediatric vital signs, drug doses, and equipment sizing.
-
 :::column-margin
 ![](/assets/millipaed.jpg){fig-alt="Millipaed app logo" fig-align="center"}
 :::
 
-With the exception of formulas, the source data for these tables is the source data for the Millipaed app — what you see here is exactly what the app uses. This makes it easy to spot any errors in the underlying values, as well as doubling as a standalone reference. Consequently, the tables are auto-generated and a bit rough around the edges — apologies for the formatting.
+This page contains a list of formulas and references ranges to aid paediatric drug dosing and equipment sizing. With the exception of formulas, the source data for these tables is the source data for the [Millipaed app](software.qmd). This makes it easier to spot any errors in the underlying values, as well as doubling as a standalone reference. Consequently, the tables are auto-generated and a bit rough around the edges — apologies for the formatting.
 
-References may vary with the values (particularly maximum doses) they list, understandably, as they are a product of the context they were developed for. I have endeavored to provide sensible defaults, but this does not replace the clinical judgement of the provider caring for the patient in front of them.
+Different sources may list different values, particularly maximum doses. This is understandable for anyone who has worked in critical care, where dosing is often 'as much as is needed to get the desired effect', and so is as much a property of the drug as it is are a product of the context they were developed for. I have endeavored to provide sensible defaults, but this does not replace the clinical judgement of the provider caring for the patient in front of them.
 
 ## Formulas
 

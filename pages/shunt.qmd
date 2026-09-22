@@ -1,5 +1,5 @@
 ---
-title: "Shunt Physiology"
+title: "Shunt Physiology Simulator"
 description: |
   An interactive model of how pulmonary shunt, tissue oxygen extraction and haemoglobin affinity shape arterial oxygenation and blood oxygen content.
 date: 8-23-2026

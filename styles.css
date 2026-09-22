@@ -32,6 +32,18 @@
   padding-bottom: 0rem;
 }
 
+/* Soften the YAML's text-only navbar dividers. */
+#quarto-header .navbar-nav > .nav-item > span.nav-link {
+  color: #999;
+}
+
+/* Hide the YAML's text-only dividers in the collapsed navbar. */
+@media (max-width: 991.98px) {
+  #quarto-header .navbar-nav > .nav-item:has(> span.nav-link) {
+    display: none;
+  }
+}
+
 /* Bibtex padding */
 .csl-entry{
   padding-bottom: 0.5em;
