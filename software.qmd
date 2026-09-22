@@ -1,7 +1,5 @@
 ---
 title: "Software"
-toc: false
-page-layout: full
 listing:
     id: software
     type: default
