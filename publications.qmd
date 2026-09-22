@@ -1,7 +1,12 @@
 ---
 title: "Publications"
+subtitle: "Published work on anaesthesia, intensive care, and statistics."
 bibliography: assets/works.bib
-citeproc: true
+# The filter runs citation processing, then formats the author names.
+citeproc: false
+filters:
+  - at: post-render
+    path: filters/bold-publication-author.lua
 csl: assets/vancouver_custom.csl
 csl-refs: true
 ---
