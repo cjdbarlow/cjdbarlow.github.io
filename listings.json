@@ -1,36 +1,5 @@
 [
   {
-    "listing": "/presentations.html",
-    "items": [
-      "/presentations/seeing-like-a-registry.html",
-      "/presentations/ethics-of-icu-research.html",
-      "/presentations/functional-outcomes-critical-illness.html",
-      "/presentations/more-than-mortality.html",
-      "/presentations/becoming-bayesian.html",
-      "/presentations/massive-transfusion.html",
-      "/presentations/critical-care-careers.html",
-      "/presentations/foam-medical-education.html"
-    ]
-  },
-  {
-    "listing": "/writing.html",
-    "items": [
-      "/posts/forge.html",
-      "/posts/emaillm-part-four.html",
-      "/posts/emaillm-part-three.html",
-      "/posts/emaillm-part-two.html",
-      "/posts/emaillm-part-one.html",
-      "/posts/ghost.html",
-      "/posts/hdi.html",
-      "/posts/shoe-rack.html",
-      "/posts/exam-reflections.html",
-      "/posts/electioneering-part-three.html",
-      "/posts/electioneering-part-two.html",
-      "/posts/electioneering-part-one.html",
-      "/posts/wordle.html"
-    ]
-  },
-  {
     "listing": "/software.html",
     "items": [
       "/pages/paed_ref.html"
@@ -52,6 +21,38 @@
       "/posts/electioneering-part-two.html",
       "/posts/electioneering-part-one.html",
       "/posts/wordle.html"
+    ]
+  },
+  {
+    "listing": "/writing.html",
+    "items": [
+      "/posts/forge.html",
+      "/posts/emaillm-part-four.html",
+      "/posts/emaillm-part-three.html",
+      "/posts/emaillm-part-two.html",
+      "/posts/emaillm-part-one.html",
+      "/posts/ghost.html",
+      "/posts/hdi.html",
+      "/posts/shoe-rack.html",
+      "/posts/exam-reflections.html",
+      "/posts/electioneering-part-three.html",
+      "/posts/electioneering-part-two.html",
+      "/posts/electioneering-part-one.html",
+      "/posts/wordle.html"
+    ]
+  },
+  {
+    "listing": "/presentations.html",
+    "items": [
+      "/presentations/lessons-learned-from-proems.html",
+      "/presentations/seeing-like-a-registry.html",
+      "/presentations/ethics-of-icu-research.html",
+      "/presentations/functional-outcomes-critical-illness.html",
+      "/presentations/more-than-mortality.html",
+      "/presentations/becoming-bayesian.html",
+      "/presentations/massive-transfusion.html",
+      "/presentations/critical-care-careers.html",
+      "/presentations/foam-medical-education.html"
     ]
   }
 ]

@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jake Barlow">
+<meta name="description" content="Talks and posters on intensive care, patient outcomes and healthcare quality.">
 
-<title>Jake Barlow | C. Jake Barlow – C. Jake Barlow</title>
+<title>Lessons learned from PROEMS | C. Jake Barlow – C. Jake Barlow</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -30,27 +31,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./assets/favicon32x32.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-c4e1171eb4281116019c604a711c5128.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0c83a7e5a5ec9568d1b7c55049185cb1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/favicon32x32.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c4e1171eb4281116019c604a711c5128.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0c83a7e5a5ec9568d1b7c55049185cb1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -78,68 +77,11 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Jake's Notes" href="atom.xml" data-external="1"></head>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="presentations.css">
+</head>
 
 <body class="floating nav-fixed quarto-light">
 
@@ -148,11 +90,11 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./assets/larynx-small.png" alt="" class="navbar-logo light-content">
-    <img src="./assets/larynx-small.png" alt="" class="navbar-logo dark-content">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/larynx-small.png" alt="" class="navbar-logo dark-content">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">C. Jake Barlow</span>
     </a>
   </div>
@@ -163,7 +105,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
@@ -172,11 +114,11 @@ window.Quarto = {
     </span>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./publications.html"> 
+    <a class="nav-link" href="../publications.html"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./presentations.html"> 
+    <a class="nav-link" href="../presentations.html"> 
 <span class="menu-text">Presentations</span></a>
   </li>  
   <li class="nav-item">
@@ -190,19 +132,19 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-medicine">    
         <li>
-    <a class="dropdown-item" href="./pages/part_one.html">
+    <a class="dropdown-item" href="../pages/part_one.html">
  <span class="dropdown-text">Part One</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./pages/bn.html">
+    <a class="dropdown-item" href="../pages/bn.html">
  <span class="dropdown-text">Bedside Notebook</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./pages/paed_ref.html">
+    <a class="dropdown-item" href="../pages/paed_ref.html">
  <span class="dropdown-text">Paediatric Reference Ranges</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./pages/shunt.html">
+    <a class="dropdown-item" href="../pages/shunt.html">
  <span class="dropdown-text">Shunt Physiology Simulator</span></a>
   </li>  
     </ul>
@@ -213,17 +155,17 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
         <li>
-    <a class="dropdown-item" href="./pages/bf.html">
+    <a class="dropdown-item" href="../pages/bf.html">
  <span class="dropdown-text">Bayesian Hypothesis Testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./pages/interval.html">
+    <a class="dropdown-item" href="../pages/interval.html">
  <span class="dropdown-text">Bayesian Intervals</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./software.html"> 
+    <a class="nav-link" href="../software.html"> 
 <span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
@@ -232,7 +174,7 @@ window.Quarto = {
     </span>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./writing.html"> 
+    <a class="nav-link" href="../writing.html"> 
 <span class="menu-text">Notes</span></a>
   </li>  
 </ul>
@@ -254,7 +196,7 @@ window.Quarto = {
 <span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./atom.xml"> 
+    <a class="nav-link" href="../atom.xml"> 
 <span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
   </li>  
 </ul>
@@ -267,13 +209,25 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Jake Barlow</h1>
-                      </div>
+    <div class="quarto-title column-page">
+      <h1 class="title">Lessons learned from PROEMS</h1>
+            <p class="subtitle lead">From research survey to routine registry activity</p>
+                  <div>
+        <div class="description">
+          <p>Practical lessons from the ANZICS PROEMS pilot on collecting patient-reported outcomes and experiences after intensive care: data workflows, invitations and responses, survey design, and the benefits and pitfalls of automation.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Presentation</div>
+                <div class="quarto-category">Intensive care</div>
+                <div class="quarto-category">Patient outcomes</div>
+                <div class="quarto-category">Research</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page">
 
       
     
@@ -281,325 +235,30 @@ window.Quarto = {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
-</nav>
+  
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-    </div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
 
 
+<div class="presentation-precis">
+<p>Practical lessons from the ANZICS PROEMS pilot on collecting patient-reported outcomes and experiences after intensive care: data workflows, invitations and responses, survey design, and the benefits and pitfalls of automation.</p>
+</div>
+<div class="pdf-viewer" data-pdf="assets/lessons-learned-from-proems/lessons-learned-from-proems.pdf" data-mode="slides" aria-label="Lessons learned from PROEMS slideshow">
+<p>Enable JavaScript to view the slides here.</p>
+</div>
 
 
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="ZGl5JTJDdGVjaCUyQ3Jlc2VhcmNo" data-listing-date-sort="1773100800000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2412">
-<div class="thumbnail"><a href="./posts/forge.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/forge/forge.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/forge.html" class="no-external">Private Git, for the Paranoid Scientist</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/forge.html" class="no-external">
-<p>Healthcare privacy compliant version control, with off-site backup.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/forge.html" class="no-external">
-<div class="listing-date">
-Mar 10, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="ZGl5JTJDdGVjaA==" data-listing-date-sort="1772582400000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1254">
-<div class="thumbnail"><a href="./posts/emaillm-part-four.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/emaillm/e4.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/emaillm-part-four.html" class="no-external">Building an Email Classifier, Part 4: Classification II</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/emaillm-part-four.html" class="no-external">
-<p>Final part of a four-part series using local language models to classify 23 years of email.</p>
-<p>In this part, we use the first-pass results as additional training data, and discover that doesn’t help.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/emaillm-part-four.html" class="no-external">
-<div class="listing-date">
-Mar 4, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="ZGl5JTJDdGVjaA==" data-listing-date-sort="1772496000000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2234">
-<div class="thumbnail"><a href="./posts/emaillm-part-three.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/emaillm/e3.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/emaillm-part-three.html" class="no-external">Building an Email Classifier, Part 3: Classification I</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/emaillm-part-three.html" class="no-external">
-<p>Third part of a four-part series using local language models to classify 23 years of email.</p>
-<p>In this part, we train the SVC, calibrate its confidence thresholds, and discover that more than half the emails end up going to the language model anyway.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/emaillm-part-three.html" class="no-external">
-<div class="listing-date">
-Mar 3, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="ZGl5JTJDdGVjaA==" data-listing-date-sort="1772409600000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3501">
-<div class="thumbnail"><a href="./posts/emaillm-part-two.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/emaillm/e2.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/emaillm-part-two.html" class="no-external">Building an Email Classifier, Part 2: Data Extraction and Embeddings</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/emaillm-part-two.html" class="no-external">
-<p>Second part of a four-part series using local language models to classify 23 years of email.</p>
-<p>In this part, we extract data, generate text embeddings, and flirt briefly with unsupervised learning.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/emaillm-part-two.html" class="no-external">
-<div class="listing-date">
-Mar 2, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="ZGl5JTJDdGVjaA==" data-listing-date-sort="1772323200000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="960">
-<div class="thumbnail"><a href="./posts/emaillm-part-one.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/emaillm/e1.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/emaillm-part-one.html" class="no-external">Building an Email Classifier, Part 1: The Plan</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/emaillm-part-one.html" class="no-external">
-<p>First part of a four-part series using classifer and local language models to sort 23 years of email.</p>
-<p>In this part, we outline the problem and some of the tools used to solve it.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/emaillm-part-one.html" class="no-external">
-<div class="listing-date">
-Mar 1, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="ZGl5JTJDdGVjaA==" data-listing-date-sort="1771113600000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1366">
-<div class="thumbnail"><a href="./posts/ghost.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/ghost/ghost.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/ghost.html" class="no-external">Ghost Listeners and the Shell</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/ghost.html" class="no-external">
-<p>The server lights are on, but nobody is home.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/ghost.html" class="no-external">
-<div class="listing-date">
-Feb 15, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="c3RhdGlzdGljcyUyQ2JheWVzJTJDUiUyQ2dnUGxvdA==" data-listing-date-sort="1710979200000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1574">
-<div class="thumbnail"><a href="./posts/hdi.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/hdi/hdi_ai.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/hdi.html" class="no-external">Plotting Bayesian Intervals using ggPlot</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/hdi.html" class="no-external">
-<p>Using ggPlot without additional packages to cleanly plot Bayesian intervals on Beta distributions, including the Highest-Density Interval and the Region of Practical Equivalence.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/hdi.html" class="no-external">
-<div class="listing-date">
-Mar 21, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="RElZ" data-listing-date-sort="1708819200000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1785">
-<div class="thumbnail"><a href="./posts/shoe-rack.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/rack/ai_design.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/shoe-rack.html" class="no-external">Step by Step: Custom Shoe Rack Construction</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/shoe-rack.html" class="no-external">
-<p>Better than IKEA.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/shoe-rack.html" class="no-external">
-<div class="listing-date">
-Feb 25, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="bWVkaWNpbmU=" data-listing-date-sort="1702512000000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2265">
-<div class="thumbnail"><a href="./posts/exam-reflections.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/reflections/birb.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/exam-reflections.html" class="no-external">Reflections on the Fellowship Exam</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/exam-reflections.html" class="no-external">
-<p>Thoughts on how the assessment process of the CICM Fellowship Exam could be improved, developed from ideas formed during the process of exam preparation.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/exam-reflections.html" class="no-external">
-<div class="listing-date">
-Dec 14, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="9" data-categories="UiUyQ2F1c3BvbA==" data-listing-date-sort="1699488000000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4522">
-<div class="thumbnail"><a href="./posts/electioneering-part-three.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/electioneering/e3.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/electioneering-part-three.html" class="no-external">Electioneering: Part III</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/electioneering-part-three.html" class="no-external">
-<p>Final part a three-part series looking at how the composition of the Australian Federal parliament might vary under different electoral systems.</p>
-<p>In this part, we conduct a comparative analysis of each voting system.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/electioneering-part-three.html" class="no-external">
-<div class="listing-date">
-Nov 9, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="10" data-categories="UiUyQ2F1c3BvbA==" data-listing-date-sort="1699401600000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3372">
-<div class="thumbnail"><a href="./posts/electioneering-part-two.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/electioneering/e2.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/electioneering-part-two.html" class="no-external">Electioneering: Part II</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/electioneering-part-two.html" class="no-external">
-<p>Part two of a three-part series looking at how the composition of the Australian Federal parliament might vary under different electorate systems.</p>
-<p>In this part, we simulate the makeup of the House of Representatives after the 2022 federal election under three different voting systems.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/electioneering-part-two.html" class="no-external">
-<div class="listing-date">
-Nov 8, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="11" data-categories="UiUyQ2F1c3BvbA==" data-listing-date-sort="1699228800000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2002">
-<div class="thumbnail"><a href="./posts/electioneering-part-one.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/electioneering/e1.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/electioneering-part-one.html" class="no-external">Electioneering: Part I</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/electioneering-part-one.html" class="no-external">
-<p>First part of a three-part series looking at how the composition of the Australian Federal parliament might vary under different electoral systems.</p>
-<p>This part provides an overview of the electoral systems under review and preparing the data for analysis.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/electioneering-part-one.html" class="no-external">
-<div class="listing-date">
-Nov 6, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="12" data-categories="Ug==" data-listing-date-sort="1643241600000" data-listing-file-modified-sort="1790737614765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1599">
-<div class="thumbnail"><a href="./posts/wordle.html" class="no-external">
-
-<img loading="lazy" src="./posts/assets/wordle/wordle-broken.png" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/wordle.html" class="no-external">Breaking Wordle</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/wordle.html" class="no-external">
-<p>What are the best starting words in Wordle?</p>
-<p>An approach to optimise the opening gambit, using R.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/wordle.html" class="no-external">
-<div class="listing-date">
-Jan 27, 2022
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
+<script type="module" src="../presentations/pdf-viewer.js"></script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1007,7 +666,7 @@ Jan 27, 2022
 <p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2020–2025 C. Jake Barlow</span><br> <span class="faux-block">Licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
 </div>   
     <div class="nav-footer-center">
-<p><span class="faux-block"><i class="fa-solid fa-key" aria-label="key"></i> <a href="public.pgp.txt">PGP public key</a> <br><br> <i class="fa-solid fa-fingerprint" aria-label="fingerprint"></i> Fingerprint:<br><span class="fingerprint">EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A</span></span></p>
+<p><span class="faux-block"><i class="fa-solid fa-key" aria-label="key"></i> <a href="../public.pgp.txt">PGP public key</a> <br><br> <i class="fa-solid fa-fingerprint" aria-label="fingerprint"></i> Fingerprint:<br><span class="fingerprint">EB2D 0937 A960 8CDD 5580 <br> C06D 2E07 192B 4DC1 816A</span></span></p>
 </div>
     <div class="nav-footer-right">
 <p><span class="faux-block">Built with <i class="fa-brands fa-r-project" aria-label="r-project"></i> and <a href="https://quarto.org/">Quarto</a></span></p>
