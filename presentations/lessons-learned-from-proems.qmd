@@ -1,0 +1,22 @@
+---
+title: "Lessons learned from PROEMS"
+subtitle: "From research survey to routine registry activity"
+year: 2026
+image: assets/lessons-learned-from-proems/lessons-learned-from-proems.png
+image-alt: "Title slide of Lessons learned from PROEMS."
+categories: [Presentation, Intensive care, Patient outcomes, Research]
+description: |
+  Practical lessons from the ANZICS PROEMS pilot on collecting patient-reported
+  outcomes and experiences after intensive care: data workflows, invitations
+  and responses, survey design, and the benefits and pitfalls of automation.
+resources:
+  - assets/lessons-learned-from-proems/lessons-learned-from-proems.pdf
+---
+
+::: {.presentation-precis}
+{{< meta description >}}
+:::
+
+::: {.pdf-viewer data-pdf="assets/lessons-learned-from-proems/lessons-learned-from-proems.pdf" data-mode="slides" aria-label="Lessons learned from PROEMS slideshow"}
+Enable JavaScript to view the slides here.
+:::
